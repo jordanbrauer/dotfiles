@@ -1,0 +1,100 @@
+{
+    "window.zoomLevel": 0,
+    
+    "editor.fontSize": 11,
+    "editor.lineHeight": 23,
+    "editor.rulers": [ 80, 120 ],
+    "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
+
+    "explorer.autoReveal": false,
+
+    "search.useIgnoreFiles": false,
+    
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "City Lights",
+    "workbench.iconTheme": "file-icons",
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#23323f",
+        "statusBar.background" : "#007acc",
+        "statusBar.foreground": "#efefef",
+        "statusBar.noFolderBackground" : "#0A0A0D",
+        "statusBar.debuggingBackground": "#cc6633",
+    },
+
+    // PHP
+    "php.suggest.basic": false,
+    "php.executablePath": "/Users/jorb/.phpbrew/php/php-7.0.26/bin/php",
+    
+    // Namespace Resolver (package)
+    "namespaceResolver.autoSort": false,
+    "namespaceResolver.sortAlphabetically": true,
+    
+    // Atom Keymap (package)
+    "atomKeymap.promptV3Features": true,
+
+    // Git
+    "merge-conflict.decorators.enabled": true,
+    
+    // GitLens (package)
+    "gitlens.keymap": "chorded",
+    "gitlens.gitExplorer.files.layout": "auto",
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": true
+    },
+    
+    // Todo Language
+    "vscode-language-todo.regex": "(//|#|<!--|;|/\\*)\\s*(TODO|FIXME|CHANGED|FIX|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|DEBUG|OPTIMIZE|UGLY)",
+
+    // Todo+
+    // "todo.file": ".taskpaper"
+    "todo.embedded.regex": "(?:<!-- *)?(?:#|//|/\\*+|<!--) *(TODO|FIXME|CHANGED|FIX|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|DEBUG|OPTIMIZE|UGLY)(?: |:|\"|'|`|-->|$)",
+    "todo.embedded.exclude": [
+        "**/.git",
+        "**/.svn",
+        "**/.hg",
+        "**/.vscode",
+        "**/.github",
+        "**/.next",
+        "**/node_modules",
+        "**/bower_components",
+        "**/vendor",
+        "**/dist",
+        "**/build",
+        "**/out",
+        "**/output",
+        "**/_output",
+        "**/third_party",
+        "**/*.min.*",
+        "**/*.map"
+    ],
+    
+    // Todo Tree
+    "todo-tree.tags": [
+        "TODO",
+        "FIXME",
+        "CHANGED",
+        "FIXED",
+        "XXX",
+        "IDEA",
+        "HACK",
+        "NOTE",
+        "REVIEW",
+        "NB",
+        "BUG",
+        "QUESTION",
+        "COMBAK",
+        "TEMP",
+        "DEBUG",
+        "OPTIMIZE",
+        "UGLY",
+    ],
+}
