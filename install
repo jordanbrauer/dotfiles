@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+brew update
+brew install jq xsv bat fzf bash htop glow neofetch
+
+cp .bash_* ~/
+cp .vimrc ~/
