@@ -9,6 +9,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 export GREP_OPTIONS='--color=auto'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export BASH_SILENCE_DEPRECATION_WARNING=1 # silence the shitty zsh warning from MacOS
+export EDITOR='nvim'
 
 set -o vi
 
@@ -26,6 +27,7 @@ alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias which='type -all'                     # Find executables
 alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
 alias tmux="tmux -f ~/.config/.tmux.conf"   # Custom Tmux config location
+alias edit=$EDITOR
 
 # Always list directory contents upon 'cd'
 cd() { 

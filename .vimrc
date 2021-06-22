@@ -105,7 +105,7 @@ function! StatuslineGitBranch(repo)
     let l:branch = get(a:repo, 'branch', '')
 
     if l:branch isnot ''
-        return printf('ᚠ %s ⤴%s ⤵%s +%s ~%s -%s', branch, get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'), get(a:repo, 'untracked', '0'), get(a:repo, 'changed', '0'), get(a:repo, 'deleted', '0'))
+        return printf('ᚠ %s (↑%s ↓%s +%s ~%s -%s)', branch, get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'), get(a:repo, 'untracked', '0'), get(a:repo, 'changed', '0'), get(a:repo, 'deleted', '0'))
     endif
 
     return ''

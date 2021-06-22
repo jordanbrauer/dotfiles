@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 brew update
-brew install jq xsv bat fzf bash htop glow neofetch
+brew install jq xsv bat fzf bash htop glow ripgrep fd
+brew install --HEAD luajit neovim
 
-cp .bash_* ~/
+mkdir ~/.vim/{plugged,undodir}
+cp .bash* ~/
+cp .inputrc ~/
 cp .vimrc ~/
+cp -r .config ~/.config
