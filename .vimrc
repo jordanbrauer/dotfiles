@@ -3,6 +3,10 @@
 " =============================================================================
 
 call plug#begin('~/.vim/plugged')
+" Neovim
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
 " Files
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -16,10 +20,6 @@ Plug 'tpope/vim-commentary'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-
-" PHP
-Plug 'StanAngeloff/php.vim'
-Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
 
 " Markdown
 Plug 'tpope/vim-markdown'
@@ -48,12 +48,27 @@ set signcolumn=yes
 set updatetime=50
 
 " =============================================================================
+" Colours
+" =============================================================================
+
+syntax enable
+syntax on
+colorscheme nord
+set background=dark
+let &t_Co=256
+
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+" =============================================================================
 " Status Bar
 " =============================================================================
 
 let g:modes = {'n': 'normal', 'v': 'visual', 'V': 'v·line', "\<C-V>": 'v·block', 'i': 'insert', 'R': 'replace', 'Rv': 'v·replace', 'c': 'command'}
 
 function! InsertStatuslineColor(mode)
+    " echo a:mode
   if a:mode == 'i'
     hi User1 ctermbg=2
     hi User2 ctermbg=2
@@ -122,17 +137,12 @@ augroup GIT_STATUS
     " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
 
     autocmd InsertEnter,InsertLeave * call InsertStatuslineColor(v:insertmode)
-    " autocmd CmdlineEnter * call InsertStatuslineColor('c')
-    " autocmd InsertLeave,CmdlineLeave,CmdwinLeave,WinLeave,WinEnter * call InsertStatuslineColor(mode())
     autocmd InsertLeave * hi User2 ctermbg=1
     autocmd InsertLeave * hi User1 ctermbg=1
 
     autocmd VimEnter * hi User1 cterm=bold ctermbg=1 ctermfg=0
     autocmd VimEnter * hi User2 ctermbg=1 ctermfg=0
 augroup end
-
-" hi StatusLine term=reverse cterm=bold ctermbg=5 gui=undercurl guisp=Magenta
-" hi StatusLine term=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
 
 set noshowmode
 " set noshowcmd
@@ -155,18 +165,71 @@ set statusline+=\ %-7([%{&fileformat}]%) " file format (unix vs. dos)
 set statusline+=%y " file type
 
 " =============================================================================
-" Colours
+" LSP
 " =============================================================================
 
-syntax enable
-syntax on
-colorscheme nord
-set background=dark
-let &t_Co=256
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
-if has('nvim')
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
+augroup IDE
+    au!
+
+    " Use completion-nvim in every buffer
+    autocmd BufEnter * lua require'completion'.on_attach()
+augroup end
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+-- lsp_completion = require('completion')
+
+-- Use an on_attach function to only map the following keys 
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- lsp_completion.on_attach()
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "phpactor" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+EOF
 
 " Lines
 set number
@@ -241,10 +304,9 @@ nnoremap <silent> <leader><leader> :call FZFOpen(":Buffers")<CR>
 nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
 nnoremap <silent> <leader>zh :call FZFOpen(":History")<CR>
 
-"" Php autocomplete
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-autocmd FileType php setlocal omnifunc=phpactor#Complete
+" set omnifunc=syntaxcomplete#Complete
+" autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 " Markdown
 let g:markdown_fenced_languages = ['js=javascript', 'php', 'bash=sh']
