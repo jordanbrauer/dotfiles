@@ -3,20 +3,21 @@
 " =============================================================================
 
 call plug#begin('~/.vim/plugged')
-" Neovim
+" Language Server
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'liuchengxu/vista.vim'
 
 " Files
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'liuchengxu/vista.vim'
 
 " Formatting
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -24,6 +25,11 @@ Plug 'airblade/vim-gitgutter'
 
 " PHP
 Plug 'jordanbrauer/php.vim'
+
+" JavaScript
+Plug 'othree/yajs.vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 " Markdown
 Plug 'tpope/vim-markdown'
@@ -347,6 +353,8 @@ nnoremap <silent> <leader><leader> :call FZFOpen(":Buffers")<CR>
 nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
 nnoremap <silent> <leader>F :call FZFOpen(":Rg ")<CR>
 nnoremap <silent> <leader>zh :call FZFOpen(":History")<CR>
+nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
+nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
 
 filetype plugin on
 " set omnifunc=syntaxcomplete#Complete
