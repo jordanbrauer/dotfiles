@@ -11,6 +11,7 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'liuchengxu/vista.vim'
 
 " Formatting
 Plug 'editorconfig/editorconfig-vim'
@@ -21,11 +22,14 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" PHP
+Plug 'StanAngeloff/php.vim'
+
 " Markdown
 Plug 'tpope/vim-markdown'
 
 " Themes
-Plug 'arcticicestudio/nord-vim'
+Plug 'jordanbrauer/citylights.vim'
 call plug#end()
 
 " =============================================================================
@@ -53,7 +57,7 @@ set updatetime=50
 
 syntax enable
 syntax on
-colorscheme nord
+colorscheme citylights
 set background=dark
 let &t_Co=256
 
@@ -61,11 +65,38 @@ if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
+" Show syntax highlighting groups for word under cursor
+function! SynGroup()                                                            
+    let l:s = synID(line('.'), col('.'), 1)                                       
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+map gm :call SynGroup()<CR>
+
 " =============================================================================
 " Status Bar
 " =============================================================================
 
 let g:modes = {'n': 'normal', 'v': 'visual', 'V': 'v·line', "\<C-V>": 'v·block', 'i': 'insert', 'R': 'replace', 'Rv': 'v·replace', 'c': 'command'}
+" Set the executive for some filetypes explicitly. Use the explicit executive
+" instead of the default one for these filetypes when using `:Vista` without
+" specifying the executive.
+let g:vista_icon_indent = ["▸ ", ""]
+let g:vista#renderer#icons = {
+\   "function": "λ",
+\   "method": "λ",
+\   "constructor": "𝑓",
+\   "constant": "π",
+\   "variable": "x",
+\   "property": "→",
+\   "namespace": "∷",
+\   "class": "✢",
+\  }
+let g:vista_default_executive = 'nvim_lsp'
+let g:vista_executive_for = {
+  \ 'php': 'nvim_lsp',
+  \ }
+let g:vista_fzf_preview = ['right:50%']
+
 
 function! InsertStatuslineColor(mode)
     " echo a:mode
@@ -130,6 +161,10 @@ function! Repo()
     return get(b:, 'git_repo', {})
 endfunction
 
+function! NearestMethodOrFunction() abort
+  return trim(printf(':%s', get(b:, 'vista_nearest_method_or_function', '')), ':', 2)
+endfunction
+
 augroup GIT_STATUS
     au!
 
@@ -142,6 +177,12 @@ augroup GIT_STATUS
 
     autocmd VimEnter * hi User1 cterm=bold ctermbg=1 ctermfg=0
     autocmd VimEnter * hi User2 ctermbg=1 ctermfg=0
+
+    " By default vista.vim never run if you don't call it explicitly.
+    "
+    " If you want to show the nearest function in your statusline automatically,
+    " you can add the following line to your vimrc
+    autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 augroup end
 
 set noshowmode
@@ -151,7 +192,8 @@ set laststatus=2
 set statusline=
 set statusline+=%2*\ λ\ %{StatuslineMode(mode())}
 set statusline+=\ %1*%{StatuslineGitBranch(Repo())}%2*
-set statusline+=\ %F " full file path
+set statusline+=\ %f " full file path
+set statusline+=\%{NearestMethodOrFunction()}
 set statusline+=\ \(%n\) " buffer ID
 set statusline+=\ %{&modified?'[+]':''}
 set statusline+=\ %r
@@ -208,6 +250,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<space>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
   -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -225,7 +268,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "phpactor" }
+local servers = { "intelephense" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
@@ -302,6 +345,7 @@ endfunction
 " FZF bindings
 nnoremap <silent> <leader><leader> :call FZFOpen(":Buffers")<CR>
 nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
+nnoremap <silent> <leader>F :call FZFOpen(":Rg ")<CR>
 nnoremap <silent> <leader>zh :call FZFOpen(":History")<CR>
 
 filetype plugin on
@@ -309,5 +353,5 @@ filetype plugin on
 " autocmd FileType php setlocal omnifunc=phpactor#Complete
 
 " Markdown
-let g:markdown_fenced_languages = ['js=javascript', 'php', 'bash=sh']
+let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
 
