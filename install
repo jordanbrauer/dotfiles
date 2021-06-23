@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+# install package manager
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 brew update
-brew install jq xsv bat fzf bash htop glow ripgrep fd
+brew install jq xsv bat fzf bash htop glow ripgrep fd stow
 brew install --HEAD luajit neovim
 
-mkdir ~/.vim/{plugged,undodir}
-cp .bash* ~/
-cp .inputrc ~/
-cp .vimrc ~/
-cp -r .config ~/.config
+stow vim bash config
+# mkdir ~/.vim/{plugged,undodir}
+# cp .bash* ~/
+# cp .inputrc ~/
+# cp .vimrc ~/
+# cp -r .config ~/.config
