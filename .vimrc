@@ -23,7 +23,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " PHP
-Plug 'StanAngeloff/php.vim'
+Plug 'jordanbrauer/php.vim'
 
 " Markdown
 Plug 'tpope/vim-markdown'
@@ -66,9 +66,9 @@ if has('nvim')
 endif
 
 " Show syntax highlighting groups for word under cursor
-function! SynGroup()                                                            
-    let l:s = synID(line('.'), col('.'), 1)                                       
-    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1) 
+    echo printf('Syntax: %s → %s', synIDattr(l:s, 'name'), synIDattr(synIDtrans(l:s), 'name'))
 endfun
 map gm :call SynGroup()<CR>
 
