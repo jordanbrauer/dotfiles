@@ -1,4 +1,4 @@
-" =============================================================================
+" ================
 " Plugins
 " =============================================================================
 
@@ -42,6 +42,7 @@ call plug#end()
 " Misc.
 " =============================================================================
 
+set makeprg=make
 set exrc
 set encoding=utf-8
 set noerrorbells
@@ -70,6 +71,12 @@ let &t_Co=256
 if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
+
+function! Make(args)
+    exe ':vert term make ' . a:args
+endfunction
+
+command! -bang -nargs=? Make call Make(<q-args>)
 
 " Show syntax highlighting groups for word under cursor
 function! SynGroup()
@@ -174,7 +181,8 @@ endfunction
 augroup GIT_STATUS
     au!
 
-    autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdlineLeave,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
+    autocmd TermOpen * startinsert
+    autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
     " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
 
     autocmd InsertEnter,InsertLeave * call InsertStatuslineColor(v:insertmode)
