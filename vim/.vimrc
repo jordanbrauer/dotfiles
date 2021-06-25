@@ -1,8 +1,9 @@
-" ================
-" Plugins
+" =============================================================================
+" Plugins                                                                   {{{
 " =============================================================================
 
 call plug#begin('~/.vim/plugged')
+
 " Language Server
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
@@ -36,131 +37,125 @@ Plug 'tpope/vim-markdown'
 
 " Themes
 Plug 'jordanbrauer/citylights.vim'
+
 call plug#end()
 
-" =============================================================================
-" Misc.
-" =============================================================================
-
-set makeprg=make
-set exrc
-set encoding=utf-8
-set noerrorbells
-set nohlsearch
-set hidden
-set noswapfile
-set nobackup
-set undodir=~/.vim/undodir
-set undofile
-set incsearch
-set cmdheight=1
-" set termguicolors
-set signcolumn=yes
-set updatetime=50
+"}}}
 
 " =============================================================================
 " Colours
 " =============================================================================
 
-syntax enable
-syntax on
-colorscheme citylights
-set background=dark
-let &t_Co=256
-
 if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-function! Make(args)
-    exe ':vert term make ' . a:args
-endfunction
+if $COLORTERM == 'truecolor' && has('termguicolors')
+    set termguicolors
+endif
 
-command! -bang -nargs=? Make call Make(<q-args>)
-
-" Show syntax highlighting groups for word under cursor
-function! SynGroup()
-    let l:s = synID(line('.'), col('.'), 1) 
-    echo printf('Syntax: %s → %s', synIDattr(l:s, 'name'), synIDattr(synIDtrans(l:s), 'name'))
-endfun
-map gm :call SynGroup()<CR>
+syntax enable
+syntax on
+filetype plugin on
+colorscheme citylights
+set background=dark
+let &t_Co=256
 
 " =============================================================================
-" Status Bar
+" Status Bar                                                                {{{
 " =============================================================================
 
-let g:modes = {'n': 'normal', 'v': 'visual', 'V': 'v·line', "\<C-V>": 'v·block', 'i': 'insert', 'R': 'replace', 'Rv': 'v·replace', 'c': 'command'}
-" Set the executive for some filetypes explicitly. Use the explicit executive
-" instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive.
-let g:vista_icon_indent = ["▸ ", ""]
-let g:vista#renderer#icons = {
-\   "function": "λ",
-\   "method": "λ",
-\   "constructor": "𝑓",
-\   "constant": "π",
-\   "variable": "x",
-\   "property": "→",
-\   "namespace": "∷",
-\   "class": "✢",
-\  }
-let g:vista_default_executive = 'nvim_lsp'
-let g:vista_executive_for = {
-  \ 'php': 'nvim_lsp',
-  \ }
-let g:vista_fzf_preview = ['right:50%']
-
+let g:modes = {
+\   'n':      'normal ', 
+\   'i':      'insert ', 
+\   'R':      'replace', 
+\   'c':      'command',
+\   'v':      'visual ', 
+\   'V':      'v·line ', 
+\   "\<C-V>": 'v·block', 
+\   'Rv':     'v·replace', 
+\ }
 
 function! InsertStatuslineColor(mode)
-    " echo a:mode
   if a:mode == 'i'
-    hi User1 ctermbg=2
-    hi User2 ctermbg=2
+    hi User1 ctermfg=2 guifg=#54af83
   elseif a:mode == 'r'
-    hi User1 ctermbg=3
-    hi User2 ctermbg=3
+    hi User1 ctermfg=3 guifg=#ebda65
   elseif a:mode == 'CTRL-V'
-    hi User1 ctermbg=4
-    hi User2 ctermbg=4
+    hi User1 ctermfg=4 guifg=#68a1f0
   elseif a:mode == 'V'
-    hi User1 ctermbg=4
-    hi User2 ctermbg=4
+    hi User1 ctermfg=4 guifg=#68a1f0
   elseif a:mode == 'v'
-    hi User1 ctermbg=4
-    hi User2 ctermbg=4
+    hi User1 ctermfg=4 guifg=#68a1f0
   elseif a:mode == 'c'
-    hi User1 ctermbg=5
-    hi User2 ctermbg=5
+    hi User1 ctermfg=5
   elseif a:mode == 'n'
-    hi User1 ctermbg=1
-    hi User2 ctermbg=1
+    hi User1 ctermfg=39 guifg=#5ec4ff
   else
-    hi User1 ctermbg=1
-    hi User2 ctermbg=1
+    hi User1 ctermfg=39 guifg=#5ec4ff
   endif
 endfunction
 
 function! StatuslineMode(mode)
-    " call InsertStatuslineColor(a:mode)
     return toupper(get(g:modes, a:mode, 'other'))
 endfunction
 
 function! StatuslineGitBranch(repo)
     let l:branch = get(a:repo, 'branch', '')
 
+    if l:branch is ''
+        return ''
+    endif
+
+    return printf('ᚠ %s', branch)
+endfunction
+
+function! StatuslineGitUntracked(repo)
+    let l:branch = get(a:repo, 'branch', '')
+
+    if l:branch is ''
+        return ''
+    endif
+
+    return printf('+%s', get(a:repo, 'untracked', '0'))
+endfunction
+
+function! StatuslineGitChanged(repo)
+    let l:branch = get(a:repo, 'branch', '')
+
     if l:branch isnot ''
-        return printf('ᚠ %s (↑%s ↓%s +%s ~%s -%s)', branch, get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'), get(a:repo, 'untracked', '0'), get(a:repo, 'changed', '0'), get(a:repo, 'deleted', '0'))
+        return printf('~%s', get(a:repo, 'changed', '0'))
     endif
 
     return ''
 endfunction
 
-" Parse git information for the current project/file
-function! GetGitBranch()
-    let l:is_git_dir = trim(system('git rev-parse --is-inside-work-tree'))
+function! StatuslineGitDeleted(repo)
+    let l:branch = get(a:repo, 'branch', '')
 
-    if l:is_git_dir is# 'true'
-        return { 'branch': trim(system('git rev-parse --abbrev-ref HEAD')), 'behind': trim(system('git rev-list --count ..@{u}')), 'ahead': trim(system('git rev-list --count @{u}..')), 'changed': trim(system('git diff --name-only --diff-filter=ad | wc -l')), 'untracked': trim(system('git ls-files -o --exclude-standard | wc -l')), 'deleted': trim(system('git ls-files --deleted | wc -l')) }
+    if l:branch isnot ''
+        return printf('-%s', get(a:repo, 'deleted', '0'))
+    endif
+
+    return ''
+endfunction
+
+function! StatuslineGitDiverge(repo)
+    let l:branch = get(a:repo, 'branch', '')
+
+    if l:branch isnot ''
+        return printf('↑%s ↓%s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
+    endif
+
+    return ''
+endfunction
+let g:is_git_dir = 0
+
+function! GetGitBranch()
+    let g:is_git_dir = trim(system('git rev-parse --is-inside-work-tree'))
+
+    if g:is_git_dir is# 'true'
+        return { 'branch': trim(system('git rev-parse --abbrev-ref HEAD')), 'behind': trim(system('git rev-list --count ..@{u} 2> /dev/null || echo 0')), 'ahead': trim(system('git rev-list --count @{u}.. 2> /dev/null || echo 0')), 'changed': trim(system('git diff --name-only --diff-filter=ad | wc -l')), 'untracked': trim(system('git ls-files -o --exclude-standard | wc -l')), 'deleted': trim(system('git ls-files --deleted | wc -l')) }
     else
         return {'branch': ''}
     endif
@@ -185,62 +180,89 @@ augroup GIT_STATUS
     autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
     " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
 
-    autocmd InsertEnter,InsertLeave * call InsertStatuslineColor(v:insertmode)
-    autocmd InsertLeave * hi User2 ctermbg=1
-    autocmd InsertLeave * hi User1 ctermbg=1
+    autocmd InsertEnter * call InsertStatuslineColor(v:insertmode)
+    autocmd InsertLeave * call InsertStatuslineColor(mode())
 
-    autocmd VimEnter * hi User1 cterm=bold ctermbg=1 ctermfg=0
-    autocmd VimEnter * hi User2 ctermbg=1 ctermfg=0
+    autocmd VimEnter * hi User1 ctermfg=39 guifg=#5ec4ff ctermbg=none guibg=none cterm=bold gui=bold
+    autocmd VimEnter * hi User2 ctermfg=80 guifg=#70e1e8 ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User3 ctermfg=2 guifg=#8bd49c ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User4 ctermfg=3 guifg=#ebbf83 ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User5 ctermfg=1 guifg=#e27e8d ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User6 ctermfg=23 guifg=#008b94 ctermbg=none guibg=none cterm=bold gui=bold
+    autocmd VimEnter * hi User7 ctermfg=123 guifg=#9effff ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User8 ctermfg=238 guifg=#41505e ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User9 ctermfg=243 guifg=#718ca1 ctermbg=none guibg=none cterm=bold gui=bold
 
     " By default vista.vim never run if you don't call it explicitly.
     "
     " If you want to show the nearest function in your statusline automatically,
     " you can add the following line to your vimrc
     autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+    " Use completion-nvim in every buffer
+    autocmd BufEnter * lua require'completion'.on_attach()
+
+    " EditorConfig
+    au FileType gitcommit let b:EditorConfig_disable = 1
+
+    " Start NERDTree when Vim starts with a directory argument.
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+        \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+    " Exit Vim if NERDTree is the only window left.
+    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+        \ vsplit new | exe "NERDTreeFocus" | exe "vertical resize 80" | endif
 augroup end
+
+function! IsGit()
+    return g:is_git_dir is# 'true'
+endfunction
 
 set noshowmode
 " set noshowcmd
-" set noruler
+set noruler
+set cmdheight=1
 set laststatus=2
 set statusline=
-set statusline+=%2*\ λ\ %{StatuslineMode(mode())}
-set statusline+=\ %1*%{StatuslineGitBranch(Repo())}%2*
-set statusline+=\ %f " full file path
+set statusline+=%1*\ λ\ %{StatuslineMode(mode())}\ 
+set statusline+=\%6*%{IsGit()?StatuslineGitBranch(Repo()).'\ ':''}%1*
+set statusline+=\%2*%{IsGit()?'\ '.StatuslineGitDiverge(Repo()).'\ ':''}
+set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitUntracked(Repo()).'\ ':''} 
+set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitChanged(Repo()).'\ ':''}
+set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitDeleted(Repo()).'\ ':''}%1*
+set statusline+=%8*%f " full file path
 set statusline+=\%{NearestMethodOrFunction()}
-set statusline+=\ \(%n\) " buffer ID
-set statusline+=\ %{&modified?'[+]':''}
-set statusline+=\ %r
+set statusline+=\ %9*\(%n\) " buffer ID
+set statusline+=\ %3*%{&modified?'[+]':''}
+set statusline+=%5*%r
 set statusline+=%=
-set statusline+=\ %1*Ln%2*\ %l/%L " line number
-set statusline+=\ %1*Col%2*\ %v " column number
+set statusline+=\ %9*Ln%8*\ %l/%L " line number
+set statusline+=\ %9*Col%8*\ %v " column number
 set statusline+=\ %2p%% " document position
 set statusline+=\ 0x%04B\ \(%o\) " current character & byte
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " file encoding
 set statusline+=\ %-7([%{&fileformat}]%) " file format (unix vs. dos)
-set statusline+=%y " file type
+set statusline+=%y\ 
+
+" }}}
 
 " =============================================================================
 " LSP
 " =============================================================================
 
+" Smooth auto-complete & search experience
+set nohlsearch
+set incsearch
 set completeopt=menuone,noinsert,noselect
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-" Avoid showing message extra message when using completion
 set shortmess+=c
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 imap <tab> <Plug>(completion_smart_tab)
 imap <s-tab> <Plug>(completion_smart_s_tab)
-
-augroup IDE
-    au!
-
-    " Use completion-nvim in every buffer
-    autocmd BufEnter * lua require'completion'.on_attach()
-augroup end
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
@@ -288,14 +310,54 @@ for _, lsp in ipairs(servers) do
 end
 EOF
 
+" Set the executive for some filetypes explicitly. Use the explicit executive
+" instead of the default one for these filetypes when using `:Vista` without
+" specifying the executive.
+let g:vista_icon_indent = ["▸ ", ""]
+let g:vista#renderer#icons = {
+\   "function": "λ",
+\   "method": "λ",
+\   "constructor": "𝑓",
+\   "constant": "π",
+\   "variable": "x",
+\   "property": "→",
+\   "namespace": "∷",
+\   "class": "✢",
+\ }
+let g:vista_default_executive = 'nvim_lsp'
+let g:vista_executive_for = {
+  \ 'php': 'nvim_lsp',
+  \ }
+let g:vista_fzf_preview = ['right:50%']
+
+" =============================================================================
+" Memory
+" =============================================================================
+
+set hidden
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+
+" =============================================================================
 " Lines
+" =============================================================================
+
 set number
 set relativenumber
 set scrolloff=20
 set nowrap
+set colorcolumn=80
+set signcolumn=yes
 
-" Tabs
+" =============================================================================
+" Formatting
+" =============================================================================
+
 filetype indent on
+
+set encoding=utf-8
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -311,7 +373,6 @@ map <C-l> <C-W>l
 
 "" Editor Config
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-au FileType gitcommit let b:EditorConfig_disable = 1
 
 " NerdTree
 let NERDTreeShowHidden=1
@@ -322,15 +383,6 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 " NerdTree bindings
 map <C-b> :NERDTreeToggle<CR>
-
-" Start NERDTree when Vim starts with a directory argument.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-" Exit Vim if NERDTree is the only window left.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ vsplit new | exe "NERDTreeFocus" | exe "vertical resize 80" | endif
 
 " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
 " autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
@@ -364,10 +416,28 @@ nnoremap <silent> <leader>zh :call FZFOpen(":History")<CR>
 nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
 nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
 
-filetype plugin on
-" set omnifunc=syntaxcomplete#Complete
-" autocmd FileType php setlocal omnifunc=phpactor#Complete
-
 " Markdown
 let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
 
+function! Make(args)
+    exe ':vert term make ' . a:args
+endfunction
+
+command! -bang -nargs=? Make call Make(<q-args>)
+
+" Show syntax highlighting groups for word under cursor
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1) 
+    echo printf('Syntax: %s → %s', synIDattr(l:s, 'name'), synIDattr(synIDtrans(l:s), 'name'))
+endfun
+map gm :call SynGroup()<CR>
+
+" =============================================================================
+" Misc.
+" =============================================================================
+
+set exrc
+set makeprg=make
+set noerrorbells
+set updatetime=50
+set foldmethod=marker
