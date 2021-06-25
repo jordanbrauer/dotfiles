@@ -13,10 +13,11 @@ export EDITOR='nvim'
 
 set -o vi
 
+pfetch
+
+[[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
-
-echo '' && pfetch
 
 # Improved Shell
 alias ls="ls -alFhG"                        # Preferred 'ls' implementation
