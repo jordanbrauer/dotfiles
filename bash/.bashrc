@@ -13,11 +13,11 @@ export EDITOR='nvim'
 
 set -o vi
 
-pfetch
-
 [[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
+
+pfetch
 
 # Improved Shell
 alias ls="ls -alFhG"                        # Preferred 'ls' implementation
@@ -80,4 +80,22 @@ palette () {
     echo '';
     echo ' Background Usage:';
     echo ' \[\033[48;5;{$color}m\] hello world \[\033[0m\]';
+}
+
+function gi() {
+    curl -sL https://www.toptal.com/developers/gitignore/api/$@; 
+}
+
+# Codi
+# Usage: codi [filetype] [filename]
+scratch() {
+  local syntax="${1:-php}"
+  shift
+  nvim -c \
+    "let g:startify_disable_at_vimenter = 1 |\
+    set bt=nofile ls=0 noru nonu nornu |\
+    hi ColorColumn guibg=NONE ctermbg=NONE |\
+    hi VertSplit guibg=NONE ctermbg=NONE |\
+    hi NonText ctermfg=0 |\
+    Codi $syntax" "$@"
 }
