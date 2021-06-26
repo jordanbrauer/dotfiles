@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'liuchengxu/vista.vim'
+Plug 'metakirby5/codi.vim'
 
 " Files
 Plug 'junegunn/fzf'
@@ -329,6 +330,13 @@ let g:vista_executive_for = {
   \ 'php': 'nvim_lsp',
   \ }
 let g:vista_fzf_preview = ['right:50%']
+
+let g:codi#interpreters = {
+\   'php': {
+\       'bin':    'psysh',
+\       'prompt': '^\(λ\|\.\.\.\) ',
+\   }
+\ }
 
 " =============================================================================
 " Memory
