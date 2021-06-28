@@ -28,6 +28,7 @@ alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias which='type -all'                     # Find executables
 alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
 alias tmux="tmux -f ~/.config/.tmux.conf"   # Custom Tmux config location
+alias tt="tt -theme citylights"             # Typing test custom theme
 alias edit=$EDITOR
 
 # Always list directory contents upon 'cd'
@@ -89,13 +90,28 @@ function gi() {
 # Codi
 # Usage: codi [filetype] [filename]
 scratch() {
-  local syntax="${1:-php}"
-  shift
-  nvim -c \
-    "let g:startify_disable_at_vimenter = 1 |\
-    set bt=nofile ls=0 noru nonu nornu |\
-    hi ColorColumn guibg=NONE ctermbg=NONE |\
-    hi VertSplit guibg=NONE ctermbg=NONE |\
-    hi NonText ctermfg=0 |\
-    Codi $syntax" "$@"
+    local syntax="${1:-php}"
+    local repl=$syntax
+    local header=''
+    local commands=''
+
+    shift
+
+    case $syntax in
+        php)
+            header='<?php\n\ndeclare(strict_types = 1);\n\n\n'
+            commands=' | + normal G $"'
+            ;;
+        js | node)
+            repl='javascript'
+            ;;
+    esac
+
+    printf "$header" | nvim -c \
+        "let g:startify_disable_at_vimenter = 1 |\
+        set bt=nofile ls=0 noru nonu nornu |\
+        hi ColorColumn guibg=NONE ctermbg=NONE |\
+        hi VertSplit guibg=NONE ctermbg=NONE |\
+        hi NonText ctermfg=0 |\
+        Codi $repl$commands" -
 }
