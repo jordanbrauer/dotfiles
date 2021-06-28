@@ -95,8 +95,6 @@ scratch() {
     local header=''
     local commands=''
 
-    shift
-
     case $syntax in
         php)
             header='<?php\n\ndeclare(strict_types = 1);\n\n\n'
