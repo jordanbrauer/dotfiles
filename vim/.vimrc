@@ -1,5 +1,4 @@
-" =============================================================================
-" Plugins                                                                   {{{
+" 0. Plugins                                                                {{{
 " =============================================================================
 
 call plug#begin('~/.vim/plugged')
@@ -13,6 +12,7 @@ Plug 'metakirby5/codi.vim'
 " Files
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'dyng/ctrlsf.vim'
 Plug 'scrooloose/nerdtree'
 
 " Formatting
@@ -24,6 +24,7 @@ Plug 'jiangmiao/auto-pairs'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'stsewd/fzf-checkout.vim'
 
 " PHP
 Plug 'jordanbrauer/php.vim'
@@ -43,8 +44,7 @@ call plug#end()
 
 "}}}
 
-" =============================================================================
-" Colours
+" 1. Colours                                                                {{{
 " =============================================================================
 
 if has('nvim')
@@ -62,7 +62,8 @@ colorscheme citylights
 set background=dark
 let &t_Co=256
 
-" =============================================================================
+" }}}
+
 " Status Bar                                                                {{{
 " =============================================================================
 
@@ -248,8 +249,7 @@ set statusline+=%y\
 
 " }}}
 
-" =============================================================================
-" LSP
+" LSP                                                                       {{{
 " =============================================================================
 
 " Smooth auto-complete & search experience
@@ -305,7 +305,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "intelephense" }
+local servers = { "intelephense", 'gopls', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
@@ -338,8 +338,9 @@ let g:codi#interpreters = {
 \   }
 \ }
 
-" =============================================================================
-" Memory
+" }}}
+
+" Memory                                                                    {{{
 " =============================================================================
 
 set hidden
@@ -348,8 +349,9 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
-" =============================================================================
-" Lines
+" }}}
+
+" Lines & Columns                                                           {{{
 " =============================================================================
 
 set number
@@ -359,8 +361,9 @@ set nowrap
 set colorcolumn=80
 set signcolumn=yes
 
-" =============================================================================
-" Formatting
+" }}}
+
+" Formatting                                                                {{{
 " =============================================================================
 
 filetype indent on
@@ -373,11 +376,21 @@ set expandtab
 set autoindent
 set smartindent
 
+" }}}
+
+" Key Map                                                                   {{{
+" =============================================================================
+ 
 " Swap paned buffers with hjkl
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" }}}
+
+" Third-Party                                                               {{{
+" =============================================================================
 
 "" Editor Config
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -417,12 +430,13 @@ function! FZFOpen(cmd)
 endfunction
 
 " FZF bindings
-nnoremap <silent> <leader><leader> :call FZFOpen(":Buffers")<CR>
+nnoremap <silent> <leader>b :call FZFOpen(":Buffers")<CR>
+nnoremap <silent> <leader>h :call FZFOpen(":History")<CR>
 nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
 nnoremap <silent> <leader>F :call FZFOpen(":Rg ")<CR>
-nnoremap <silent> <leader>zh :call FZFOpen(":History")<CR>
 nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
 nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
+nnoremap <silent> <leader>gb :exe ":GBranches"<CR>
 
 " Markdown
 let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
@@ -440,8 +454,9 @@ function! SynGroup()
 endfun
 map gm :call SynGroup()<CR>
 
-" =============================================================================
-" Misc.
+" }}}
+
+" Misc.                                                                     {{{
 " =============================================================================
 
 set exrc
@@ -449,3 +464,5 @@ set makeprg=make
 set noerrorbells
 set updatetime=50
 set foldmethod=marker
+
+" }}}
