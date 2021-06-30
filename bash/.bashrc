@@ -10,14 +10,13 @@ export GREP_OPTIONS='--color=auto'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export BASH_SILENCE_DEPRECATION_WARNING=1 # silence the shitty zsh warning from MacOS
 export EDITOR='nvim'
+export VIMRC='~/.vimrc'
 
 set -o vi
 
 [[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
-
-pfetch
 
 # Improved Shell
 alias ls="ls -alFhG"                        # Preferred 'ls' implementation
@@ -87,8 +86,9 @@ function gi() {
     curl -sL https://www.toptal.com/developers/gitignore/api/$@; 
 }
 
-# Codi
-# Usage: codi [filetype] [filename]
+# Codi shell wrapper
+# 
+# Usage: scratch [language]
 scratch() {
     local syntax="${1:-php}"
     local repl=$syntax
@@ -112,4 +112,10 @@ scratch() {
         hi VertSplit guibg=NONE ctermbg=NONE |\
         hi NonText ctermfg=0 |\
         Codi $repl$commands" -
+}
+
+function reload() {
+    printf " \033[38;5;3m‼\033[0m Reloading shell configuration ...\n"
+    source ~/.bashrc
+    printf " \033[38;5;2m✔\033[0m Done!\n"
 }
