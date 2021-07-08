@@ -16,6 +16,8 @@ call plug#begin('~/.vim/plugged')
 
 " Language Server
 Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': 'TSUpdate'}
+Plug 'nvim-treesitter/playground'
 Plug 'nvim-lua/completion-nvim'
 Plug 'liuchengxu/vista.vim'
 Plug 'metakirby5/codi.vim'
@@ -351,6 +353,21 @@ protocol.CompletionItemKind = {
   '', -- Event
   '', -- Operator
   '', -- TypeParameter
+}
+
+require 'nvim-treesitter.configs'.setup {
+    highlight = {
+        enable = false, -- TODO: make true when Citylights TS highlighting ready
+        disable = {},
+        custom_captures = {},
+    },
+    indent = {
+        enable = true,
+        disable = {},
+    },
+    ensure_installed = {
+        "php"
+    },
 }
 EOF
 
