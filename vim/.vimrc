@@ -186,7 +186,7 @@ function! NearestMethodOrFunction() abort
   return trim(printf(':%s', get(b:, 'vista_nearest_method_or_function', '')), ':', 2)
 endfunction
 
-augroup GIT_STATUS
+augroup MY_IDE
     au!
 
     autocmd TermOpen * startinsert
@@ -226,6 +226,8 @@ augroup GIT_STATUS
     " Exit Vim if NERDTree is the only window left.
     autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
         \ vsplit new | exe "NERDTreeFocus" | exe "vertical resize 80" | endif
+
+    autocmd FileType php setlocal commentstring=#\ %s
 augroup end
 
 function! IsGit()
@@ -278,6 +280,7 @@ imap <s-tab> <Plug>(completion_smart_s_tab)
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
+local protocol = require('vim.lsp.protocol')
 -- lsp_completion = require('completion')
 
 -- Use an on_attach function to only map the following keys 
@@ -320,6 +323,35 @@ local servers = { "intelephense", 'gopls', 'tsserver' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
+
+-- protocol.SymbolKind
+protocol.CompletionItemKind = {
+  '', -- Text
+  'λ', -- Method
+  'λ', -- Function
+  '𝑓', -- Constructor
+  '', -- Field
+  '', -- Variable
+  '', -- Class
+  'ﰮ', -- Interface
+  '', -- Module
+  '', -- Property
+  '', -- Unit
+  '', -- Value
+  '', -- Enum
+  '', -- Keyword
+  '', -- Snippet
+  '', -- Color
+  '', -- File
+  '', -- Reference
+  '', -- Folder
+  '', -- EnumMember
+  'π', -- Constant
+  '', -- Struct
+  '', -- Event
+  '', -- Operator
+  '', -- TypeParameter
+}
 EOF
 
 " Set the executive for some filetypes explicitly. Use the explicit executive
@@ -331,10 +363,10 @@ let g:vista#renderer#icons = {
 \   "method": "λ",
 \   "constructor": "𝑓",
 \   "constant": "π",
-\   "variable": "x",
-\   "property": "→",
+\   "variable": "",
+\   "property": "",
 \   "namespace": "∷",
-\   "class": "✢",
+\   "class": "",
 \ }
 let g:vista_default_executive = 'nvim_lsp'
 let g:vista_executive_for = {
