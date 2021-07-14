@@ -27,6 +27,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dyng/ctrlsf.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'wfxr/minimap.vim'
 
 " Formatting
 Plug 'editorconfig/editorconfig-vim'
@@ -498,7 +499,12 @@ nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
 nnoremap <silent> <leader>F :call FZFOpen(":Rg ")<CR>
 nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
 nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
+nnoremap <silent> <leader>m :exe ":MinimapToggle"<CR>
 nnoremap <silent> <leader>gb :exe ":GBranches"<CR>
+
+let g:minimap_highlight = 'Special'
+let g:minimap_base_highlight = 'Comment'
+" let g:minimap_left = 1
 
 " Markdown
 let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
