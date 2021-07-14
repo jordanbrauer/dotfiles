@@ -213,7 +213,7 @@ augroup MY_IDE
 
     " By default vista.vim never run if you don't call it explicitly.
     "
-    " If you want to show the nearest function in your statusline automatically,
+    " If you want to show the nearest function in your status line automatically,
     " you can add the following line to your vimrc
     autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
@@ -254,7 +254,7 @@ set statusline+=\ %9*Col%8*\ %v " column number
 set statusline+=\ %2p%% " document position
 set statusline+=\ 0x%04B\ \(%o\) " current character & byte
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " file encoding
-set statusline+=\ %-7([%{&fileformat}]%) " file format (unix vs. dos)
+set statusline+=\ %-7([%{&fileformat}]%) " file format (Unix vs. DOS)
 set statusline+=%y\ 
 
 " }}}
