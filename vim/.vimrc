@@ -26,7 +26,7 @@ Plug 'metakirby5/codi.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'dyng/ctrlsf.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-vinegar'
 Plug 'wfxr/minimap.vim'
 
 " Formatting
@@ -223,16 +223,8 @@ augroup MY_IDE
     " EditorConfig
     au FileType gitcommit let b:EditorConfig_disable = 1
 
-    " Start NERDTree when Vim starts with a directory argument.
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-        \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-
-    " Exit Vim if NERDTree is the only window left.
-    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-        \ vsplit new | exe "NERDTreeFocus" | exe "vertical resize 80" | endif
-
     autocmd FileType php setlocal commentstring=#\ %s
+    autocmd FileType netrw setlocal colorcolumn=
 augroup end
 
 function! IsGit()
@@ -458,20 +450,6 @@ map <C-l> <C-W>l
 "" Editor Config
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
-" NerdTree
-let NERDTreeShowHidden=1
-let g:NERDTreeWinSize=40
-let g:NERDTreeWinPos = "right"
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-
-" NerdTree bindings
-map <C-b> :NERDTreeToggle<CR>
-
-" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
-" autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
-"    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-
 let $FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 " Give FZF a preview window
@@ -479,24 +457,11 @@ let g:fzf_preview_window = ['right:50%', 'ctrl-/']
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
 
-" Prevent FZF commands from opening in none modifiable buffers
-" and always open to the left of NerdTree
-function! FZFOpen(cmd)
-    " If more than 1 window, and buffer is not modifiable or file type is
-    " NERD tree or Quickfix type
-    if bufname('%') =~ 'NERD_tree' && bufname('#') !~ 'NERD_tree' && winnr('$') > 1 && (!&modifiable || &ft == 'nerdtree' || &ft == 'qf')
-	b#
-	exe "normal! \<c-w>\<c-w>"
-	:blast
-    endif
-    exe a:cmd
-endfunction
-
-" FZF bindings
-nnoremap <silent> <leader>b :call FZFOpen(":Buffers")<CR>
-nnoremap <silent> <leader>h :call FZFOpen(":History")<CR>
-nnoremap <silent> <leader>f :call FZFOpen(":Files")<CR>
-nnoremap <silent> <leader>F :call FZFOpen(":Rg ")<CR>
+" FZF Bindings
+nnoremap <silent> <leader>b :exe ":Buffers"<CR>
+nnoremap <silent> <leader>h :exe ":History"<CR>
+nnoremap <silent> <leader>f :exe ":Files"<CR>
+nnoremap <silent> <leader>F :exe ":Rg "<CR>
 nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
 nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
 nnoremap <silent> <leader>m :exe ":MinimapToggle"<CR>
@@ -532,5 +497,7 @@ set makeprg=make
 set noerrorbells
 set updatetime=50
 set foldmethod=marker
+
+let g:netrw_localrmdir='rm -r'
 
 " }}}
