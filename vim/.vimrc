@@ -495,6 +495,7 @@ map gm :call SynGroup()<CR>
 set exrc
 set makeprg=make
 set noerrorbells
+set iskeyword+=-
 set updatetime=50
 set foldmethod=marker
 
