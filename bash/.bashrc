@@ -1,4 +1,4 @@
-export PS1="\n \[\033[38;5;240m\]\w\[\033[0m\] \[\033[1;36m\]@\[\033[0m\] \[\033[1;34m\]\u\[\033[0m\] \[\033[1;32m\]\$(git_hud)\[\033[0m\]\n \[\033[1;36m\]λ\[\033[0m\] "
+export PS1="\n \[\033[38;5;240m\]\W\[\033[0m\] \[\033[1;36m\]@\[\033[0m\] \[\033[1;34m\]\u\[\033[0m\] \[\033[1;32m\]\$(git_hud)\[\033[0m\]\n \[\033[1;36m\]λ\[\033[0m\] "
 export PS2=" \[\033[1;36m\]λ\[\033[0m\] "
 
 export PATH="$HOME/.composer/vendor/bin:/usr/local/bin/php:$PATH"
@@ -64,12 +64,13 @@ spotlight () {
 
 # Git branch in prompt
 git_hud() {
-    [[ -d .git ]] && echo "ᚠ $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    # [[ -d .git ]] && echo "ᚠ $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    [[ -d .git ]] && echo " $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
 }
 
 # list all 256 terminal colours an how they would look in your terminal
 palette () {
-    color=16;
+    color=0;
     while [ $color -lt 245 ]; do
         echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m"
         ((color++));

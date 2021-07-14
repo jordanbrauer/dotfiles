@@ -122,7 +122,8 @@ function! StatuslineGitBranch(repo)
         return ''
     endif
 
-    return printf('ᚠ %s', branch)
+    return printf(' %s', branch)
+    " return printf('ᚠ %s', branch)
 endfunction
 
 function! StatuslineGitUntracked(repo)
@@ -159,7 +160,8 @@ function! StatuslineGitDiverge(repo)
     let l:branch = get(a:repo, 'branch', '')
 
     if l:branch isnot ''
-        return printf('↑%s ↓%s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
+        return printf('%s %s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
+        " return printf('↑%s ↓%s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
     endif
 
     return ''
