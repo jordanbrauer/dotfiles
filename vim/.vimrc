@@ -497,7 +497,15 @@ set makeprg=make
 set noerrorbells
 set iskeyword+=-
 set updatetime=50
+
+function! FoldedText()
+    return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{'))
+endfunction
+
+set foldcolumn=2
 set foldmethod=marker
+set foldtext=FoldedText()
+set fillchars=fold:\ 
 
 let g:netrw_localrmdir='rm -r'
 
