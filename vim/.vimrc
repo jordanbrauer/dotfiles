@@ -466,6 +466,8 @@ nnoremap <silent> <leader>r :exe ":Vista!!"<CR>
 nnoremap <silent> <leader>R :exe ":Vista finder fzf:nvim_lsp"<CR>
 nnoremap <silent> <leader>m :exe ":MinimapToggle"<CR>
 nnoremap <silent> <leader>gb :exe ":GBranches"<CR>
+nnoremap <silent> <cr> :GitGutterNextHunk<cr>
+nnoremap <silent> <backspace> :GitGutterPrevHunk<cr>
 
 let g:minimap_highlight = 'Special'
 let g:minimap_base_highlight = 'Comment'
