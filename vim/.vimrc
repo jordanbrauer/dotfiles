@@ -357,7 +357,7 @@ require 'nvim-treesitter.configs'.setup {
         custom_captures = {},
     },
     indent = {
-        enable = true,
+        enable = false,
         disable = {},
     },
     ensure_installed = {
@@ -414,6 +414,7 @@ set relativenumber
 set scrolloff=20
 set nowrap
 set colorcolumn=80
+set textwidth=80
 set signcolumn=yes
 
 " }}}
@@ -430,6 +431,7 @@ set shiftwidth=4
 set expandtab
 set autoindent
 set smartindent
+set formatoptions-=t
 
 " }}}
 
