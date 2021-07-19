@@ -36,12 +36,6 @@ cd() {
     \ls
 }
 
-# Makes new Dir and jumps inside
-mcd () { 
-    mkdir -p "$1" && cd "$1"; 
-}
-
-
 # MacOS copy current working directory to clipboard
 cwd() { 
     pwd | pbcopy;
@@ -116,7 +110,7 @@ scratch() {
 }
 
 function reload() {
-    printf " \033[38;5;3m‼\033[0m Reloading shell configuration ...\n"
+    printf " \033[38;5;3m↻\033[0m Reloading shell configuration ...\n"
     source ~/.bashrc
     printf " \033[38;5;2m✔\033[0m Done!\n"
 }
