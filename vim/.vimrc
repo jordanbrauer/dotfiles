@@ -37,7 +37,14 @@ Plug 'jiangmiao/auto-pairs'
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
+
 Plug 'stsewd/fzf-checkout.vim'
 
 " PHP
@@ -504,7 +511,7 @@ set exrc
 set makeprg=make
 set noerrorbells
 set iskeyword+=-
-set updatetime=50
+set updatetime=100
 set clipboard+=unnamedplus
 
 function! FoldedText()
