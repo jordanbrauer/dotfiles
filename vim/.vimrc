@@ -438,11 +438,15 @@ set formatoptions-=t
 " Key Map {{{
 " =============================================================================
  
-" Swap paned buffers with hjkl
+" Swap paned buffers with ctrl+<hjkl>
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" Move selected lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '>-2<CR>gv=gv
 
 " }}}
 
@@ -501,6 +505,7 @@ set makeprg=make
 set noerrorbells
 set iskeyword+=-
 set updatetime=50
+set clipboard+=unnamedplus
 
 function! FoldedText()
     return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{'))
