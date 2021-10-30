@@ -5,7 +5,7 @@
 brew update
 brew install node php yarn nvm jq xsv bat fzf bash htop glow ripgrep fd stow code-minimap tldr
 brew install --HEAD luajit neovim
-yarn add -g intelephense typescript typescript-language-server
+yarn global add intelephense typescript typescript-language-server awsx
 
 stow vim bash config
 # mkdir ~/.vim/{plugged,undodir}
