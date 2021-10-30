@@ -58,6 +58,9 @@ Plug 'maxmellon/vim-jsx-pretty'
 " Markdown
 Plug 'tpope/vim-markdown'
 
+" Ops
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
+
 " Themes
 Plug 'jordanbrauer/citylights.vim'
 
@@ -198,42 +201,6 @@ function! NearestMethodOrFunction() abort
   return trim(printf(':%s', get(b:, 'vista_nearest_method_or_function', '')), ':', 2)
 endfunction
 
-augroup MY_IDE
-    au!
-
-    autocmd TermOpen * startinsert
-    autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
-    " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
-
-    autocmd InsertEnter * call InsertStatuslineColor(v:insertmode)
-    autocmd InsertLeave * call InsertStatuslineColor(mode())
-
-    autocmd VimEnter * hi User1 ctermfg=39 guifg=#5ec4ff ctermbg=none guibg=none cterm=bold gui=bold
-    autocmd VimEnter * hi User2 ctermfg=80 guifg=#70e1e8 ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User3 ctermfg=2 guifg=#8bd49c ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User4 ctermfg=3 guifg=#ebbf83 ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User5 ctermfg=1 guifg=#e27e8d ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User6 ctermfg=23 guifg=#008b94 ctermbg=none guibg=none cterm=bold gui=bold
-    autocmd VimEnter * hi User7 ctermfg=123 guifg=#9effff ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User8 ctermfg=238 guifg=#41505e ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User9 ctermfg=243 guifg=#718ca1 ctermbg=none guibg=none cterm=bold gui=bold
-
-    " By default vista.vim never run if you don't call it explicitly.
-    "
-    " If you want to show the nearest function in your status line automatically,
-    " you can add the following line to your vimrc
-    autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-    " Use completion-nvim in every buffer
-    autocmd BufEnter * lua require'completion'.on_attach()
-
-    " EditorConfig
-    au FileType gitcommit let b:EditorConfig_disable = 1
-
-    autocmd FileType php setlocal commentstring=#\ %s
-    autocmd FileType netrw setlocal colorcolumn=
-augroup end
-
 function! IsGit()
     return g:is_git_dir is# 'true'
 endfunction
@@ -323,7 +290,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "intelephense", 'gopls', 'tsserver' }
+local servers = { "intelephense", 'gopls', 'tsserver', 'graphql' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
@@ -368,9 +335,40 @@ require 'nvim-treesitter.configs'.setup {
         disable = {},
     },
     ensure_installed = {
-        "php"
+        "php", "typescript"
     },
 }
+
+  function goimports(timeout_ms)
+    vim.lsp.buf.formatting()
+    local context = { only = { "source.organizeImports" } }
+    vim.validate { context = { context, "t", true } }
+
+    local params = vim.lsp.util.make_range_params()
+    params.context = context
+
+    -- See the implementation of the textDocument/codeAction callback
+    -- (lua/vim/lsp/handler.lua) for how to do this properly.
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+    if not result or next(result) == nil then return end
+    local actions = result[1].result
+    if not actions then return end
+    local action = actions[1]
+
+    -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
+    -- is a CodeAction, it can have either an edit, a command or both. Edits
+    -- should be executed first.
+    if action.edit or type(action.command) == "table" then
+      if action.edit then
+        vim.lsp.util.apply_workspace_edit(action.edit)
+      end
+      if type(action.command) == "table" then
+        vim.lsp.buf.execute_command(action.command)
+      end
+    else
+      vim.lsp.buf.execute_command(action)
+    end
+  end
 EOF
 
 " Set the executive for some filetypes explicitly. Use the explicit executive
@@ -528,3 +526,40 @@ set fillchars=fold:\
 let g:netrw_localrmdir='rm -r'
 
 " }}}
+
+augroup MY_IDE
+    au!
+
+    autocmd TermOpen * startinsert
+    autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
+    " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
+
+    autocmd InsertEnter * call InsertStatuslineColor(v:insertmode)
+    autocmd InsertLeave * call InsertStatuslineColor(mode())
+
+    autocmd VimEnter * hi User1 ctermfg=39 guifg=#5ec4ff ctermbg=none guibg=none cterm=bold gui=bold
+    autocmd VimEnter * hi User2 ctermfg=80 guifg=#70e1e8 ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User3 ctermfg=2 guifg=#8bd49c ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User4 ctermfg=3 guifg=#ebbf83 ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User5 ctermfg=1 guifg=#e27e8d ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User6 ctermfg=23 guifg=#008b94 ctermbg=none guibg=none cterm=bold gui=bold
+    autocmd VimEnter * hi User7 ctermfg=123 guifg=#9effff ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User8 ctermfg=238 guifg=#41505e ctermbg=none guibg=none cterm=none gui=none
+    autocmd VimEnter * hi User9 ctermfg=243 guifg=#718ca1 ctermbg=none guibg=none cterm=bold gui=bold
+
+    " By default vista.vim never run if you don't call it explicitly.
+    "
+    " If you want to show the nearest function in your status line automatically,
+    " you can add the following line to your vimrc
+    autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+    " Use completion-nvim in every buffer
+    autocmd BufEnter * lua require'completion'.on_attach()
+
+    " EditorConfig
+    au FileType gitcommit let b:EditorConfig_disable = 1
+
+    autocmd FileType php setlocal commentstring=#\ %s
+    autocmd FileType netrw setlocal colorcolumn=
+    autocmd BufWritePre *.go lua goimports(1000)
+augroup end

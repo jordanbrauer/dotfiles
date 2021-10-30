@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+languages=$(echo "golang php typescript nodejs javascript" | tr ' ' "\n")
+selected=$(printf "$languages" | fzf)
+
+read -p " $selected: " query
+
+if printf "$languages" | grep -qs $selected; then
+    # echo "cht.sh/$selected/$(echo $query | tr ' ' '+')"
+    curl "cht.sh/$selected/$(echo $query | tr ' ' '+')"
+else
+    echo 'wtf?'
+    # curl cht.sh/$selected~$query
+fi
+

@@ -3,6 +3,10 @@ export PS2=" \[\033[1;36m\]λ\[\033[0m\] "
 
 export PATH="$HOME/.composer/vendor/bin:/usr/local/bin/php:$PATH"
 export PATH="/usr/local/opt/python@3.7/bin:$PATH"
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export NVM_DIR="$HOME/.nvm"
 
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
@@ -11,12 +15,15 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export BASH_SILENCE_DEPRECATION_WARNING=1 # silence the shitty zsh warning from MacOS
 export EDITOR='nvim'
 export VIMRC='~/.vimrc'
+export GPG_TTY=$(tty)
 
 set -o vi
 
 [[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Improved Shell
 alias ls="ls -alFhG"                        # Preferred 'ls' implementation
@@ -29,6 +36,8 @@ alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
 alias tmux="tmux -f ~/.config/.tmux.conf"   # Custom Tmux config location
 alias tt="tt -theme citylights"             # Typing test custom theme
 alias edit=$EDITOR
+alias cheat="~/.dotfiles/cheat"
+alias awsx="source _awsx"
 
 # Always list directory contents upon 'cd'
 cd() { 
@@ -114,3 +123,5 @@ function reload() {
     source ~/.bashrc
     printf " \033[38;5;2m✔\033[0m Done!\n"
 }
+
+export -f gi

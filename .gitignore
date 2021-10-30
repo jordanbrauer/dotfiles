@@ -1,3 +1,5 @@
+config/.config/configstore/
+config/.config/gtk-2.0/
 config/.config/yarn/global
 psysh_history
 update_check.json
