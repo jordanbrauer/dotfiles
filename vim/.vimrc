@@ -6,7 +6,7 @@
 " (_)___/_/_/_/_/_/  \__/                         
 "
 " Author:    Jordan Brauer
-" Requires:  Neovim >= 0.5
+" Requires:  Neovim >= 0.6
 " 
 
 " 0. Plugins {{{
@@ -62,15 +62,18 @@ Plug 'tpope/vim-markdown'
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
 
 " Themes
-Plug 'jordanbrauer/citylights.vim'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'jordanbrauer/citylights.nvim'
 
 call plug#end()
 
 "}}}
 
-" 1. Colours {{{
+" 0. Theme {{{
 " =============================================================================
 
+" Syntax Highlighting
 if has('nvim')
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
@@ -82,218 +85,21 @@ endif
 syntax enable
 syntax on
 filetype plugin on
-colorscheme citylights
 set background=dark
 let &t_Co=256
 
-" }}}
-
-" Status Bar {{{
-" =============================================================================
-
-let g:modes = {
-\   'n':      'normal ', 
-\   'i':      'insert ', 
-\   'R':      'replace', 
-\   'c':      'command',
-\   'v':      'visual ', 
-\   'V':      'v·line ', 
-\   "\<C-V>": 'v·block', 
-\   'Rv':     'v·replace', 
-\ }
-
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    hi User1 ctermfg=2 guifg=#54af83
-  elseif a:mode == 'r'
-    hi User1 ctermfg=3 guifg=#ebda65
-  elseif a:mode == 'CTRL-V'
-    hi User1 ctermfg=4 guifg=#68a1f0
-  elseif a:mode == 'V'
-    hi User1 ctermfg=4 guifg=#68a1f0
-  elseif a:mode == 'v'
-    hi User1 ctermfg=4 guifg=#68a1f0
-  elseif a:mode == 'c'
-    hi User1 ctermfg=5
-  elseif a:mode == 'n'
-    hi User1 ctermfg=39 guifg=#5ec4ff
-  else
-    hi User1 ctermfg=39 guifg=#5ec4ff
-  endif
-endfunction
-
-function! StatuslineMode(mode)
-    return toupper(get(g:modes, a:mode, 'other'))
-endfunction
-
-function! StatuslineGitBranch(repo)
-    let l:branch = get(a:repo, 'branch', '')
-
-    if l:branch is ''
-        return ''
-    endif
-
-    return printf(' %s', branch)
-    " return printf('ᚠ %s', branch)
-endfunction
-
-function! StatuslineGitUntracked(repo)
-    let l:branch = get(a:repo, 'branch', '')
-
-    if l:branch is ''
-        return ''
-    endif
-
-    return printf('+%s', get(a:repo, 'untracked', '0'))
-endfunction
-
-function! StatuslineGitChanged(repo)
-    let l:branch = get(a:repo, 'branch', '')
-
-    if l:branch isnot ''
-        return printf('~%s', get(a:repo, 'changed', '0'))
-    endif
-
-    return ''
-endfunction
-
-function! StatuslineGitDeleted(repo)
-    let l:branch = get(a:repo, 'branch', '')
-
-    if l:branch isnot ''
-        return printf('-%s', get(a:repo, 'deleted', '0'))
-    endif
-
-    return ''
-endfunction
-
-function! StatuslineGitDiverge(repo)
-    let l:branch = get(a:repo, 'branch', '')
-
-    if l:branch isnot ''
-        return printf('%s %s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
-        " return printf('↑%s ↓%s', get(a:repo, 'ahead', '0'), get(a:repo, 'behind', '0'))
-    endif
-
-    return ''
-endfunction
-let g:is_git_dir = 0
-
-function! GetGitBranch()
-    let g:is_git_dir = trim(system('git rev-parse --is-inside-work-tree'))
-
-    if g:is_git_dir is# 'true'
-        return { 'branch': trim(system('git rev-parse --abbrev-ref HEAD')), 'behind': trim(system('git rev-list --count ..@{u} 2> /dev/null || echo 0')), 'ahead': trim(system('git rev-list --count @{u}.. 2> /dev/null || echo 0')), 'changed': trim(system('git diff --name-only --diff-filter=ad | wc -l')), 'untracked': trim(system('git ls-files -o --exclude-standard | wc -l')), 'deleted': trim(system('git ls-files --deleted | wc -l')) }
-    else
-        return {'branch': ''}
-    endif
-endfunction
-
-function! Repo()
-    if !has_key(b:, 'git_repo')
-        let b:git_repo = GetGitBranch()
-    endif
-
-    return get(b:, 'git_repo', {})
-endfunction
-
-function! NearestMethodOrFunction() abort
-  return trim(printf(':%s', get(b:, 'vista_nearest_method_or_function', '')), ':', 2)
-endfunction
-
-function! IsGit()
-    return g:is_git_dir is# 'true'
-endfunction
-
-set noshowmode
-" set noshowcmd
-set noruler
-set cmdheight=1
-set laststatus=2
-set statusline=
-set statusline+=%1*\ λ\ %{StatuslineMode(mode())}\ 
-set statusline+=\%6*%{IsGit()?StatuslineGitBranch(Repo()).'\ ':''}%1*
-set statusline+=\%2*%{IsGit()?'\ '.StatuslineGitDiverge(Repo()).'\ ':''}
-set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitUntracked(Repo()).'\ ':''} 
-set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitChanged(Repo()).'\ ':''}
-set statusline+=\%7*%{IsGit()?'\ '.StatuslineGitDeleted(Repo()).'\ ':''}%1*
-set statusline+=%8*%f " full file path
-set statusline+=\%{NearestMethodOrFunction()}
-set statusline+=\ %9*\(%n\) " buffer ID
-set statusline+=\ %3*%{&modified?'[+]':''}
-set statusline+=%5*%r
-set statusline+=%=
-set statusline+=\ %9*Ln%8*\ %l/%L " line number
-set statusline+=\ %9*Col%8*\ %v " column number
-set statusline+=\ %2p%% " document position
-set statusline+=\ 0x%04B\ \(%o\) " current character & byte
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding} " file encoding
-set statusline+=\ %-7([%{&fileformat}]%) " file format (Unix vs. DOS)
-set statusline+=%y\ 
-
-" }}}
-
-" LSP {{{
-" =============================================================================
-
-" Smooth auto-complete & search experience
-set nohlsearch
-set incsearch
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <tab> <Plug>(completion_smart_tab)
-imap <s-tab> <Plug>(completion_smart_s_tab)
-
-lua << EOF
-local nvim_lsp = require('lspconfig')
+lua << END
 local protocol = require('vim.lsp.protocol')
--- lsp_completion = require('completion')
+local lualine = require('lualine')
+local citylights = require('lualine.themes.citylights')
 
--- Use an on_attach function to only map the following keys 
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+require('colorbuddy').colorscheme('citylights')
+lualine.setup(citylights)
 
-  --Enable completion triggered by <c-x><c-o>
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  -- lsp_completion.on_attach()
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<space>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { "intelephense", 'gopls', 'tsserver', 'graphql' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
-end
+vim.fn.sign_define('DiagnosticSignError', { text = "", texthl = "DiagnosticError" })
+vim.fn.sign_define('DiagnosticSignWarn', { text = "", texthl = "DiagnosticWarn" })
+vim.fn.sign_define('DiagnosticSignInfo', { text = "", texthl = "DiagnosticInfo" })
+vim.fn.sign_define('DiagnosticSignHint', { text = "", texthl = "DiagnosticHint" })
 
 -- protocol.SymbolKind
 protocol.CompletionItemKind = {
@@ -323,10 +129,78 @@ protocol.CompletionItemKind = {
   '', -- Operator
   '', -- TypeParameter
 }
+END
+
+" Command Line
+set noerrorbells
+set noshowmode
+set noshowcmd
+set noruler
+set cmdheight=1
+
+" Lines & Columns
+set number
+set relativenumber
+set scrolloff=20
+set nowrap
+set colorcolumn=80
+set textwidth=80
+set signcolumn=yes
+
+" Folds
+function! FoldedText()
+    return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{'))
+endfunction
+
+set foldcolumn=2
+set foldmethod=marker
+set foldtext=FoldedText()
+set fillchars=fold:\ 
+
+" Vista (plugin)
+let g:vista_icon_indent = ["▸ ", ""]
+let g:vista#renderer#icons = {
+\   "function":    "λ",
+\   "method":      "λ",
+\   "constructor": "𝑓",
+\   "constant":    "π",
+\   "variable":    "",
+\   "property":    "",
+\   "namespace":   "∷",
+\   "class":       "",
+\ }
+
+let g:vista_fzf_preview = ['right:50%']
+
+" Set the executive for some filetypes explicitly. Use the explicit executive
+" instead of the default one for these filetypes when using `:Vista` without
+" specifying the executive.
+let g:vista_default_executive = 'nvim_lsp'
+let g:vista_executive_for = {
+  \ 'php': 'nvim_lsp',
+  \ }
+
+" Minimap (plugin)
+let g:minimap_highlight = 'Special'
+let g:minimap_base_highlight = 'Comment'
+" let g:minimap_left = 1
+
+" Markdown
+let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
+
+" }}}
+
+" 0. LSP & Treesitter {{{
+" =============================================================================
+
+lua << EOF
+local servers = { "intelephense", 'gopls', 'tsserver', 'graphql' }
+local nvim_lsp = require('lspconfig')
+-- lsp_completion = require('completion')
 
 require 'nvim-treesitter.configs'.setup {
     highlight = {
-        enable = false, -- TODO: make true when Citylights TS highlighting ready
+        enable = true,
         disable = {},
         custom_captures = {},
     },
@@ -335,11 +209,47 @@ require 'nvim-treesitter.configs'.setup {
         disable = {},
     },
     ensure_installed = {
-        "php", "typescript"
+        "php", "typescript", "go", "gomod", "graphql", "javascript"
     },
 }
 
-  function goimports(timeout_ms)
+-- Use an on_attach function to only map the following keys 
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local opts = { noremap=true, silent=true }
+
+  --Enable completion triggered by <c-x><c-o>
+  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- lsp_completion.on_attach()
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD',        '<Cmd>lua vim.lsp.buf.declaration()<CR>',                                opts)
+  buf_set_keymap('n', 'gd',        '<Cmd>lua vim.lsp.buf.definition()<CR>',                                 opts)
+  buf_set_keymap('n', 'K',         '<Cmd>lua vim.lsp.buf.hover()<CR>',                                      opts)
+  buf_set_keymap('n', 'gi',        '<cmd>lua vim.lsp.buf.implementation()<CR>',                             opts)
+  buf_set_keymap('n', '<space>gs', '<cmd>lua vim.lsp.buf.document_symbol()<CR>',                            opts)
+  -- buf_set_keymap('n', '<C-k>',     '<cmd>lua vim.lsp.buf.signature_help()<CR>',                             opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>',                       opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>',                    opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>',                            opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>',                                     opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>',                                opts)
+  buf_set_keymap('n', 'gr',        '<cmd>lua vim.lsp.buf.references()<CR>',                                 opts)
+  buf_set_keymap('n', '<space>e',  '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',               opts)
+  buf_set_keymap('n', '[d',        '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',                           opts)
+  buf_set_keymap('n', ']d',        '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>',                           opts)
+  buf_set_keymap('n', '<space>q',  '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>',                         opts)
+  buf_set_keymap("n", "<space>f",  "<cmd>lua vim.lsp.buf.formatting()<CR>",                                 opts)
+end
+
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+
+function goimports(timeout_ms)
     vim.lsp.buf.formatting()
     local context = { only = { "source.organizeImports" } }
     vim.validate { context = { context, "t", true } }
@@ -368,28 +278,8 @@ require 'nvim-treesitter.configs'.setup {
     else
       vim.lsp.buf.execute_command(action)
     end
-  end
+end
 EOF
-
-" Set the executive for some filetypes explicitly. Use the explicit executive
-" instead of the default one for these filetypes when using `:Vista` without
-" specifying the executive.
-let g:vista_icon_indent = ["▸ ", ""]
-let g:vista#renderer#icons = {
-\   "function": "λ",
-\   "method": "λ",
-\   "constructor": "𝑓",
-\   "constant": "π",
-\   "variable": "",
-\   "property": "",
-\   "namespace": "∷",
-\   "class": "",
-\ }
-let g:vista_default_executive = 'nvim_lsp'
-let g:vista_executive_for = {
-  \ 'php': 'nvim_lsp',
-  \ }
-let g:vista_fzf_preview = ['right:50%']
 
 let g:codi#interpreters = {
 \   'php': {
@@ -400,7 +290,7 @@ let g:codi#interpreters = {
 
 " }}}
 
-" Memory {{{
+" 0. Behaviour {{{
 " =============================================================================
 
 set hidden
@@ -408,24 +298,6 @@ set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
-
-" }}}
-
-" Lines & Columns {{{
-" =============================================================================
-
-set number
-set relativenumber
-set scrolloff=20
-set nowrap
-set colorcolumn=80
-set textwidth=80
-set signcolumn=yes
-
-" }}}
-
-" Formatting {{{
-" =============================================================================
 
 filetype indent on
 
@@ -438,9 +310,33 @@ set autoindent
 set smartindent
 set formatoptions-=t
 
+set exrc
+set makeprg=make
+set iskeyword+=-
+set updatetime=100
+set clipboard+=unnamedplus
+
+" NetRW
+let g:netrw_localrmdir='rm -r'
+
+" Smooth auto-complete & search experience
+set nohlsearch
+set incsearch
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+" fzf
+let $FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+" Give FZF a preview window
+let g:fzf_preview_window = ['right:50%', 'ctrl-/']
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+
 " }}}
 
-" Key Map {{{
+" 0. Key Map {{{
 " =============================================================================
  
 " Swap paned buffers with ctrl+<hjkl>
@@ -453,21 +349,6 @@ map <C-l> <C-W>l
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '>-2<CR>gv=gv
 
-" }}}
-
-" Third-Party {{{
-" =============================================================================
-
-"" Editor Config
-let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-
-let $FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-
-" Give FZF a preview window
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-
 " FZF Bindings
 nnoremap <silent> <leader>b :exe ":Buffers"<CR>
 nnoremap <silent> <leader>h :exe ":History"<CR>
@@ -479,15 +360,23 @@ nnoremap <silent> <leader>m :exe ":MinimapToggle"<CR>
 nnoremap <silent> <leader>gb :exe ":GBranches"<CR>
 
 " Signify
-nnoremap <silent> <cr> :exe ":<c-u>call sy#jump#next_hunk(v:count1)<cr>"
-nnoremap <silent> <backspace> ":<c-u>call sy#jump#next_hunk(v:count1)<cr>"
+nnoremap <silent> <tab> :exe ":<c-u>call sy#jump#next_hunk(v:count1)<cr>"
+nnoremap <silent> <backspace> :exe ":<c-u>call sy#jump#next_hunk(v:count1)<cr>"
 
-let g:minimap_highlight = 'Special'
-let g:minimap_base_highlight = 'Comment'
-" let g:minimap_left = 1
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
 
-" Markdown
-let g:markdown_fenced_languages = ['js=javascript', 'php', 'vim', 'bash=sh']
+" }}}
+
+" 0. Misc. {{{
+" =============================================================================
+
+"" Editor Config
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
 
 function! Make(args)
     exe ':vert term make ' . a:args
@@ -504,54 +393,16 @@ map gm :call SynGroup()<CR>
 
 " }}}
 
-" Misc. {{{
-" =============================================================================
-
-set exrc
-set makeprg=make
-set noerrorbells
-set iskeyword+=-
-set updatetime=100
-set clipboard+=unnamedplus
-
-function! FoldedText()
-    return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{'))
-endfunction
-
-set foldcolumn=2
-set foldmethod=marker
-set foldtext=FoldedText()
-set fillchars=fold:\ 
-
-let g:netrw_localrmdir='rm -r'
-
-" }}}
-
 augroup MY_IDE
     au!
 
     autocmd TermOpen * startinsert
-    autocmd VimEnter,BufEnter,FocusGained,BufWritePost,BufNewFile,CmdwinLeave,BufRead,ShellCmdPost,DiffUpdated,FileChangedShellPost * let b:git_repo = GetGitBranch()
-    " autocmd BufEnter,FocusGained,BufWritePost * GetGitBranch()
-
-    autocmd InsertEnter * call InsertStatuslineColor(v:insertmode)
-    autocmd InsertLeave * call InsertStatuslineColor(mode())
-
-    autocmd VimEnter * hi User1 ctermfg=39 guifg=#5ec4ff ctermbg=none guibg=none cterm=bold gui=bold
-    autocmd VimEnter * hi User2 ctermfg=80 guifg=#70e1e8 ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User3 ctermfg=2 guifg=#8bd49c ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User4 ctermfg=3 guifg=#ebbf83 ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User5 ctermfg=1 guifg=#e27e8d ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User6 ctermfg=23 guifg=#008b94 ctermbg=none guibg=none cterm=bold gui=bold
-    autocmd VimEnter * hi User7 ctermfg=123 guifg=#9effff ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User8 ctermfg=238 guifg=#41505e ctermbg=none guibg=none cterm=none gui=none
-    autocmd VimEnter * hi User9 ctermfg=243 guifg=#718ca1 ctermbg=none guibg=none cterm=bold gui=bold
 
     " By default vista.vim never run if you don't call it explicitly.
     "
     " If you want to show the nearest function in your status line automatically,
     " you can add the following line to your vimrc
-    autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+    " autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
     " Use completion-nvim in every buffer
     autocmd BufEnter * lua require'completion'.on_attach()
