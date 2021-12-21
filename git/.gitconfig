@@ -11,5 +11,5 @@
 [init]
 	defaultBranch = trunk
 [alias]
-	stats = status -sb
+	ls = status -sb
     adog = log --all --decorate --oneline --graph
