@@ -8,6 +8,7 @@ brew install --HEAD luajit neovim
 yarn global add intelephense typescript typescript-language-server awsx
 
 stow vim bash config
+bat cache --build
 # mkdir ~/.vim/{plugged,undodir}
 # cp .bash* ~/
 # cp .inputrc ~/
