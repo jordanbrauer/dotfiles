@@ -135,3 +135,16 @@ function reload() {
     printf " \033[38;5;2m✔\033[0m Done!\n"
 }
 
+function spaces() {
+    local space=$1
+
+    [[ "" == $space ]] && {
+        printf " \033[38;5;1mNo workspace was provided!\033[0m\n"
+
+        return 1
+    }
+
+    [[ -f ~/Code/workspaces/$space ]] && ~/Code/workspaces/$space || {
+        printf " \033[38;5;1mUnknown workspace:\033[0m %s\n" $space
+    }
+}
