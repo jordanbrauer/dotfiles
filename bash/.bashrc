@@ -31,8 +31,6 @@ set -o vi
 [[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
 [[ -f ~/.fzf.bash ]] && source ~/.fzf.bash
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Improved Shell
 alias ls="ls -alFhG"                        # Preferred 'ls' implementation
@@ -43,10 +41,10 @@ alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias which='type -all'                     # Find executables
 alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
 alias tmux="tmux -f ~/.config/.tmux.conf"   # Custom Tmux config location
+alias todo="todo.sh"                        # Alias todo-txt for less keystrokes
 alias tt="tt -theme citylights"             # Typing test custom theme
-alias edit=$EDITOR
-alias cheat="~/.dotfiles/cheat"
-alias awsx="source _awsx"
+alias edit=$EDITOR                          # Open prefered editor
+alias cheat="~/.dotfiles/cheat"             # Cheat sheet access
 alias x86="arch -x86_64 /bin/bash"          # Start an x86 shell
 
 # Always list directory contents upon 'cd'
@@ -100,6 +98,8 @@ function gi() {
     curl -sL https://www.toptal.com/developers/gitignore/api/$@; 
 }
 
+export -f gi
+
 # Codi shell wrapper
 # 
 # Usage: scratch [language]
@@ -135,4 +135,3 @@ function reload() {
     printf " \033[38;5;2m✔\033[0m Done!\n"
 }
 
-export -f gi
