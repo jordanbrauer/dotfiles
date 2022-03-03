@@ -78,7 +78,7 @@ spotlight () {
 # Git branch in prompt
 git_hud() {
     # [[ -d .git ]] && echo "ᚠ $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-    [[ -d .git ]] && echo " $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    git rev-parse 2> /dev/null && echo " $(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
 }
 
 # list all 256 terminal colours an how they would look in your terminal
