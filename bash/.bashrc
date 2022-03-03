@@ -129,6 +129,7 @@ scratch() {
 }
 
 function reload() {
+    clear
     printf " \033[38;5;3m↻\033[0m Reloading shell configuration ...\n"
     source ~/.bashrc
     printf " \033[38;5;2m✔\033[0m Done!\n"
