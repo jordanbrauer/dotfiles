@@ -23,6 +23,7 @@ export BASH_SILENCE_DEPRECATION_WARNING=1 # silence the shitty zsh warning from 
 export EDITOR='nvim'
 export VIMRC='~/.vimrc'
 export GPG_TTY=$(tty)
+export PF_INFO="ascii title os host kernel uptime memory shell editor"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 set -o vi
