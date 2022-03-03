@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+today() {
+    list "Today" 0
+}
+
+yesterday() {
+    local days=1
+    local when="Yesterday"
+
+    # TODO: handle long weekends/holidays? ¯\_(ツ)_/¯
+    if [ "$(date -u +'%a')" = "Mon" ]; then
+        days=3
+        when="Last Week"
+    fi
+
+    list "$when" $days
+}
+
+list() {
+    printf "\033[38;5;123m%s:\033[0m\n\n" "$1"
+    completed $2
+}
+
+completed() {
+    # date -u +'%Y-%m-'$(printf '%02d' $(expr $(date -u +'%d') - $1))
+    # return
+    printf "\033[38;5;241m%s\033[0m\n\n" "$(grep $(date -u +'%Y-%m-'$(printf '%02d' $(expr $(date -u +'%d') - $1))) ~/Code/todo/done.txt || printf 'N/A')"
+}
+
+what=$2
+
+case $what in
+    "usage")
+        echo "todo: add help info"
+        ;;
+    "yesterday")
+        yesterday
+        ;;
+    "today")
+        today
+        ;;
+    "")
+        yesterday
+        today
+        ;;
+    *)
+        printf "Uh, oh – when was that?"
+        ;;
+esac
