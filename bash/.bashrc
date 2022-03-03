@@ -1,8 +1,15 @@
 export PS1="\n \[\033[38;5;240m\]\W\[\033[0m\] \[\033[1;36m\]@\[\033[0m\] \[\033[1;34m\]\u\[\033[0m\] \[\033[1;32m\]\$(git_hud)\[\033[0m\]\n \[\033[1;36m\]λ\[\033[0m\] "
 export PS2=" \[\033[1;36m\]λ\[\033[0m\] "
 
+if [[ $(arch) == 'arm64' ]]; then
+  export SHELL_ARCH="arm64"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+else
+  export SHELL_ARCH="x86"
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+fi
+
 export PATH="$HOME/.composer/vendor/bin:/usr/local/bin/php:$PATH"
-export PATH="/usr/local/opt/python@3.7/bin:$PATH"
 export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -17,6 +24,7 @@ export EDITOR='nvim'
 export VIMRC='~/.vimrc'
 export GPG_TTY=$(tty)
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 set -o vi
 
 [[ $TERM == 'xterm-kitty' ]] && source <(kitty + complete setup bash)
@@ -38,6 +46,7 @@ alias tt="tt -theme citylights"             # Typing test custom theme
 alias edit=$EDITOR
 alias cheat="~/.dotfiles/cheat"
 alias awsx="source _awsx"
+alias x86="arch -x86_64 /bin/bash"          # Start an x86 shell
 
 # Always list directory contents upon 'cd'
 cd() { 
