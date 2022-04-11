@@ -33,7 +33,9 @@ Plug 'metakirby5/codi.vim'
 " Files
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim' " dependency of harpoon
+Plug 'nvim-lua/plenary.nvim' " dependency of harpoon; telescope
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'dyng/ctrlsf.vim'
 Plug 'tpope/vim-vinegar'
