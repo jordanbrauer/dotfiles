@@ -42,10 +42,11 @@ alias which='type -all'                     # Find executables
 alias path='echo -e ${PATH//:/\\n}'         # Echo all executable Paths
 alias tmux="tmux -f ~/.config/.tmux.conf"   # Custom Tmux config location
 alias todo="todo.sh"                        # Alias todo-txt for less keystrokes
-alias tt="tt -theme citylights"             # Typing test custom theme
+alias tt="tt -theme citylights -showwpm -quotes en"  # Typing test custom theme
 alias edit=$EDITOR                          # Open prefered editor
 alias cheat="~/.dotfiles/cheat"             # Cheat sheet access
 alias x86="arch -x86_64 /bin/bash"          # Start an x86 shell
+alias sizeof="du -sh"                       # Size on disk of a file
 
 # Always list directory contents upon 'cd'
 cd() { 
