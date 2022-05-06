@@ -11,6 +11,8 @@ fi
 
 export PATH="$HOME/.composer/vendor/bin:/usr/local/bin/php:$PATH"
 export PATH=$PATH:/usr/local/go/bin
+export HISTSIZE=20000
+export HISTFILESIZE=20000
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export NVM_DIR="$HOME/.nvm"
@@ -47,6 +49,11 @@ alias edit=$EDITOR                          # Open prefered editor
 alias cheat="~/.dotfiles/cheat"             # Cheat sheet access
 alias x86="arch -x86_64 /bin/bash"          # Start an x86 shell
 alias sizeof="du -sh"                       # Size on disk of a file
+
+# Print most frequently used commands
+freq() {
+    printf "\n" && history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10
+}
 
 # Always list directory contents upon 'cd'
 cd() { 
