@@ -311,6 +311,7 @@ augroup MY_IDE
     autocmd FileType netrw setlocal colorcolumn=
     autocmd BufNewFile,BufRead *.mdx   set syntax=markdown
     autocmd BufWritePre *.go lua require('go').imports(1000)
+    autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 augroup end
 
 " }}}

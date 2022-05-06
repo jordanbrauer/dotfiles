@@ -6,6 +6,7 @@ local servers = {
     'tsserver',
     'graphql',
     'terraformls',
+    'eslint',
 }
 
 -- Use an on_attach function to only map the following keys 
