@@ -7,6 +7,7 @@ local servers = {
     'graphql',
     'terraformls',
     'eslint',
+    'elixirls',
 }
 
 -- Use an on_attach function to only map the following keys 
@@ -38,5 +39,14 @@ local on_attach = function(client, bufnr)
 end
 
 for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
+    if lsp ~= "elixirls" then
+        nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
+    else
+        nvim_lsp[lsp].setup {
+            on_attach = on_attach,
+            capabilities = update_capabilities,
+            cmd = { "/Users/jorb/.elixirls/language_server.sh" }
+        }
+    end
+
 end

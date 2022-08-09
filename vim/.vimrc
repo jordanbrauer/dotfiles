@@ -71,6 +71,9 @@ Plug 'tpope/vim-markdown'
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
 Plug 'hashivim/vim-terraform'
 
+" Elixir
+Plug 'elixir-editors/vim-elixir'
+
 " Themes
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'nvim-lualine/lualine.nvim'
