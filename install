@@ -10,6 +10,7 @@ yarn global add intelephense typescript typescript-language-server awsx
 stow vim bash config
 stow --dir=./config/.config/ --target="$HOME/Library/Application Support/nushell" nushell
 bat cache --build
+touch ~/.gitconfig.neo
 # mkdir ~/.vim/{plugged,undodir}
 # cp .bash* ~/
 # cp .inputrc ~/
