@@ -134,7 +134,7 @@ let-env config = {
       {
         name: completion_menu
         only_buffer_difference: false
-        marker: "| "
+        marker: ([(ansi -e { fg: $CityLights.Orange }) "λ | " (ansi reset)] | str collect)
         type: {
             layout: columnar
             columns: 4
@@ -150,7 +150,7 @@ let-env config = {
       {
         name: history_menu
         only_buffer_difference: true
-        marker: "? "
+        marker: ([(ansi -e { fg: $CityLights.Yellow }) "λ ? " (ansi reset)] | str collect)
         type: {
             layout: list
             page_size: 10
@@ -164,7 +164,7 @@ let-env config = {
       {
         name: help_menu
         only_buffer_difference: true
-        marker: "? "
+        marker: ([(ansi -e { fg: $CityLights.Yellow }) "λ ? " (ansi reset)] | str collect)
         type: {
             layout: description
             columns: 4
@@ -185,7 +185,7 @@ let-env config = {
       {
         name: commands_menu
         only_buffer_difference: false
-        marker: "# "
+        marker: "λ # "
         type: {
             layout: columnar
             columns: 4
@@ -206,7 +206,7 @@ let-env config = {
       {
         name: vars_menu
         only_buffer_difference: true
-        marker: "# "
+        marker: "λ # "
         type: {
             layout: list
             page_size: 10
@@ -226,7 +226,7 @@ let-env config = {
       {
         name: commands_with_description
         only_buffer_difference: true
-        marker: "# "
+        marker: "λ # "
         type: {
             layout: description
             columns: 4
