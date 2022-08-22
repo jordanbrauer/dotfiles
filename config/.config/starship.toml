@@ -1,9 +1,11 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = " $username[λ](bold fg:#008b94) "
+format = " $username"
 right_format = "$directory$git_branch$time"
-add_newline = false # Warp & left/right do not support newlines well
+add_newline = false # Warp & left+right prompts do not support newlines well
+
+# Note: Every module must end with an empty space to provide consistent padding
 
 [time]
 format = "[at $time]($style) "
@@ -20,7 +22,7 @@ truncate_to_repo = false
 truncation_length = 1
 
 [username]
-format = "[$user](blue) "
+format = "[$user](fg:#008b94) "
 show_always = true
 
 [git_branch]

@@ -3,6 +3,8 @@
 # for more information on themes see
 # https://www.nushell.sh/book/coloring_and_theming.html
 
+let-env LS_COLORS = (vivid generate citylights | str trim)
+
 let CityLights = {
     Black: black
     White: white
@@ -475,5 +477,3 @@ module completions {
 
 # Get just the extern definitions without the custom completion commands
 use completions *
-pfetch
-# let-env LS_COLORS = (vivid generate nord | str trim)

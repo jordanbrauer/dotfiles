@@ -1,0 +1,124 @@
+colors:
+  # Theme colors
+  background_color: '1f252b'
+  black: "1f252b"
+  white: "b7c5d3"
+  gray: "41505e"
+  dimgray: "363C43" #select
+  darkgray: "718ca1" #steel
+  red: "e27e8d"
+  green: "54af83"
+  blue: "68a1f0"
+  yellow: "ebda65"
+  cyan: "9effff" #aqua
+  orange: "ebbf83"
+
+  sage: "008b94"
+  teal: "70e1e8"
+  azure: "5ec4ff"
+  success: "8bd49c"
+  error: "f88070"
+  void: "14232d"
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+
+  directory:
+    foreground: darkgray
+
+  symlink:
+    foreground: cyan
+
+  multi_hard_link: {}
+
+  fifo:
+    foreground: void
+    background: teal
+
+  socket:
+    foreground: void
+    background: green
+
+  door:
+    foreground: void
+    background: cyan
+
+  block_device:
+    foreground: cyan
+    background: darkgray
+
+  character_device:
+    foreground: teal
+    background: darkgray
+
+  broken_symlink:
+    foreground: void
+    background: error
+
+  missing_symlink_target:
+    foreground: void
+    background: error
+
+  setuid: {}
+
+  setgid: {}
+
+  file_with_capability: {}
+
+  sticky_other_writable: {}
+
+  other_writable: {}
+
+  sticky: {}
+
+  executable_file:
+    foreground: azure
+    font-style: bold
+
+text:
+  special:
+    foreground: white
+
+  todo:
+    font-style: bold
+
+  licenses:
+    foreground: gray
+
+  configuration:
+    foreground: dimgray
+
+  other:
+    foreground: white
+
+markup:
+  foreground: white
+
+programming:
+  source:
+    foreground: sage
+
+  tooling:
+    foreground: green
+
+    continuous-integration:
+      foreground: green
+
+media:
+  foreground: orange
+
+office:
+  foreground: yellow
+
+archives:
+  foreground: red
+  font-style: underline
+
+executable:
+  foreground: azure
+  font-style: bold
+
+unimportant:
+  foreground: dimgray

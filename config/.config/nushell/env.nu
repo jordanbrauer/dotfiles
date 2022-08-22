@@ -2,14 +2,6 @@
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # let-env PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
-let-env CLICOLOR = 1
-let-env GREP_OPTIONS = '--color=auto'
-let-env FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
-let-env EDITOR = 'nvim'
-let-env VIMRC = '~/.vimrc'
-let-env GPG_TTY = (tty)
-let-env PF_INFO = 'ascii title os host kernel uptime memory shell editor'
-let-env STARSHIP_SHELL = "nu"
 let-env GOPATH = (echo [$env.HOME go] | path join)
 let-env PATH = (
     echo $env.PATH |
@@ -23,7 +15,18 @@ let-env PATH = (
     # append (echo [$env.GOROOT 'bin'] | path join) | 
     append (echo [$env.GOPATH 'bin'] | path join)
 )
+let-env CLICOLOR = 1
+let-env EDITOR = 'nvim'
+let-env FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
+let-env GPG_TTY = (tty)
+let-env GREP_OPTIONS = '--color=auto'
+let-env PF_INFO = 'ascii title os host kernel uptime memory shell editor'
+let-env STARSHIP_SHELL = "nu"
+let-env VIMRC = '~/.vimrc'
 
+# Use nushell functions to define your right and left prompt
+# The prompt indicators are environmental variables that represent
+# the state of the prompt
 def create_left_prompt [] {
     starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
 }
@@ -32,16 +35,12 @@ def create_right_prompt [] {
     starship prompt --right --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)'
 }
 
-# Use nushell functions to define your right and left prompt
 let-env PROMPT_COMMAND = { create_left_prompt }
 let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
-
-# The prompt indicators are environmental variables that represent
-# the state of the prompt
-let-env PROMPT_INDICATOR = ""
-let-env PROMPT_INDICATOR_VI_INSERT = "+ "
-let-env PROMPT_INDICATOR_VI_NORMAL = ": " 
-let-env PROMPT_MULTILINE_INDICATOR = " > "
+let-env PROMPT_INDICATOR = "" # handled by Starship – https://starship.rs/
+let-env PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#8bd49c' }) "λ + " (ansi reset)] | str collect)
+let-env PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#5ec4ff' }) "λ : " (ansi reset)] | str collect)
+let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " > " (ansi reset)] | str collect)
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
