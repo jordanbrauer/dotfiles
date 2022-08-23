@@ -15,7 +15,6 @@ export HISTSIZE=20000
 export HISTFILESIZE=20000
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export NVM_DIR="$HOME/.nvm"
 
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
