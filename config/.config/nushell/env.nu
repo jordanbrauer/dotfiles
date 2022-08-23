@@ -76,4 +76,3 @@ load-env (fnm env --shell bash | lines | str replace 'export ' '' | str replace 
 
 let-env PATH = ($env.PATH | prepend [ $"($env.FNM_MULTISHELL_PATH)/bin" ])
 let-env LS_COLORS = (^vivid generate citylights | str trim)
-
