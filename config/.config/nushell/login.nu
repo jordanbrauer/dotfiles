@@ -1,1 +1,2 @@
 pfetch
+awsx load
