@@ -537,3 +537,144 @@ def howto [
 
     curl $"https://cht.sh/($selection)/($path)"
 }
+
+# 1Password CLI wrapper
+def onepass [] {
+    help onepass
+}
+
+# Check if you are currently authenticated with 1password
+def "onepass authed" [] {
+    if false == (env | any? name == OP_SESSION) {
+        false
+    } else {
+        do -i { op list vaults --session $env.OP_SESSION | save /dev/null }
+        $env.LAST_EXIT_CODE == 0
+    }
+}
+
+# Log into a 1password session for the given account
+def-env "onepass login" [account: string = 'neofinancial' --return] {
+    let-env OP_SESSION = (if (onepass authed) {
+        $env.OP_SESSION
+    } else {
+        let options = ['neofinancial']
+        let chosen = (if $account != null {
+            $account
+        } else {
+            ($options | str collect "\n" | gum filter --placeholder "Choose account..." | str trim)
+        })
+
+        op signin $chosen --raw | str trim
+    })
+
+    if $return {
+        $env.OP_SESSION
+    }
+}
+
+# Copy an items password to the clipboard
+def-env "onepass word" [record: string] {
+    onepass login
+    op get item $"($record)" --session $env.OP_SESSION --fields password | pbcopy
+    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" password to the clipboard'] | str collect)
+}
+
+# Copy an items MFA token to the clipboard
+def-env "onepass mfa" [record: string] {
+    onepass login
+    op get totp $"($record)" --session $env.OP_SESSION | pbcopy
+    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" MFA to the clipboard'] | str collect)
+}
+
+# Look at at a given items details
+def-env "onepass view" [record: string] {
+    onepass login
+    op get item $"($record)" --session $env.OP_SESSION | from json
+}
+
+# AWSX wrapper
+def-env awsx [...argv: string] {
+    _awsx ($argv | str collect)
+    awsx load
+}
+
+# Load AWSX `exports.sh` environment variables
+def-env "awsx load" [] {
+    load-env (
+        open ([$env.HOME .awsx/exports.sh] | path join) |
+        split row " " |
+        last 2 |
+        str replace -a '"' '' |
+        split column = |
+        rename name value |
+        reduce -f {} {|it, acc| $acc | upsert $it.name $it.value }
+    )
+}
+
+# Make use of the Pritunl VPN through the gotunl CLI utility.
+def vpn [] {
+    help vpn
+}
+
+# List all VPN connections
+def "vpn ls" [] {
+    gotunl -o tsv -l | from tsv | str trim | rename id name status
+}
+
+# Disconnect from all active connections
+def "vpn dc" [] {
+    gotunl -d all
+    vpn ls
+}
+
+# Connect to the specified VPN or be prompted for an environment
+def-env "vpn connect" [environment?: string] {
+    let options = ["staging" "production" "integration"]
+    let connection = (if $environment != null {
+        $environment
+    } else {
+        ($options | str collect "\n" | gum filter --placeholder "Choose connection..." | str trim)
+    })
+    let host = (vpn ls | where name =~ $connection | first)
+
+    onepass mfa pritunl
+    gotunl -c $host.id
+    gum spin sleep 5 --spinner minidot --title Connecting...
+    vpn ls | where name =~ $connection | first
+}
+
+# Connect to a MongoDB database using credentials stored in 1Password
+def-env mongo [
+    database: string                # The name of the initial database to select upon connection
+    environment?: string            # Specific environment to make a connection to
+    --cluster: string = 'core' # Specify which cluster in the environment should be connected to
+] {
+    let options = [local integration staging production]
+    let clusters = {
+        core: 'connection-string-template'
+        reporting: 'Reporting Cluster'
+        internal: 'internal-cluster'
+    }
+    let connection = (if null != $environment {
+        $environment
+    } else {
+        ($options | str collect "\n" | gum filter --placeholder "Choose connection..." | str trim)
+    })
+    let item = $"mongo-($connection)"
+    let credentials = onepass view $item
+    let password = ($credentials | get details.fields | where name == password | first | get value)
+    let dsn = (
+        $credentials |
+        get details.sections |
+        where title == 'Connection String Templates' |
+        first |
+        get fields |
+        where t =~ $"($clusters | get $cluster)" |
+        first |
+        get v |
+        str replace '{password}' $password
+    )
+
+    mongosh $dsn
+}
