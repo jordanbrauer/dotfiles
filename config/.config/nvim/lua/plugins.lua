@@ -1,26 +1,26 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-    -- Core
-	use 'wbthomason/packer.nvim' -- Packer can manage itself
-    use 'nvim-lua/plenary.nvim'  -- depended on by: telescope, harpoon
+    -- Core (Dependencies)
+    use 'wbthomason/packer.nvim'   -- Packer can manage itself
+    use 'nvim-lua/plenary.nvim'    -- depended on by: telescope, harpoon
+    use 'tjdevries/colorbuddy.vim' -- depended on by: citylights
 
     -- UI & Themes
-	use 'tjdevries/colorbuddy.vim'
-	use 'nvim-lualine/lualine.nvim'
-	use 'jordanbrauer/citylights.nvim'
+    use 'jordanbrauer/citylights.nvim'
+    use 'nvim-lualine/lualine.nvim'
     use 'norcalli/nvim-colorizer.lua'
 
     -- File Management
     use 'nvim-telescope/telescope.nvim'
     use 'nvim-telescope/telescope-ui-select.nvim'
-	use 'tpope/vim-vinegar'
-	use 'ThePrimeagen/harpoon'
+    use 'tpope/vim-vinegar'
+    use 'ThePrimeagen/harpoon'
 
     -- Formatting
-	use 'tpope/vim-surround'
-	use 'tpope/vim-commentary'
-	use 'jiangmiao/auto-pairs'
+    use 'tpope/vim-surround'
+    use 'tpope/vim-commentary'
+    use 'jiangmiao/auto-pairs'
 
     -- Git Integrations
     use 'tpope/vim-fugitive'
