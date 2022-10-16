@@ -6,8 +6,19 @@
 " (_)___/_/_/_/_/_/  \__/                         
 "
 " Author:    Jordan Brauer
+" Published: Apr 20, 2018
 " Requires:  Neovim >= 0.8
 " 
+" Note to the Reader
+" ------------------
+"
+" Much of the configuration found here is heavily supplemented by Lua code
+" specific to NeoVim found within the config/.config/nvim/ directory in this
+" repository.
+"
+" The responsibility of this configuration lies primarily in simple settings
+" such as sets, lets, and other minor, global configuration values.
+"
 
 " Theme
 if has('nvim')
@@ -18,13 +29,13 @@ if $COLORTERM == 'truecolor' && has('termguicolors')
 	set termguicolors
 endif
 
-syntax enable
-syntax on
-
-filetype plugin on
-set background=dark
 let &t_Co=256
 
+set background=dark
+
+syntax enable
+
+" Lua Configurations
 lua require('plugins')
 lua require('theme')
 
@@ -44,16 +55,6 @@ set colorcolumn=80
 set textwidth=80
 set signcolumn=yes
 
-" Folds
-function! FoldedText()
-	return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{"'))
-endfunction
-
-set foldcolumn=2
-set foldmethod=marker
-set foldtext=FoldedText()
-set fillchars=fold:\
-
 " Behaviour
 set hidden
 set noswapfile
@@ -61,6 +62,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 
+filetype plugin on
 filetype indent on
 
 set encoding=utf-8
@@ -82,3 +84,13 @@ set nohlsearch
 set incsearch
 set completeopt=menu,menuone,noselect
 set shortmess+=c
+
+" Folds
+function! FoldedText()
+	return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{"'))
+endfunction
+
+set foldcolumn=2
+set foldmethod=marker
+set foldtext=FoldedText()
+set fillchars=fold:\ 
