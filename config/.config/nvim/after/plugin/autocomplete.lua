@@ -67,7 +67,19 @@ cmp.setup({
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      -- WTF IS GOING ON !?!?!?!?!?!?!
+      --    roll back to 0.7.2 neovim ???
+      -- https://github.com/hrsh7th/nvim-cmp/issues/1151
+      -- https://github.com/hrsh7th/nvim-cmp/issues/1208
+      -- ['<CR>'] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Insert }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      -- ['<CR>'] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+      -- ['<CR>'] = cmp.mapping(function(fallback)
+      --     if cmp.visible() then
+      --         cmp.confirm()
+      --       else
+      --           fallback()
+      --       end
+      -- end),
       ['<C-n'] = cmp.config.disable,
       ['<C-p'] = cmp.config.disable,
       ["<Tab>"] = cmp.mapping(function(fallback)
@@ -88,27 +100,28 @@ cmp.setup({
           feedkey("<Plug>(vsnip-jump-prev)", "")
         end
       end, { "i", "s" }),
-    },
-    sources = cmp.config.sources({
+    },    sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'vsnip' }, -- For vsnip users.
     }, {
       { name = 'buffer' },
     })
-    })
+})
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline('/', {
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = 'buffer' }
     }
-    })
+  })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(':', {
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
       { name = 'cmdline' }
     })
-})
+  })

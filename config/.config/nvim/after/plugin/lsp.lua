@@ -44,12 +44,11 @@ end
 for _, lsp in ipairs(servers) do
     if lsp ~= "elixirls" then
         nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
-    else
+    else -- special handling for the Elixir language server
         nvim_lsp[lsp].setup {
             on_attach = on_attach,
             capabilities = capabilities,
             cmd = { "/Users/jorb/.elixirls/language_server.sh" }
         }
     end
-
 end
