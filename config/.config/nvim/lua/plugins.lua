@@ -1,10 +1,11 @@
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
+local plugins = require('packer').startup(function(use)
     -- Core (Dependencies)
     use 'wbthomason/packer.nvim'   -- Packer can manage itself
     use 'nvim-lua/plenary.nvim'    -- depended on by: telescope, harpoon
     use 'tjdevries/colorbuddy.vim' -- depended on by: citylights
+    use 'ray-x/guihua.lua'         -- depended on by: go.nvim
 
     -- UI & Themes
     use 'jordanbrauer/citylights.nvim'
@@ -42,9 +43,30 @@ return require('packer').startup(function(use)
     use 'nvim-treesitter/playground'
 
     use 'ray-x/go.nvim'
-    use 'ray-x/guihua.lua'
     use 'elixir-editors/vim-elixir'
+    -- php
+    -- javascript/typescript/jsx
+    -- markdown
+    -- earthly
+    -- terraform
 
     -- Misc.
     use 'metakirby5/codi.vim'
 end)
+
+-- Auto Command Groups
+vim.api.nvim_create_augroup('editor_behaviour', { clear = true })
+vim.api.nvim_create_augroup('packer_user_config', { clear = true })
+
+-- Re-Compile Packer when plugins file is written
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+    pattern = { 'plugins.lua' },
+    group = 'packer_user_config',
+    callback = function()
+        local file = vim.cmd [[ silent! echo expand("%") ]]
+
+        vim.api.nvim_command('source ' .. file .. ' | PackerCompile')
+    end,
+})
+
+return plugins
