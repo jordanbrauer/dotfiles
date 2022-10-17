@@ -6,8 +6,8 @@ vim.g.vsnip_filetypes.typescriptreact = { 'typescript' }
 
 -- Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
 -- See https://github.com/hrsh7th/vim-vsnip/pull/50
-vim.keymap.set({'n', 'x'}, 's', '<Plug>(vsnip-select-text)')
-vim.keymap.set({'n', 'x'}, 'S', '<Plug>(vsnip-cut-text)')
+-- vim.keymap.set({'n', 'x'}, 's', '<Plug>(vsnip-select-text)')
+-- vim.keymap.set({'n', 'x'}, 'S', '<Plug>(vsnip-cut-text)')
 
 -- Expand
 vim.keymap.set(

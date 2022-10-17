@@ -1,22 +1,22 @@
-local nvim_lsp = require('lspconfig')
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local config = require('lspconfig')
+local completion = require('cmp_nvim_lsp')
+local lsp = {}
+
 local servers = {
-    'intelephense',
-    'gopls',
+    -- 'intelephense',
+    -- 'gopls',
     'tsserver',
     'graphql',
     'terraformls',
     'eslint',
-    'elixirls',
+    -- 'elixirls',
 }
-
-vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }
 
 -- Use an on_attach function to only map the following keys 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local opts = { noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -50,14 +50,13 @@ local on_attach = function(client, bufnr)
     buf_set_keymap('n', '<space>q',  '<Cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 end
 
-for _, lsp in ipairs(servers) do
-    if lsp ~= "elixirls" then
-        nvim_lsp[lsp].setup { on_attach = on_attach, capabilities = capabilities }
-    else -- special handling for the Elixir language server
-        nvim_lsp[lsp].setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-            cmd = { "/Users/jorb/.elixirls/language_server.sh" }
-        }
-    end
+function lsp.setup(server, overrides)
+    local defaults = {
+        on_attach = on_attach,
+        capabilities = completion.default_capabilities(),
+    }
+
+    config[server].setup(vim.tbl_extend("force", defaults, overrides or {}))
 end
+
+return lsp
