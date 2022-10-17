@@ -5,4 +5,4 @@ source ~/.vimrc
 
 lua require('plugins')
 lua require('keymap')
-lua require('theme')
+lua require('theme').configure()

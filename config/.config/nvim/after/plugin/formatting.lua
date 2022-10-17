@@ -4,9 +4,7 @@ vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }
 vim.api.nvim_create_autocmd({ 'FileType' }, {
     pattern = {'gitcommit'},
     group = 'editor_behaviour',
-    callback = function()
-        vim.cmd [[ let b:EditorConfig_disable = 1 ]]
-    end,
+    callback = function() vim.cmd [[ let b:EditorConfig_disable = 1 ]] end,
 })
 
 -- Automatically put user into INSERT mode upon terminal opening

@@ -9,5 +9,5 @@ go.setup()
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     pattern = { '*.go' },
     group = 'editor_behaviour',
-    callback = format.goimport,
+    callback = function() format.goimport() end,
 })

@@ -59,13 +59,6 @@ set colorcolumn=80
 set textwidth=80
 set signcolumn=yes
 
-" Command Line
-set noerrorbells
-set noshowmode
-set noshowcmd
-set noruler
-set cmdheight=1
-
 " Theme
 let &t_Co=256
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -78,12 +71,16 @@ set background=dark
 
 syntax enable
 
-" Folds
-function! FoldedText()
-	return printf(' 祈%-4d %s', 1 + v:foldend - v:foldstart, trim(getline(v:foldstart), '#";:{"'))
-endfunction
+" Command Line
+set noerrorbells
+set noshowmode
+set noshowcmd
+set noruler
+set cmdheight=1
 
-set foldcolumn=2
-set foldmethod=marker
-set foldtext=FoldedText()
+" Folds
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldcolumn=0
+set foldlevel=1
 set fillchars=fold:\ 
