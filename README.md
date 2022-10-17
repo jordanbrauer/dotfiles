@@ -57,31 +57,17 @@ and others are essential.
 
 Better `cat(1)`.
 
-```shell
-bat /tmp/somefile
-```
-
 ### [bottom](https://github.com/ClementTsang/bottom)
 
 > Yet another cross-platform graphical process/system monitor.
 
 `htop` is great, but too ugly for my liking.
 
-```shell
-btm
-```
-
 ### [choosealicense](https://pypi.org/project/choosealicense-cli/)
 
 I don't like creating repositories with GitHub containing default files. In this
 case, a `LICENSE`. It's also annoying to visit [choosealicence.com](https://choosealicense.com/)
 everytime.
-
-```shell
-license generate mit
-```
-
-Pipe this to a `LICENSE` and Bob's your uncle.
 
 ### [fnm](https://github.com/Schniz/fnm)
 
