@@ -2,6 +2,7 @@ local protocol = require('vim.lsp.protocol')
 local lualine = require('lualine')
 local citylights = require('lualine.themes.citylights')
 
+require('colorizer').setup() -- hexcode, rgb, etc.
 require('colorbuddy').colorscheme('citylights')
 lualine.setup(citylights)
 
