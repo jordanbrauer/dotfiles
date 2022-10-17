@@ -34,7 +34,7 @@ local on_attach = function(client, bufnr)
 
     -- Introspecation
     buf_set_keymap('n', 'K',         '<Cmd>lua vim.lsp.buf.hover()<CR>',           opts)
-    buf_set_keymap('n', '<C-k>',     '<Cmd>lua vim.lsp.buf.signature_help()<CR>',                             opts)
+    buf_set_keymap('n', '<C-k>',     '<Cmd>lua vim.lsp.buf.signature_help()<CR>',  opts)
     buf_set_keymap('n', 'gr',        '<Cmd>Telescope lsp_references<CR>',          opts)
     buf_set_keymap('n', '<space>gs', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
 
