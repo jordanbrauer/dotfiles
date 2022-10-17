@@ -1,6 +1,7 @@
 vim.cmd [[packadd packer.nvim]]
 
-local plugins = require('packer').startup(function(use)
+local packer = require('packer')
+local plugins = function(use)
     -- Core (Dependencies)
     use 'wbthomason/packer.nvim'   -- Packer can manage itself
     use 'nvim-lua/plenary.nvim'    -- depended on by: telescope, harpoon
@@ -52,7 +53,7 @@ local plugins = require('packer').startup(function(use)
 
     -- Misc.
     use 'metakirby5/codi.vim'
-end)
+end
 
 -- Auto Command Groups
 vim.api.nvim_create_augroup('editor_behaviour', { clear = true })
@@ -69,4 +70,4 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
     end,
 })
 
-return plugins
+return packer.startup(plugins)
