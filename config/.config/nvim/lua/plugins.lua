@@ -21,6 +21,7 @@ return require('packer').startup(function(use)
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'jiangmiao/auto-pairs'
+    use 'editorconfig/editorconfig-vim'
 
     -- Git Integrations
     use 'tpope/vim-fugitive'
@@ -37,10 +38,13 @@ return require('packer').startup(function(use)
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
     use 'hrsh7th/cmp-vsnip'
-    use 'nvim-treesitter/nvim-treesitter'
+    use { 'nvim-treesitter/nvim-treesitter', run = 'vim.cmd [[ TSUpdate ]]' }
     use 'nvim-treesitter/playground'
 
     use 'ray-x/go.nvim'
     use 'ray-x/guihua.lua'
     use 'elixir-editors/vim-elixir'
+
+    -- Misc.
+    use 'metakirby5/codi.vim'
 end)
