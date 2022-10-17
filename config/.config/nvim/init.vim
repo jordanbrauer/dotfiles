@@ -3,6 +3,6 @@ let &packpath=&runtimepath
 
 source ~/.vimrc
 
-lua require('plugins')
+lua require('dependencies')
 lua require('keymap')
 lua require('theme').configure()

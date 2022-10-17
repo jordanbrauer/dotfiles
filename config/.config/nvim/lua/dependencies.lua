@@ -1,7 +1,7 @@
 vim.cmd [[packadd packer.nvim]]
 
 local packer = require('packer')
-local plugins = function(use)
+local dependencies = function(use)
     -- Core (Dependencies)
     use 'wbthomason/packer.nvim'   -- Packer can manage itself
     use 'nvim-lua/plenary.nvim'    -- depended on by: telescope, harpoon
@@ -61,7 +61,7 @@ vim.api.nvim_create_augroup('packer_user_config', { clear = true })
 
 -- Re-Compile Packer when plugins file is written
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-    pattern = { 'plugins.lua' },
+    pattern = { 'dependencies.lua' },
     group = 'packer_user_config',
     callback = function()
         local file = vim.cmd [[ silent! echo expand("%") ]]
@@ -70,4 +70,4 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
     end,
 })
 
-return packer.startup(plugins)
+return packer.startup(dependencies)
