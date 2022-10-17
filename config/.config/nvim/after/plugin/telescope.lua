@@ -1,6 +1,7 @@
 local telescope = require("telescope.actions")
 
 vim.keymap.set('n', '<leader>f', '<cmd>Telescope find_files<cr>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>h', '<cmd>Telescope oldfiles<cr>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>F', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>b', '<cmd>Telescope buffers<cr>', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>gb', '<cmd>Telescipe git_branches<cr>', { noremap = true, silent = true })
