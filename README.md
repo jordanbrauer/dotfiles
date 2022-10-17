@@ -59,9 +59,7 @@ Better `cat(1)`.
 
 ### [bottom](https://github.com/ClementTsang/bottom)
 
-> Yet another cross-platform graphical process/system monitor.
-
-`htop` is great, but too ugly for my liking.
+`top` and `htop` are fine, but a bit too boring for my liking.
 
 ### [choosealicense](https://pypi.org/project/choosealicense-cli/)
 
