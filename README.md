@@ -11,7 +11,7 @@ Have fun!
 It's fast, sleak, fully configurable, scriptable.. what's not to love? Plus,
 _cats_.
 
-### Command Prompt ([Starship](https://starship.rs/))
+### [starship](https://starship.rs/)
 
 Configuring a beautiful prompt has never been easier...
 
@@ -19,13 +19,21 @@ Configuring a beautiful prompt has never been easier...
 
 Minimalistic system information. An alternative to fetch, neofetch, etc.
 
-### ls Colours ([vivid](https://github.com/sharkdp/vivid))
+### [vivid](https://github.com/sharkdp/vivid)
 
 Properly configure colours for `ls` output in a consistent manner.
 
 ## Shell ([Nushell](https://www.nushell.sh/))
 
 Bash was awesome for many years, however I am now a Nushell convert.
+
+## Editor ([Neovim](https://neovim.io/))
+
+A few dependencies for Neovim & plugins.
+
+- `luajit`
+- `ripgrep`
+- `code-minimap`
 
 ## Package Managers
 
@@ -39,14 +47,6 @@ executables.
 ### [Homebrew](https://brew.sh/)
 
 My choice of package manager as a Mac OS user.
-
-## Editor ([Neovim](https://neovim.io/))
-
-A few dependencies for Neovim & plugins.
-
-- `luajit`
-- `ripgrep`
-- `code-minimap`
 
 ## Other Tools
 
