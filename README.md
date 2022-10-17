@@ -1,10 +1,43 @@
-# Dot Files
+# .dotfiles
 
 Here lay a currated list of the tools I use or have used at one point in time or
-a nother. Maybe they will be as useful to you, dear reader, as they were to me.
+another. Consider this my _virtual toolbelt_, full of the well worn & maintained
+trappings of a hacker. Perhaps they will be as useful to you, dear reader, as
+they are to me.
 
-Have fun!
+_Happy hacking!_
 
+## Setting Up
+
+These instructions are for new machines.
+
+1. Clone this repository into the home directory.
+    ```shell
+    git clone git@github.com:jordanbrauer/dotfiles.git ~/.dotfiles
+    ```
+2. Install all necessary dependencies.
+    ```shell
+    # probably a few that aren't in this install script lol
+    make install
+    ```
+3. Sync the configurations
+    ```
+    make sync
+    ```
+
+## Syncing New Configurations
+
+If a new package is being added, simply create the directory & files, then edit
+the `Makefile` `sync` target to include it. Alterantively you can (un)stow the
+new package individually to test it before altering the `Makefile`.
+
+If adding a new file to an existing package, no extra work is required.
+
+Once all of the new new files are in place, simply run
+
+```shell
+make sync
+```
 
 ## Terminal ([kitty](https://sw.kovidgoyal.net/kitty/))
 
