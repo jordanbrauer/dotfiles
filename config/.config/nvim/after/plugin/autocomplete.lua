@@ -1,3 +1,5 @@
+vim.g.completion_matching_strategy_list = { 'exact', 'substring', 'fuzzy' }
+
 local cmp = require('cmp')
 local completion_icons = {
   Text = '',
