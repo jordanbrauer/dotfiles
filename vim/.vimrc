@@ -20,41 +20,6 @@
 " such as sets, lets, and other minor, global configuration values.
 "
 
-" Theme
-if has('nvim')
-	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-if $COLORTERM == 'truecolor' && has('termguicolors')
-	set termguicolors
-endif
-
-let &t_Co=256
-
-set background=dark
-
-syntax enable
-
-" Lua Configurations
-lua require('plugins')
-lua require('theme')
-
-" Command Line
-set noerrorbells
-set noshowmode
-set noshowcmd
-set noruler
-set cmdheight=1
-
-" Lines & Columns
-set number
-set relativenumber
-set scrolloff=20
-set nowrap
-set colorcolumn=80
-set textwidth=80
-set signcolumn=yes
-
 " Behaviour
 set hidden
 set noswapfile
@@ -84,6 +49,34 @@ set nohlsearch
 set incsearch
 set completeopt=menu,menuone,noselect
 set shortmess+=c
+
+" Lines & Columns
+set number
+set relativenumber
+set scrolloff=20
+set nowrap
+set colorcolumn=80
+set textwidth=80
+set signcolumn=yes
+
+" Command Line
+set noerrorbells
+set noshowmode
+set noshowcmd
+set noruler
+set cmdheight=1
+
+" Theme
+let &t_Co=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+if $COLORTERM == 'truecolor' && has('termguicolors')
+	set termguicolors
+endif
+
+set background=dark
+
+syntax enable
 
 " Folds
 function! FoldedText()
