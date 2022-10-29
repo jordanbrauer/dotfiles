@@ -68,6 +68,10 @@ A few dependencies for Neovim & plugins.
 - `ripgrep`
 - `code-minimap`
 
+Other resources
+
+- https://github.com/nanotee/nvim-lua-guide
+
 ## Package Managers
 
 How I install my tools.
