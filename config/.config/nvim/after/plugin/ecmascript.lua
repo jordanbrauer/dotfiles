@@ -1,5 +1,5 @@
 -- all JavaScript & TypeScript shit
 
--- local lsp = require('lsp')
+local lsp = require('lsp')
 
--- lsp.setup({ 'tsserver', 'eslint' })
+lsp.setup({ 'tsserver', 'eslint' })

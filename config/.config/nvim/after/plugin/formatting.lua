@@ -1,3 +1,4 @@
+-- Ignore files from editorconfig formatting
 vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*', 'scp://.*' }
 
 -- Disable editorconfig for git commits

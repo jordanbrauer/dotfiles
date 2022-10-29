@@ -22,6 +22,7 @@ require 'nvim-treesitter.configs'.setup {
         "go",
         "gomod",
         "elixir",
+        "heex",
         "graphql",
         "javascript",
         "typescript",
