@@ -42,7 +42,7 @@ let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
 let-env PROMPT_INDICATOR = "" # handled by Starship – https://starship.rs/
 let-env PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#8bd49c' }) "λ + " (ansi reset)] | str collect)
 let-env PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#5ec4ff' }) "λ : " (ansi reset)] | str collect)
-let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " > " (ansi reset)] | str collect)
+let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " |> " (ansi reset)] | str collect)
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
