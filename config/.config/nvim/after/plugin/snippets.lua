@@ -13,13 +13,7 @@ vim.g.vsnip_filetypes.typescriptreact = { 'typescript' }
 vim.keymap.set(
     { 'i', 's' },
     '<C-j>',
-    function()
-        if vim.cmd [[ exe vsnip#expandable() ]] then
-            return '<Plug>(vsnip-expand)'
-        end
-
-        return '<C-j>'
-    end,
+    "vsnip#expandable() ? '<Plug>(vsnip-expand)' : '<C-j>'",
     {
         expr = true,
     })
@@ -28,13 +22,7 @@ vim.keymap.set(
 vim.keymap.set(
     { 'i', 's' },
     '<C-l>',
-    function()
-        if vim.cmd [[ exe vsnip#available(1) ]] then
-            return '<Plug>(vsnip-expand-or-jump)'
-        end
-
-        return '<C-l>'
-    end,
+    "vsnip#available(1) ? 'echo <Plug>(vsnip-expand-or-jump)' : 'echo <C-l>'",
     {
         expr = true,
     })
@@ -43,27 +31,14 @@ vim.keymap.set(
 vim.keymap.set(
     { 'i', 's' },
     '<Tab>',
-    function()
-        if vim.cmd [[ exe vsnip#jumpable(1) ]] then
-            return '<Plug>(vsnip-jump-next)'
-        end
-
-        return '<Tab>'
-    end,
+    "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'",
     {
         expr = true,
     })
-
 vim.keymap.set(
     { 'i', 's' },
     '<S-Tab>',
-    function()
-        if vim.cmd [[ exe vsnip#jumpable(-1) ]] then
-            return '<Plug>(vsnip-jump-prev)'
-        end
-
-        return '<S-Tab>'
-    end,
+    "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'"
     {
         expr = true,
     })
