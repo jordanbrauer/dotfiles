@@ -38,7 +38,7 @@ vim.keymap.set(
 vim.keymap.set(
     { 'i', 's' },
     '<S-Tab>',
-    "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'"
+    "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'",
     {
         expr = true,
     })
