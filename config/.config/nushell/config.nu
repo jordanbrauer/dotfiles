@@ -17,14 +17,14 @@ let CityLights = {
     Black: black
     White: white
     Grey: "#41505e"
+    Steel: "#718ca1"
     Red: "#e27e8d"
     Green: "#54af83"
     Blue: '#68a1f0'
     Yellow: '#ebda65'
-    Aqua: "#9effff"
     Orange: "#ebbf83"
     Sage: "#008b94"
-    Steel: "#718ca1"
+    Aqua: "#9effff"
     Teal: "#70e1e8"
     Azure: "#5ec4ff"
     Success: "#54af83"

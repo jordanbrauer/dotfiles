@@ -45,7 +45,7 @@ function theme.configure()
     local citylights = require('lualine.themes.citylights')
     local icons = theme.completion.icons
 
-    require('colorizer').setup() -- hexcode, rgb, etc.
+    require('colorizer').setup(nil, { names = false }) -- hexcode, rgb, etc.
     require('colorbuddy').colorscheme('citylights')
     lualine.setup(citylights)
 
