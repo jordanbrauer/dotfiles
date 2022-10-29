@@ -5,6 +5,7 @@
 let-env GOPATH = (echo [$env.HOME go] | path join)
 let-env PATH = (
     echo $env.PATH |
+    prepend '/opt/homebrew/opt/libpq/bin' |
     prepend '/opt/homebrew/sbin' |
     prepend '/opt/homebrew/bin' |
     append '/usr/local/bin' |
@@ -16,9 +17,10 @@ let-env PATH = (
     append (echo [$env.GOPATH 'bin'] | path join)
 )
 let-env CLICOLOR = 1
+let-env SHELL = 'nu'
 let-env EDITOR = 'nvim'
 let-env FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
-let-env GPG_TTY = (tty)
+let-env GPG_TTY = (tty | str trim)
 let-env GREP_OPTIONS = '--color=auto'
 let-env PF_INFO = 'ascii title os host kernel uptime memory shell editor'
 let-env STARSHIP_SHELL = "nu"

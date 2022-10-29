@@ -548,7 +548,7 @@ def onepass [] {
 
 # Check if you are currently authenticated with 1password
 def "onepass authed" [] {
-    if false == (env | any? name == OP_SESSION) {
+    if false == (env | any name == OP_SESSION) {
         false
     } else {
         do -i { op list vaults --session $env.OP_SESSION | save /dev/null }
@@ -643,7 +643,7 @@ def-env "vpn connect" [environment?: string] {
 
     onepass mfa pritunl
     gotunl -c $host.id
-    gum spin sleep 5 --spinner minidot --title Connecting...
+    gum spin --spinner minidot --title Connecting... -- nu -c 'sleep 3sec'
     vpn ls | where name =~ $connection | first
 }
 
