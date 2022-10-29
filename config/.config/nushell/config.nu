@@ -9,6 +9,9 @@ alias less = less -FSRXc
 alias mv = mv -iv
 alias nvm = fnm
 alias todo = todo.sh
+alias cat = bat
+alias vim = nvim
+alias top = btm
 
 let CityLights = {
     Black: black
