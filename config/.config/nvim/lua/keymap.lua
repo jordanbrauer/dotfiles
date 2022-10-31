@@ -1,12 +1,18 @@
+-- Colemak
+vim.keymap.set({'n', 'v'}, 'h', '<Up>')
+vim.keymap.set({'n', 'v'}, 'k', '<Down>')
+vim.keymap.set({'n', 'v'}, 'j', '<Left>')
+vim.keymap.set({'n', 'v'}, 'l', '<Right>')
+
 -- Swap paned buffers with ctrl+<hjkl>
-vim.keymap.set('n', '<C-j>', '<C-W>j')
-vim.keymap.set('n', '<C-h>', '<C-W>h')
-vim.keymap.set('n', '<C-k>', '<C-W>k')
+vim.keymap.set('n', '<C-j>', '<C-W>h')
+vim.keymap.set('n', '<C-h>', '<C-W>k')
+vim.keymap.set('n', '<C-k>', '<C-W>j')
 vim.keymap.set('n', '<C-l>', '<C-W>l')
 
 -- Move selected lines with shift+<JK>
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { noremap = true })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { noremap = true })
+vim.keymap.set('v', 'K', ":m '>+1<CR>gv=gv", { noremap = true })
+vim.keymap.set('v', 'H', ":m '<-2<CR>gv=gv", { noremap = true })
 
 -- Use <Tab> and <S-Tab> to navigate through popup menus
 -- QUESTION: are these needed anymore?
