@@ -256,6 +256,42 @@ let-env config = {
       }
   ]
   keybindings: [
+      {
+          name: colemak_vi_up
+          modifier: none
+          keycode: char_h
+          mode: vi_normal
+          event: {
+            send: Up
+          }
+      }
+      {
+          name: colemak_vi_down
+          modifier: none
+          keycode: char_k
+          mode: vi_normal
+          event: {
+            send: Down
+          }
+      }
+      {
+          name: colemak_vi_left
+          modifier: none
+          keycode: char_j
+          mode: vi_normal
+          event: {
+            send: Left
+          }
+      }
+      {
+          name: colemak_vi_right
+          modifier: none
+          keycode: char_l
+          mode: vi_normal
+          event: {
+            send: Right
+          }
+      }
     {
       name: completion_menu
       modifier: none
