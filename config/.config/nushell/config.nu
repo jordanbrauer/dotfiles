@@ -27,7 +27,7 @@ let CityLights = {
     Aqua: "#9effff"
     Teal: "#70e1e8"
     Azure: "#5ec4ff"
-    Success: "#54af83"
+    Success: "#8bd49c"
     Error: red
     Column: "#242b33"
     Menu: "#14232d"
@@ -60,7 +60,7 @@ let dark_theme = {
     hints: $CityLights.Grey
 
     # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: b}
+    shape_garbage: { fg: $CityLights.Black bg: $CityLights.Error attr: b}
     shape_binary: $CityLights.Red
     shape_bool: $CityLights.Red
     shape_int: $CityLights.Red
