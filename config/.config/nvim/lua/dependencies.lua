@@ -22,7 +22,7 @@ local dependencies = function(use)
     -- Formatting
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
-    use 'jiangmiao/auto-pairs'
+    -- use 'jiangmiao/auto-pairs'
     use 'editorconfig/editorconfig-vim'
 
     -- Git Integrations
