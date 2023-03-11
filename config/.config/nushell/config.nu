@@ -125,10 +125,10 @@ let-env config = {
 
   hooks: {
     pre_prompt: [{
-      $nothing  # replace with source code to run before the prompt is shown
+        print "" # blank line between output & prompt
     }]
     pre_execution: [{
-      $nothing  # replace with source code to run before the repl input is run
+        print "" # blank line between output & prompt
     }]
     env_change: {
       PWD: [{|before, after|
@@ -548,12 +548,12 @@ def onepass [] {
 
 # Check if you are currently authenticated with 1password
 def "onepass authed" [] {
-    if false == (env | any name == OP_SESSION) {
-        false
-    } else {
-        do -i { op list vaults --session $env.OP_SESSION | save /dev/null }
-        $env.LAST_EXIT_CODE == 0
-    }
+    # if false == (env | any name == OP_SESSION) {
+    #    false
+    # } else {
+    #    do -i { op list vaults --session $env.OP_SESSION | save /dev/null }
+    #    $env.LAST_EXIT_CODE == 0
+    # }
 }
 
 # Log into a 1password session for the given account
