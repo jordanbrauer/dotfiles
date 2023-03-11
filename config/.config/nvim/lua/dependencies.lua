@@ -45,6 +45,7 @@ local dependencies = function(use)
 
     use 'ray-x/go.nvim'
     use 'elixir-editors/vim-elixir'
+    use { 'LhKipp/nvim-nu', run = 'vim.cmd [[ TSInstall nu ]]' }
     -- php
     -- javascript/typescript/jsx
     -- markdown
