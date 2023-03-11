@@ -512,6 +512,41 @@ module completions {
 # Get just the extern definitions without the custom completion commands
 use completions *
 
+# # Print most frequently used commands
+# freq() {
+#     printf "\n" && history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl |  head -n10
+# }
+
+# # Moves a file to the MacOS trash
+# trash () {
+#     command mv "$@" ~/.Trash ;
+# }
+
+# # Opens any file in MacOS Quicklook Preview
+# ql () {
+#     qlmanage -p "$*" >& /dev/null;
+# }
+
+# # Search for a file using MacOS Spotlight's metadata
+# spotlight () {
+#     mdfind "kMDItemDisplayName == '$@'wc";
+# }
+
+# # list all 256 terminal colours an how they would look in your terminal
+# palette () {
+#     color=0;
+#     while [ $color -lt 245 ]; do
+#         echo -e "$color: \\033[38;5;${color}mhello\\033[48;5;${color}mworld\\033[0m"
+#         ((color++));
+#     done;
+#     echo '';
+#     echo ' Foreground Usage:';
+#     echo ' \[\033[38;5;{$color}m\] hello world \[\033[0m\]';
+#     echo '';
+#     echo ' Background Usage:';
+#     echo ' \[\033[48;5;{$color}m\] hello world \[\033[0m\]';
+# }
+
 # Generate a `.gitignore` file from a list of technology options
 def gi [] {
     let options = (["macos" "windows" "linux" "go" "node" "php" "elixir"] | str collect "\n")
