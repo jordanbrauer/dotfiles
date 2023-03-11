@@ -25,6 +25,10 @@ These instructions are for new machines.
     make sync
     ```
 
+> **Warning**
+> These configurations make use of [Nerd Font](https://www.nerdfonts.com/cheat-sheet)
+> gylphs. Make sure to use a font that supports dev icons.
+
 ## Syncing New Configurations
 
 If a new package is being added, simply create the directory & files, then edit
