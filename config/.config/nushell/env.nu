@@ -5,6 +5,7 @@
 let-env GOPATH = (echo [$env.HOME go] | path join)
 let-env PATH = (
     echo $env.PATH |
+    prepend '/opt/homebrew/Cellar/avr-gcc@8/8.5.0/bin' |
     prepend '/opt/homebrew/opt/libpq/bin' |
     prepend '/opt/homebrew/sbin' |
     prepend '/opt/homebrew/bin' |
@@ -14,7 +15,8 @@ let-env PATH = (
     append '/usr/local/go/bin' |
     append (echo [$env.HOME '.composer/vendor/bin'] | path join) | 
     # append (echo [$env.GOROOT 'bin'] | path join) | 
-    append (echo [$env.GOPATH 'bin'] | path join)
+    append (echo [$env.GOPATH 'bin'] | path join) |
+    append (echo [$env.HOME '.bun/bin'] | path join)
 )
 let-env CLICOLOR = 1
 let-env SHELL = 'nu'
