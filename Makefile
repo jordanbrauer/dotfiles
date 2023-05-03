@@ -6,7 +6,7 @@ help: ## Show this help message
 	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(firstword $(MAKEFILE_LIST)) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
 
 sync: ## Sync all symlinks for the configurations
-	@stow vim config todo
+	@stow vim config todo git
 	@stow --dir=./config/.config/ --target="$$HOME/Library/Application Support/nushell" nushell
 
 install: ## Attempt to install dependencies. Typically only used for new computers
