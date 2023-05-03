@@ -15,6 +15,3 @@
 [alias]
 	ls = status -sb
     adog = log --all --decorate --oneline --graph
-
-[includeIf "gitdir:~/Code/neo/"]
-    path = .gitconfig.neo

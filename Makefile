@@ -15,5 +15,4 @@ install: ## Attempt to install dependencies. Typically only used for new compute
 	@brew update
 	@brew install node php fnm jq xsv bat fzf bottom glow ripgrep fd stow code-minimap tldr nushell vivid starship neovim hurl vhs gum
 	@npm install -g intelephense typescript typescript-language-server ts-node
-	@touch ~/.gitconfig.neo
 	@bat cache --build
