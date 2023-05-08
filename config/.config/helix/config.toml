@@ -1,0 +1,29 @@
+theme = "citylights"
+
+[editor]
+
+line-number = "relative"
+rulers = [80]
+mouse = false
+true-color = true
+color-modes = true
+
+[editor.statusline]
+
+left = ["mode", "spacer", "version-control", "spinner"]
+center = ["file-name", "file-modification-indicator"]
+right = ["diagnostics", "position", "position-percentage", "selections", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "λ NORMAL"
+mode.insert = "λ INSERT"
+mode.select = "λ SELECT"
+
+[editor.indent-guides]
+
+render = true
+character = "┊"
+skip-levels = 1
+
+[keys.normal]
+
+esc = ["collapse_selection", "keep_primary_selection"]

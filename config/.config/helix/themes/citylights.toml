@@ -1,0 +1,178 @@
+type = "sage"
+
+constructor = "steel"
+
+label = "teal"
+
+tag = "sage"
+
+attribute = "teal"
+
+namespace = "steel"
+
+special = "success" # fuzzy highlight?
+
+# Constants
+# -------------------
+
+"constant" = "red"
+"constant.builtin" = "red"
+"constant.character" = "red"
+"constant.numeric" = "red"
+
+# Strings
+#--------------------
+
+"string" = "blue"
+"string.regexp" = "red"
+"string.special" = "azure"
+
+# Comments
+#--------------------
+
+"comment" = "grey"
+
+# Variables
+#--------------------
+
+"variable" = "steel"
+"variable.parameter" = "orange"
+"variable.builtin" = "green"
+"variable.other.member" = "steel"
+
+# Punctuation
+#--------------------
+
+"punctuation" = "steel"
+"punctuation.special" = "steel"
+"punctuation.delimiter" = "azure"
+
+# Keywords
+#--------------------
+
+"keyword" = "azure"
+"keyword.function" = "sage"
+
+# Operators
+#--------------------
+
+"operator" = "azure"
+
+# Functions
+#--------------------
+
+"function" = "aqua"
+"function.builtin" = "teal"
+
+# Markup
+#--------------------
+
+# "markup.heading.marker" = { fg = "peach", modifiers = ["bold"] }
+# "markup.heading.1" = "lavender"
+# "markup.heading.2" = "mauve"
+# "markup.heading.3" = "green"
+# "markup.heading.4" = "yellow"
+# "markup.heading.5" = "pink"
+# "markup.heading.6" = "teal"
+# "markup.list" = "mauve"
+# "markup.bold" = { modifiers = ["bold"] }
+# "markup.italic" = { modifiers = ["italic"] }
+# "markup.link.url" = { fg = "rosewater", modifiers = ["italic", "underlined"] }
+# "markup.link.text" = "blue"
+# "markup.raw" = "flamingo"
+
+# Version Control
+#--------------------
+
+"diff.plus" = "green"
+"diff.minus" = "red"
+"diff.delta" = "blue"
+
+# User Interface
+#--------------------
+
+"ui.background" = { fg = "white", bg = "black" }
+
+"ui.linenr" = "grey"
+"ui.linenr.selected" = "steel"
+
+"ui.statusline" = { fg = "grey", bg = "black" }
+"ui.statusline.inactive" = { fg = "steel", bg = "black" }
+"ui.statusline.normal" = { fg = "azure", bg = "black", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "success", bg = "black", modifiers = ["bold"]  }
+"ui.statusline.select" = { fg = "blue", bg = "black", modifiers = ["bold"]  }
+
+"ui.popup" = { fg = "white", bg = "menu" }
+"ui.window" = { fg = "menu" }
+"ui.help" = { fg = "white", bg = "menu" }
+
+# "ui.bufferline" = { fg = "subtext0", bg = "mantle" }
+# "ui.bufferline.active" = { fg = "mauve", bg = "base", underline = { color = "mauve", style = "line" } }
+# "ui.bufferline.background" = { bg = "crust" }
+
+"ui.text" = "white"
+"ui.text.focus" = { fg = "white", bg = "surface0", modifiers = ["bold"] }
+"ui.text.inactive" = { fg = "overlay1" }
+
+"ui.virtual" = "overlay0"
+"ui.virtual.ruler" = { bg = "column" }
+"ui.virtual.indent-guide" = "select"
+"ui.virtual.inlay-hint" = { fg = "surface1", bg = "mantle" }
+
+"ui.selection" = { bg = "select" }
+
+"ui.cursor" = { fg = "black", bg = "white" }
+"ui.cursor.primary" = { fg = "black", bg = "white" }
+"ui.cursor.match" = { modifiers = ["bold"] }
+
+"ui.cursorline.primary" = { bg = "cursorline" }
+
+"ui.highlight" = { bg = "surface1", modifiers = ["bold"] }
+
+"ui.menu" = { fg = "white", bg = "menu" }
+"ui.menu.selected" = { fg = "menu", bg = "success", modifiers = ["bold"] }
+
+# Diagnostics
+#--------------------
+
+"diagnostic.error" = { underline = { color = "error", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.info" = { underline = { color = "blue", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "white", style = "curl" } }
+
+error = "error"
+warning = "yellow"
+info = "blue"
+hint = "white"
+
+[palette] # Citylights palette colors (black/white use terminal colours)
+
+subtext0 = "#a5adcb"
+overlay1 = "#8087a2"
+overlay0 = "#6e738d"
+surface1 = "#494d64"
+surface0 = "#363a4f"
+
+base = "#24273a"
+mantle = "#1e2030"
+crust = "#181926"
+
+# derived colors by blending existing palette colors
+cursorline = "#303347"
+
+grey = "#41505e"
+steel = "#718ca2"
+column = "#242b33"
+menu = "#14232d"
+select = "#363C43"
+red = "#e27e8d"
+error = "#d95468" # FIXME: color is wrong
+green = "#54af83"
+success = "#8bd49c"
+sage = "#008b94"
+blue = "#68a1f0"
+azure = "#5ec4ff"
+teal = "#70e1e8"
+aqua = "#9effff"
+yellow = "#ebda65"
+orange = "#ebbf83"
