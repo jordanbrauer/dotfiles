@@ -1,0 +1,31 @@
+[language-server.eslint]
+
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+
+[language-server.eslint.config]
+
+validate = "on"
+experimental = { useFlatConfig = false }
+rulesCustomizations = []
+run = "onType"
+problems = { shortenToSingleLine = false }
+nodePath = ""
+workingDirectory = { mode = "location" }
+
+# [language-server.efm-lsp-prettier]
+
+# command = "efm-langserver"
+
+# [language-server.efm-lsp-prettier.config]
+
+# documentFormatting = true
+# # languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
+# languages = { typescript = [ { formatCommand ="eslint --fix ${INPUT}", formatStdin = true } ] }
+
+[[language]]
+
+name = "typescript"
+auto-format = true
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, { name = "eslint", except-features = [ "format" ] } ]
+formatter = { command = "eslint", args = ["--stdin", "--fix"] }
