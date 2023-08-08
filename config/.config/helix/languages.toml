@@ -11,7 +11,22 @@ rulesCustomizations = []
 run = "onType"
 problems = { shortenToSingleLine = false }
 nodePath = ""
-workingDirectory = { mode = "location" }
+workingDirectory = { mode = "auto" }
+
+# format = true
+# nodePath = ""
+# onIgnoredFiles = "off"
+# packageManager = "npm"
+# quiet = false
+# rulesCustomizations = []
+# run = "onType"
+# useESLintClass = false
+# validate = "on"
+# codeAction = { disableRuleComment = { enable = true, location = "separateLine" }, showDocumentation = { enable = true } }
+# codeActionOnSave = { mode = "all" }
+# experimental = { }
+# problems = { shortenToSingleLine = false }
+# workingDirectory = { mode = "auto" }
 
 # [language-server.efm-lsp-prettier]
 
@@ -23,9 +38,9 @@ workingDirectory = { mode = "location" }
 # # languages = { typescript = [ { formatCommand ="prettier --stdin-filepath ${INPUT}", formatStdin = true } ] }
 # languages = { typescript = [ { formatCommand ="eslint --fix ${INPUT}", formatStdin = true } ] }
 
-[[language]]
+# [[language]]
 
-name = "typescript"
-auto-format = true
-language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, { name = "eslint", except-features = [ "format" ] } ]
-formatter = { command = "eslint", args = ["--stdin", "--fix"] }
+# name = "typescript"
+# auto-format = true
+# language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, { name = "eslint", except-features = [ "format" ] } ]
+# formatter = { command = "eslint", args = ["--stdin", "--fix"] }

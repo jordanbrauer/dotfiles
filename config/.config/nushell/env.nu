@@ -20,7 +20,7 @@ let-env PATH = (
 )
 let-env CLICOLOR = 1
 let-env SHELL = 'nu'
-let-env EDITOR = 'nvim'
+let-env EDITOR = 'hx'
 let-env FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 let-env GPG_TTY = (tty | str trim)
 let-env GREP_OPTIONS = '--color=auto'
@@ -42,9 +42,9 @@ def create_right_prompt [] {
 let-env PROMPT_COMMAND = { create_left_prompt }
 let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
 let-env PROMPT_INDICATOR = "" # handled by Starship – https://starship.rs/
-let-env PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#8bd49c' }) "λ + " (ansi reset)] | str collect)
-let-env PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#5ec4ff' }) "λ : " (ansi reset)] | str collect)
-let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " |> " (ansi reset)] | str collect)
+let-env PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#8bd49c' }) "λ + " (ansi reset)] | str join)
+let-env PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#5ec4ff' }) "λ : " (ansi reset)] | str join)
+let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " |> " (ansi reset)] | str join)
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
@@ -53,11 +53,11 @@ let-env PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#41505e' }) " |> " (ansi 
 let-env ENV_CONVERSIONS = {
   "PATH": {
     from_string: { |s| $s | split row (char esep) | path expand -n }
-    to_string: { |v| $v | path expand -n | str collect (char esep) }
+    to_string: { |v| $v | path expand -n | str join (char esep) }
   }
   "Path": {
     from_string: { |s| $s | split row (char esep) | path expand -n }
-    to_string: { |v| $v | path expand -n | str collect (char esep) }
+    to_string: { |v| $v | path expand -n | str join (char esep) }
   }
 }
 

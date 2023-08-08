@@ -101,7 +101,7 @@ let-env config = {
       {
         name: completion_menu
         only_buffer_difference: false
-        marker: ([(ansi -e { fg: $colours.Orange }) "λ | " (ansi reset)] | str collect)
+        marker: ([(ansi -e { fg: $colours.Orange }) "λ | " (ansi reset)] | str join)
         type: {
             layout: columnar
             columns: 4
@@ -117,7 +117,7 @@ let-env config = {
       {
         name: history_menu
         only_buffer_difference: true
-        marker: ([(ansi -e { fg: $colours.Yellow }) "λ ? " (ansi reset)] | str collect)
+        marker: ([(ansi -e { fg: $colours.Yellow }) "λ ? " (ansi reset)] | str join)
         type: {
             layout: list
             page_size: 10
@@ -131,7 +131,7 @@ let-env config = {
       {
         name: help_menu
         only_buffer_difference: true
-        marker: ([(ansi -e { fg: $colours.Yellow }) "λ ? " (ansi reset)] | str collect)
+        marker: ([(ansi -e { fg: $colours.Yellow }) "λ ? " (ansi reset)] | str join)
         type: {
             layout: description
             columns: 4

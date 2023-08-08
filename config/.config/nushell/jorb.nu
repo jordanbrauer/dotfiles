@@ -1,9 +1,9 @@
 # Generate a `.gitignore` file from a list of technology options
 export def gi [] {
-    let options = (["macos" "windows" "linux" "go" "node" "php" "elixir"] | str collect "\n")
-    let ignore = ($options | gum choose --no-limit | str trim | lines | str collect ',')
+    let options = (["macos" "windows" "linux" "go" "node" "php" "elixir"] | str join "\n")
+    let ignore = ($options | gum choose --no-limit | str trim | lines | str join ',')
 
-    fetch $"https://www.toptal.com/developers/gitignore/api/($ignore)"
+    http get $"https://www.toptal.com/developers/gitignore/api/($ignore)"
 }
 
 # Open an interactive REPL editor for
@@ -15,9 +15,9 @@ export def scratch [language?: string] {
     let settings = "let g:startify_disable_at_vimenter = 1 | set bt=nofile ls=0 noru nonu nornu | hi ColorColumn guibg=NONE ctermbg=NONE | hi VertSplit guibg=NONE ctermbg=NONE | hi NonText ctermfg=0 | Codi"
 
     if $language != null {
-        nvim -c ([$settings $language] | str collect " ")
+        nvim -c ([$settings $language] | str join " ")
     } else {
-        nvim -c ([$settings ($options | str collect "\n" | gum choose --limit 1 | str trim)] | str collect " ")
+        nvim -c ([$settings ($options | str join "\n" | gum choose --limit 1 | str trim)] | str join " ")
     }
 }
 
@@ -47,8 +47,8 @@ export def howto [
         "terraform"
         "typescript"
     ]
-    let selection = ($options | str collect "\n" | gum filter --placeholder "Choose a tool ..." | str trim)
-    let path = ($query | str trim | str collect "+")
+    let selection = ($options | str join "\n" | gum filter --placeholder "Choose a tool ..." | str trim)
+    let path = ($query | str trim | str join "+")
 
     curl $"https://cht.sh/($selection)/($path)"
 }

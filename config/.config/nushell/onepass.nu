@@ -22,7 +22,7 @@ export def-env "login" [account: string = 'neofinancial' --return] {
         let chosen = (if $account != null {
             $account
         } else {
-            ($options | str collect "\n" | gum filter --placeholder "Choose account..." | str trim)
+            ($options | str join "\n" | gum filter --placeholder "Choose account..." | str trim)
         })
 
         op signin $chosen --raw | str trim
@@ -37,14 +37,14 @@ export def-env "login" [account: string = 'neofinancial' --return] {
 export def-env "word" [record: string] {
     onepass login
     op get item $"($record)" --session $env.OP_SESSION --fields password | pbcopy
-    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" password to the clipboard'] | str collect)
+    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" password to the clipboard'] | str join)
 }
 
 # Copy an items MFA token to the clipboard
 export def-env "mfa" [record: string] {
     onepass login
     op get totp $"($record)" --session $env.OP_SESSION | pbcopy
-    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" MFA to the clipboard'] | str collect)
+    print ([(ansi green) '  ' (ansi reset) ' Copied your "' $record '" MFA to the clipboard'] | str join)
 }
 
 # Look at at a given items details
