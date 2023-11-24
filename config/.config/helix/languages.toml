@@ -1,0 +1,35 @@
+[[language]]
+
+name = "typescript"
+language-servers = ["typescript-language-server"]
+formatter = { command = 'npx', args = ["prettier", "--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+
+name = "tsx"
+language-servers = ["typescript-language-server"]
+formatter = { command = 'npx', args = ["prettier", "--parser", "typescript"] }
+auto-format = true
+
+[language-server.eslint]
+
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+
+[language-server.eslint.config]
+
+format = true
+nodePath = ""
+onIgnoredFiles = "off"
+packageManager = "npm"
+quiet = false
+rulesCustomizations = []
+run = "onType"
+useESLintClass = false
+validate = "on"
+codeAction = { disableRuleComment = { enable = true, location = "separateLine" }, showDocumentation = { enable = true } }
+codeActionOnSave = { mode = "all" }
+experimental = { useFlatConfig = false }
+problems = { shortenToSingleLine = false }
+workingDirectory = { mode = "auto" }
