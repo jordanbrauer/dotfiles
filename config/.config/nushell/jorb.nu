@@ -21,6 +21,11 @@ export def scratch [language?: string] {
     }
 }
 
+# Print the top 10 (by default) commands from the history file
+export def freq [commands: int = 10] {
+    history | get command | each {|e| $e | split row -r '\s+' | first} | to text | awk '{CMD[$1]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v ./ | column -c3 -s " " -t | ^sort -nr | nl | head -n $commands | lines | str trim | split column -r '\s+' | rename place invocations percentage command | reject place
+}
+
 # Begin a new typing test
 export def tt [] {
     ^tt -theme citylights -showwpm -quotes en -json | from json
