@@ -22,7 +22,7 @@ let theme = (CityLights | get theme)
 let colours = (CityLights | get colour)
 
 # The default config record. This is where much of your global configuration is setup.
-let-env config = {
+$env.config = {
   edit_mode: vi # emacs, vi
   color_config: $theme
   use_ansi_coloring: true
@@ -65,7 +65,7 @@ let-env config = {
   }
 
   filesize: {
-    metric: false
+    metric: true
     format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
   }
 
@@ -77,10 +77,6 @@ let-env config = {
     always_trash: false
   }
 
-  cd: {
-    abbreviations: false # set to true to allow you to do things like cd s/o/f and nushell expand it to cd some/other/folder
-  }
-
   hooks: {
     pre_prompt: [{
         print "\n" # blank line between output & prompt
@@ -90,7 +86,7 @@ let-env config = {
     }]
     env_change: {
       PWD: [{|before, after|
-        $nothing  # replace with source code to run if the PWD environment is different since the last repl input
+        null  # replace with source code to run if the PWD environment is different since the last repl input
       }]
     }
   }
