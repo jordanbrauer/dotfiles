@@ -13,7 +13,7 @@ file-picker.hidden = false
 
 left = ["mode", "spacer", "version-control", "spinner"]
 center = ["file-name", "file-modification-indicator"]
-right = ["diagnostics", "position", "position-percentage", "selections", "file-encoding", "file-line-ending", "file-type"]
+right = ["diagnostics", "position", "position-percentage", "primary-selection-length", "selections", "file-encoding", "file-line-ending", "file-type"]
 separator = "│"
 mode.normal = "λ NORMAL"
 mode.insert = "λ INSERT"
