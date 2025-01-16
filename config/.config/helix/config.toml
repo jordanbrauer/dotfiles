@@ -1,4 +1,4 @@
-theme = "citylights"
+theme = "darkvoid"
 
 [editor]
 
@@ -8,6 +8,12 @@ mouse = false
 true-color = true
 color-modes = true
 file-picker.hidden = false
+end-of-line-diagnostics = "hint"
+shell = ["nu", "--stdin", "-c"]
+
+[editor.inline-diagnostics]
+
+cursor-line = "error"
 
 [editor.statusline]
 
@@ -28,3 +34,4 @@ skip-levels = 1
 [keys.normal]
 
 esc = ["collapse_selection", "keep_primary_selection"]
+space.n = "@\"%p<space>Yd"

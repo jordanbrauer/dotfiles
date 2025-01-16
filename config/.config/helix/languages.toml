@@ -1,16 +1,7 @@
-[[language]]
+[language-server.biome]
 
-name = "typescript"
-language-servers = ["typescript-language-server"]
-formatter = { command = 'npx', args = ["prettier", "--parser", "typescript"] }
-auto-format = true
-
-[[language]]
-
-name = "tsx"
-language-servers = ["typescript-language-server"]
-formatter = { command = 'npx', args = ["prettier", "--parser", "typescript"] }
-auto-format = true
+command = "biome"
+args = ["lsp-proxy"]
 
 [language-server.eslint]
 
@@ -33,3 +24,31 @@ codeActionOnSave = { mode = "all" }
 experimental = { useFlatConfig = false }
 problems = { shortenToSingleLine = false }
 workingDirectory = { mode = "auto" }
+
+[[language]]
+
+name = "html"
+scope = "text.html.basic"
+injection-regex = "html"
+file-types = ["html", "htm", "shtml", "xhtml", "xht", "jsp", "asp", "aspx", "jshtm", "volt", "rhtml", "edge"]
+language-servers = [ "vscode-html-language-server" ]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
+
+name = "javascript"
+language-servers = [{ name = "typescript-language-server", except-features = ["format"] }, "biome"]
+auto-format = true
+
+[[language]]
+
+name = "typescript"
+language-servers = [{ name = "typescript-language-server", except-features = ["format"] }, "biome"]
+auto-format = true
+
+[[language]]
+
+name = "tsx"
+language-servers = [{ name = "typescript-language-server", except-features = ["format"] }, "biome"]
+auto-format = true

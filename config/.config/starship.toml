@@ -9,7 +9,7 @@ add_newline = false # Warp & left+right prompts do not support newlines well
 
 [time]
 format = "[at $time]($style) "
-style = "fg:#41505e"
+style = "fg:#585858"
 disabled = false
 
 [character]
@@ -22,7 +22,7 @@ truncate_to_repo = false
 truncation_length = 1
 
 [username]
-format = "[$user](fg:#008b94) "
+format = "[$user](fg:#b2d8d8) "
 show_always = true
 
 [git_branch]

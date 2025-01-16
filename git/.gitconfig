@@ -11,7 +11,9 @@
 [pull]
 	rebase = false
 [init]
-	defaultBranch = trunk
+	defaultBranch = main
 [alias]
 	ls = status -sb
     adog = log --all --decorate --oneline --graph
+[commit]
+	gpgsign = false
