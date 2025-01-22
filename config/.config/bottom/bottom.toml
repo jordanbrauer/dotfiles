@@ -1,0 +1,52 @@
+[flags]
+
+battery = true
+tree = true
+
+[styles]
+
+[styles.tables]
+headers = {color = "#e1e1e1", bold = true}
+
+[styles.graphs]
+graph_color = "gray"
+legend_text = {color = "gray"}
+
+[styles.widgets]
+border_color = "dark gray"
+selected_border_color = "gray"
+widget_title = {color = "#1bfd9c"}
+text = {color = "gray"}
+selected_text = {color = "#c0c0c0", bg_color = "#303030"}
+disabled_text = {color = "dark gray"}
+
+[styles.memory]
+ram_color = "#66b2b2"
+swap_color = "#b2d8d8"
+cache_color = "light red"
+
+[styles.network]
+rx_color = "#66b2b2"
+tx_color = "#b2d8d8"
+
+[[row]]
+  ratio=2
+  [[row.child]]
+    ratio=3
+    type="proc"
+  [[row.child]]
+    ratio=4
+    [[row.child.child]]
+      type="cpu"
+    [[row.child.child]]
+      type="mem"
+    [[row.child.child]]
+      type="net"
+    [[row.child]]
+      ratio=2
+      [[row.child.child]]
+        type="batt"
+      [[row.child.child]]
+        type="temp"
+      [[row.child.child]]
+        type="disk"

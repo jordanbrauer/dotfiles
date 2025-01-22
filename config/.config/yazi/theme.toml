@@ -1,0 +1,115 @@
+# general 
+[manager]
+syntect_theme = "~/.dotfiles/config/.config/yazi/darkvoid.xml"
+marker_copied   = { fg = "green",   bg = "green" }
+marker_cut      = { fg = "red",     bg = "red" }
+marker_marked   = { fg = "#bdfe58", bg = "#bdfe58" }
+marker_selected = { fg = "cyan",    bg = "cyan" }
+
+cwd = { fg = "#1bfd9c", bold = true } # yellow
+hovered = { bg = "#303030", bold = true }
+preview_hovered = { reversed = false }
+
+tab_active   = { fg = "#1bfd9c", bold = true, italic = true }
+tab_inactive = { fg = "#585858" }
+tab_width    = 1
+
+# default bg
+count_copied   = { fg = "green", reversed = true } # green
+count_cut      = { fg = "red", reversed = true } # red
+count_selected = { fg = "cyan", reversed = true } # yellow
+
+border_symbol = "│"
+border_style = { fg = "#585858"} # white
+title_format = ""
+
+# status-line
+[status]
+separator_open = ""
+separator_close = ""
+separator_style = { fg = "reset" } # light bg
+
+perm_type = { fg = "#1bfd9c" } # green
+perm_read = { fg = "#1bfd9c" } # yellow
+perm_write = { fg = "#1bfd9c" } # red
+perm_exec = { fg = "#1bfd9c" } # cyan
+perm_sep = { fg = "#585858" } # magenta
+
+progress_label  = { fg = "#8ba4b0", bg = "#363646", bold = true }
+progress_normal = { fg = "#363646", bg = "#1f1f28" }
+progress_error  = { fg = "#363646", bg = "#1f1f28" }
+
+[mode]
+normal_main = { fg = "#c0c0c0", bg = "#1c1c1c" }
+normal_alt = { fg = "#c0c0c0", bg = "#1c1c1c" }
+
+# Select mode
+select_main = { fg = "#1c1c1c", bg = "#1bfd9c" }
+select_alt = { bg = "#1c1c1c", fg = "#1bfd9c" }
+
+# Unset mode
+unset_main = { fg = "#1c1c1c", bg = "#1bfd9c" }
+unset_alt = { bg = "#1c1c1c", fg = "#1bfd9c" }
+
+[select]
+border   = { fg = "#7fb4ca" } # blue
+active   = { fg = "#938aa9", bold = true } # magenta
+inactive = {}
+
+[input]
+border   = { fg = "#c0c0c0" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[completion]
+border   = { fg = "#7fb4ca" } # blue
+active   = { reversed = true }
+inactive = {}
+
+[tasks]
+border  = { fg = "#7fb4ca" } # blue
+title   = {}
+hovered = { fg = "#938aa9" } # magenta
+
+[which]
+cols = 2
+separator = " - "
+separator_style = { fg = "#727169" } # darkgrey
+mask = { bg = "#16161d" } # dark bg
+rest = { fg = "#727169" } # darkgrey
+cand = { fg = "#8ba4b0" }
+desc = { fg = "#565666" }
+
+[help]
+on      = { fg = "#7aa89f" } # cyan
+run     = { fg = "#938aa9" } # magenta
+desc    = {}
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#090618", bg = "#c5c9c5" } # white
+
+[notify]
+title_info  = { fg = "#87a987" } # green
+title_warn  = { fg = "#e6c384" } # yellow
+title_error = { fg = "#E46876" } # red
+
+# files
+[filetype]
+rules = [
+    { mime = "image/*", fg = "#66b2b2" },
+    { mime = "{audio,video}/*", fg = "#66b2b2" },
+    { mime = "application/{,g}zip", fg = "#e1e1e1" },
+    { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#e46876" },
+    { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "yellow" },
+    { name = "*", is = "link", fg = "cyan" },
+    { name = "*", is = "orphan", fg = "#dea6a0" },
+    { name = "*", is = "exec", fg = "#1bfd9c" },
+    { name = "*/", fg = "#d1d1d1"},
+    { name = "*", fg = "#c0c0c0"}
+]
+
+[icon]
+
+globs = []
+files = []
+exts  = []

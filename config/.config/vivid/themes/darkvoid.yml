@@ -28,7 +28,7 @@ core:
   reset_to_normal: {}
 
   directory:
-    foreground: white
+    foreground: "d1d1d1"
 
   symlink:
     foreground: cyan

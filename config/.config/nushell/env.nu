@@ -31,7 +31,7 @@ $env.PROMPT_INDICATOR = ""
 $env.PROMPT_COMMAND = {(starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
 $env.PROMPT_COMMAND_RIGHT = {(starship prompt --right --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
 $env.PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#bdfe58' attr: b }) "λ " (ansi reset)] | str join)
-$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#c0c0c0' attr: b}) "λ " (ansi reset)] | str join)
+$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#c0c0c0' attr: b }) "λ " (ansi reset)] | str join)
 $env.PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#404040' }) "|> " (ansi reset)] | str join)
 
 $env.NU_LIB_DIRS = [
@@ -64,3 +64,10 @@ $env.GREP_OPTIONS = '--color=auto'
 $env.FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 $env.STARSHIP_SHELL = "nu"
 $env.JQ_COLORS = "0;36:0;36:0;36:0;34:0;37:0;37:0;37:2;37"
+$env.FZF_DEFAULT_OPTS = '--color=fg:#c0c0c0,fg+:#f1f1f1,bg:#1c1c1c,bg+:#1c1c1c
+  --color=hl:#bdfe58,hl+:#bdfe58,info:#c0c0c0,marker:#1bfd9c
+  --color=prompt:#bdfe58,spinner:#1bfd9c,pointer:#bdfe58,header:#f1f1f1
+  --color=border:#585858,label:#3c3c3c,query:#c0c0c0
+  --border="rounded" --border-label="" --preview-window="border-rounded" --padding=1
+  --prompt="λ " --marker="+" --pointer=">" --separator="─"
+  --scrollbar="|" --layout="reverse" --info="right"'
