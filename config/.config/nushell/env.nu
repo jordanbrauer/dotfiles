@@ -30,9 +30,9 @@ $env.PATH = ($env.PATH | prepend [ $"($env.FNM_MULTISHELL_PATH)/bin" ])
 $env.PROMPT_INDICATOR = ""
 $env.PROMPT_COMMAND = {(starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
 $env.PROMPT_COMMAND_RIGHT = {(starship prompt --right --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
-$env.PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#bdfe58' }) "λ + " (ansi reset)] | str join)
-$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#c0c0c0' }) "λ : " (ansi reset)] | str join)
-$env.PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#404040' }) " |> " (ansi reset)] | str join)
+$env.PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#bdfe58' attr: b }) "λ " (ansi reset)] | str join)
+$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#c0c0c0' attr: b}) "λ " (ansi reset)] | str join)
+$env.PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#404040' }) "|> " (ansi reset)] | str join)
 
 $env.NU_LIB_DIRS = [
     ($nu.config-path | path dirname | path join 'scripts')
@@ -55,6 +55,7 @@ $env.ENV_CONVERSIONS = {
 
 $env.SHELL = 'nu'
 $env.EDITOR = 'hx'
+$env.VISUAL = 'hx'
 $env.CLICOLOR = 1
 $env.LS_COLORS = (^vivid generate darkvoid | str trim)
 $env.VIMRC = '~/.vimrc'
@@ -62,3 +63,4 @@ $env.GPG_TTY = (tty | str trim)
 $env.GREP_OPTIONS = '--color=auto'
 $env.FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 $env.STARSHIP_SHELL = "nu"
+$env.JQ_COLORS = "0;36:0;36:0;36:0;34:0;37:0;37:0;37:2;37"

@@ -7,7 +7,6 @@ alias todo = todo.sh
 alias cat = bat
 alias vim = nvim
 alias top = btm
-# alias "nb q" = ^nb q -l
 
 $env.config = {
   show_banner: false
@@ -121,12 +120,12 @@ $env.config.keybindings = [
 ]
 
 $env.config.hooks = {
-  pre_prompt: [
-    { print "\n"  }
-  ]
-  pre_execution: [
-    { print "" }
-  ]
+  # pre_prompt: [
+  #   { print "\n"  }
+  # ]
+  # pre_execution: [
+  #   { print "" }
+  # ]
   env_change: {
     PWD: [
       {|before, after| null}
@@ -218,7 +217,7 @@ $env.config.color_config = {
   bool: $palette.Bool
   int: $palette.Constant
   filesize: $palette.Constant
-  duration: $palette.Green
+  duration: $palette.Constant
   date: $palette.Constant
   range: $palette.Operator
   float: $palette.Constant
@@ -276,23 +275,23 @@ $env.config.menus = [
   {
     name: completion_menu
     only_buffer_difference: false
-    marker: ([(ansi -e { fg: $colours.Operator }) "λ | " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
     type: {
-        layout: columnar
+        layout: ide
         columns: 4
         col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
         col_padding: 2
     }
     style: {
         text: white
-        selected_text: white_reverse
+        selected_text: $colours.Green
         description_text: $colours.Comment
     }
   }
   {
     name: history_menu
     only_buffer_difference: true
-    marker: ([(ansi -e { fg: $colours.Operator }) "λ ? " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: list
         page_size: 10
@@ -306,7 +305,7 @@ $env.config.menus = [
   {
     name: help_menu
     only_buffer_difference: true
-    marker: ([(ansi -e { fg: $colours.Operator }) "λ ? " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: description
         columns: 4
@@ -327,7 +326,7 @@ $env.config.menus = [
   {
     name: commands_menu
     only_buffer_difference: false
-    marker: "λ # "
+    marker: "λ "
     type: {
         layout: columnar
         columns: 4
@@ -335,7 +334,7 @@ $env.config.menus = [
         col_padding: 2
     }
     style: {
-        text: white
+        text: white_bold
         selected_text: white_reverse
         description_text: $colours.Comment
     }
@@ -348,13 +347,13 @@ $env.config.menus = [
   {
     name: vars_menu
     only_buffer_difference: true
-    marker: "λ # "
+    marker: "λ "
     type: {
         layout: list
         page_size: 10
     }
     style: {
-        text: white
+        text: white_bold
         selected_text: white_reverse
         description_text: $colours.Comment
     }
@@ -368,7 +367,7 @@ $env.config.menus = [
   {
     name: commands_with_description
     only_buffer_difference: true
-    marker: "λ # "
+    marker: "λ "
     type: {
         layout: description
         columns: 4
@@ -378,7 +377,7 @@ $env.config.menus = [
         description_rows: 10
     }
     style: {
-        text: white
+        text: white_bold
         selected_text: white_reverse
         description_text: $colours.Comment
     }
@@ -506,9 +505,12 @@ def "nu-complete code projects" [] {
     ls ~/Code/github.com/*/* | where type == dir | get name | each {|l| path split | last 2 | path join}
 }
 
+# Open the given project in a new or existing terminal tab
 export extern "code open" [
-    project: string@"nu-complete code projects"
+    ...project: string@"nu-complete code projects" # the name of the project to open
 ]
+
+alias "code op" = code open
 
 # Custom completions for external commands (those outside of Nushell)
 # Each completions has two parts: the form of the external command, including its flags and parameters

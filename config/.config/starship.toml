@@ -1,19 +1,24 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = " $username"
-right_format = "$directory$git_branch$time"
+format = "" # prompt and vim mode handled by nushell
+right_format = "$directory$git_branch$golang$php$lua$nodejs$time"
 add_newline = false # Warp & left+right prompts do not support newlines well
 
 # Note: Every module must end with an empty space to provide consistent padding
 
 [time]
-format = "[at $time]($style) "
+format = "[at $time]($style)"
 style = "fg:#585858"
 disabled = false
 
+[cmd_duration]
+format = " [took $duration]($style)"
+style="fg:#585858"
+
 [character]
-success_symbol = "[➜](bold green)"
+success_symbol = "[➜](bold fg:#1bfd9c)"
+error_symbol = '[ⅹ](bold fg:#dea6a0)'
 
 [directory]
 format = "[$path]($style) "
@@ -22,10 +27,41 @@ truncate_to_repo = false
 truncation_length = 1
 
 [username]
-format = "[$user](fg:#b2d8d8) "
+format = "[$user](bold white) "
 show_always = true
 
 [git_branch]
 format = "[$symbol $branch]($style) "
-symbol = ""
+symbol = ""
 style = "bold green"
+
+[golang]
+format = "[via](fg:#585858) [$version]($style) "
+version_format = "go $major.$minor"
+symbol = ""
+
+[php]
+format = "[via](fg:#585858) [$version]($style) "
+version_format = "php $major.$minor"
+symbol = ""
+
+[lua]
+format = "[via](fg:#585858) [$version]($style) "
+version_format = "lua $major.$minor"
+symbol = ""
+
+[nodejs]
+format = "[via](fg:#585858) [$version]($style) "
+version_format = "node $major"
+symbol = ""
+
+[aws]
+force_display = false
+symbol = ""
+
+[kubernetes]
+disabled = false
+# format = "$context"
+symbol = ""
+style = "bold blue"
+detect_env_vars = ["AWS_SSO_PROFILE"]
