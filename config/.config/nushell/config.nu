@@ -36,12 +36,45 @@ $env.config.keybindings = [
     mode: [emacs, vi_normal, vi_insert]
     event: { send: menuprevious }
   }
+  # {
+  #   name: history_menu
+  #   modifier: control
+  #   keycode: char_r
+  #   mode: emacs
+  #   event: { send: menu name: history_menu }
+  # }
   {
-    name: history_menu
+    name: fuzzy_history
     modifier: control
     keycode: char_r
-    mode: emacs
-    event: { send: menu name: history_menu }
+    mode: [emacs, vi_normal, vi_insert]
+    event: [
+      {
+        send: ExecuteHostCommand
+        cmd: "do {
+          $env.SHELL = "/opt/homebrew/bin/bash"
+          commandline edit --insert (
+            history
+            | get command
+            | reverse
+            | uniq
+            | str join (char -i 0)
+            | fzf --scheme=history 
+                --read0
+                --prompt=""
+                --padding=0
+                --bind 'ctrl-/:change-preview-window(right,70%|right)'
+                --layout=reverse
+                --height=40%
+                --preview='echo -n {} | nu --stdin -c \'nu-highlight\''
+                # Run without existing commandline query for now to test composability
+                # -q (commandline)
+            | decode utf-8
+            | str trim
+          )
+        }"
+      }
+    ]
   }
   {
     name: next_page
