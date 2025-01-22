@@ -1,0 +1,20 @@
+colors:
+  body: none
+  date: cyan
+  tags: green
+  title: blue
+default_hour: 9
+default_minute: 0
+editor: hx
+encrypt: false
+highlight: true
+indent_character: '|'
+journals:
+  default:
+    journal: /Users/jorb/.local/share/jrnl/journal.txt
+linewrap: 79
+tagsymbols: '#@'
+template: false
+timeformat: '%F %R'
+version: v4.2
+display_format: pretty

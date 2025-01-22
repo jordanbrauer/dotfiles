@@ -1,0 +1,5 @@
+[repository]
+host = 'github.com'
+
+[user]
+workspace = '/Users/jorb/Code'

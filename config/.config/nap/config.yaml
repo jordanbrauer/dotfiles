@@ -1,0 +1,17 @@
+# # Configuration
+# home: ~/.local/state/nap
+# default_language: go
+# theme: nord
+
+# Colors
+background: "#1c1c1c"
+foreground: "#c0c0c0"
+primary_color: "#AFBEE1"
+primary_color_subdued: "#64708D"
+green: "#baffc9"
+bright_green: "#baffc9"
+bright_red: "#ffb3ba"
+red: "#ffb3ba"
+black: "#ffb3ba"
+gray: "#585858"
+white: "#ffb3ba"
