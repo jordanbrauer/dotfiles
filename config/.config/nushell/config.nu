@@ -539,9 +539,23 @@ def "nu-complete code projects" [] {
 }
 
 # Open the given project in a new or existing terminal tab
-export extern "code open" [
-    ...project: string@"nu-complete code projects" # the name of the project to open
-]
+def "code open" [
+  ...project: string@"nu-complete code projects" # the name of the project to open
+] {
+  if ($project | length) == 0 {
+    nu-complete code projects
+      | to text
+      | fzf -m --bind 'ctrl-c:clear-query' --bind 'enter:become(code op {+})' --height=25% --header-border rounded --header "select code repo(s)" --header-label="open" --header-label-pos=3 --prompt "" --padding=0
+    return    
+  }
+
+  ^code open ($project | str join " ")
+}
+
+# # Open the given project in a new or existing terminal tab
+# export extern "code open" [
+#     ...project: string@"nu-complete code projects" # the name of the project to open
+# ]
 
 alias "code op" = code open
 

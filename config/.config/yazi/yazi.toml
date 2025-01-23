@@ -1,6 +1,6 @@
 [manager]
 
-ratio = [0, 4, 6]
+ratio = [0, 4, 0]
 sort_dir_first = true
 linemode = "none"
 
@@ -8,3 +8,9 @@ linemode = "none"
 
 wrap = "no"
 tab_size = 4
+
+[opener]
+
+edit = [
+  { run = 'nu ~/.dotfiles/config/.config/yazi/open_file.nu "$0"', desc = "Open File in a new window", block = true },
+]

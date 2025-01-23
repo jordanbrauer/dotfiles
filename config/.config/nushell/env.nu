@@ -64,6 +64,7 @@ $env.GREP_OPTIONS = '--color=auto'
 $env.FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 $env.STARSHIP_SHELL = "nu"
 $env.JQ_COLORS = "0;36:0;36:0;36:0;34:0;37:0;37:0;37:2;37"
+# https://vitormv.github.io/fzf-themes#eyJib3JkZXJTdHlsZSI6InJvdW5kZWQiLCJib3JkZXJMYWJlbCI6IiIsImJvcmRlckxhYmVsUG9zaXRpb24iOjAsInByZXZpZXdCb3JkZXJTdHlsZSI6InJvdW5kZWQiLCJwYWRkaW5nIjoiIiwibWFyZ2luIjoiMCIsInByb21wdCI6Is67ICIsIm1hcmtlciI6IisiLCJwb2ludGVyIjoiPiIsInNlcGFyYXRvciI6IuKUgCIsInNjcm9sbGJhciI6InwiLCJsYXlvdXQiOiJyZXZlcnNlIiwiaW5mbyI6InJpZ2h0IiwiY29sb3JzIjoiZmc6I2MwYzBjMCxmZys6I2YxZjFmMSxiZzojMWMxYzFjLGJnKzojMWMxYzFjLGhsOiNiZGZlNTgsaGwrOiNiZGZlNTgsaW5mbzojYzBjMGMwLG1hcmtlcjojMWJmZDljLHByb21wdDojYmRmZTU4LHNwaW5uZXI6IzFiZmQ5Yyxwb2ludGVyOiNiZGZlNTgsaGVhZGVyOiNmMWYxZjEsYm9yZGVyOiM1ODU4NTgsbGFiZWw6IzNjM2MzYyxxdWVyeTojYzBjMGMwIn0=
 $env.FZF_DEFAULT_OPTS = '--color=fg:#c0c0c0,fg+:#f1f1f1,bg:#1c1c1c,bg+:#1c1c1c
   --color=hl:#bdfe58,hl+:#bdfe58,info:#c0c0c0,marker:#1bfd9c
   --color=prompt:#bdfe58,spinner:#1bfd9c,pointer:#bdfe58,header:#f1f1f1
