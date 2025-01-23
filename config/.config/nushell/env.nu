@@ -72,3 +72,16 @@ $env.FZF_DEFAULT_OPTS = '--color=fg:#c0c0c0,fg+:#f1f1f1,bg:#1c1c1c,bg+:#1c1c1c
   --border="rounded" --border-label="" --preview-window="border-rounded" --padding=1
   --prompt="λ " --marker="+" --pointer=">" --separator="─"
   --scrollbar="|" --layout="reverse" --info="right"'
+# $env.NAP_CONFIG = "~/.config/nap/config.yaml" # NOTE: file does not work for some reason
+$env.NAP_THEME = "bw"
+$env.NAP_PRIMARY_COLOR = "#1bfd9c"
+$env.NAP_PRIMARY_COLOR_SUBDUED = "#303030"
+$env.NAP_RED = "#dea6a0"
+$env.NAP_BRIGHT_RED = "#dea6a0"
+$env.NAP_GREEN = "#baffc9"
+$env.NAP_BRIGHT_GREEN = "#baffc9"
+$env.NAP_FOREGROUND = "#c0c0c0"
+$env.NAP_BACKGROUND = "#1c1c1c"
+$env.NAP_BLACK = "#1c1c1c"
+$env.NAP_GRAY = "#404040"
+$env.NAP_WHITE = "#d1d1d1"
