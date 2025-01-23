@@ -1,6 +1,7 @@
 #!/usr/bin/env nu
 
-export def is_hx_running [list_clients_output: string] {
+# taken from yazelix: https://github.com/luccahuguet/yazelix/blob/4a9582266afd50b54729e691ecbb69f64be7e23e/yazi/open_file.nu#L3-L40
+def is_hx_running [list_clients_output: string] {
     let cmd = $list_clients_output | str trim | str downcase
     
     # Split the command into parts
@@ -38,8 +39,6 @@ export def is_hx_running [list_clients_output: string] {
     
     $result
 }
-
-
 
 def main [file_path: path] {
     # Move focus to the next pane
