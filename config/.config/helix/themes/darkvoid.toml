@@ -35,6 +35,7 @@
 "ui.virtual.ruler" = { bg = "visual" }
 "ui.virtual.whitespace" = { fg = "line_nr" }
 "ui.virtual.indent-guide" = { fg = "line_nr" }
+"ui.virtual.jump-label" = { fg = "func", bg = "visual", modifiers = ["bold"] }
 "ui.menu" = { fg = "pmenu_fg", bg = "pmenu_bg" }
 "ui.menu.selected" = { fg = "bg", bg = "pmenu_sel_bg", modifiers = ["bold"] }
 "ui.menu.scroll" = { fg = "pmenu_sel_bg", bg = "pmenu_bg" }
