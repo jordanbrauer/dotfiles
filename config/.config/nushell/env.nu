@@ -13,6 +13,7 @@ $env.PATH = (
     | append (echo [$env.HOME '.composer/vendor/bin'] | path join)
     | append (echo [$env.GOPATH 'bin'] | path join)
     | append (echo [$env.HOME '.bun/bin'] | path join)
+    | append (echo [$env.HOME '.cargo/bin'] | path join)
 )
 
 load-env (
@@ -56,6 +57,7 @@ $env.ENV_CONVERSIONS = {
 $env.SHELL = 'nu'
 $env.EDITOR = 'hx'
 $env.VISUAL = 'hx'
+$env.MANPAGER = "less -R --use-color -Dd+231 -Du+253 -DS+49.240"
 $env.CLICOLOR = 1
 $env.LS_COLORS = (^vivid generate darkvoid | str trim)
 $env.VIMRC = '~/.vimrc'
@@ -85,3 +87,5 @@ $env.NAP_BACKGROUND = "#1c1c1c"
 $env.NAP_BLACK = "#1c1c1c"
 $env.NAP_GRAY = "#404040"
 $env.NAP_WHITE = "#d1d1d1"
+
+zoxide init nushell | save -f ~/.zoxide.nu
