@@ -2,7 +2,7 @@ start-at-login = true
 
 after-startup-command = [
     'exec-and-forget sketchybar',
-    'exec-and-forget borders active_color=0xff1bfd9c inactive_color=0xff494d64 width=5.0'
+    'exec-and-forget borders active_color=0xff1bfd9c inactive_color=0xff494d64 width=5.0 blacklist=Loom'
 ]
 
 exec-on-workspace-change = [
@@ -38,15 +38,15 @@ outer.right =      10
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+alt-n = 'focus left'
+alt-e = 'focus down'
+alt-u = 'focus up'
+alt-i = 'focus right'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+alt-shift-n = 'move left'
+alt-shift-e = 'move down'
+alt-shift-u = 'move up'
+alt-shift-i = 'move right'
 
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
@@ -83,10 +83,10 @@ r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+alt-shift-n = ['join-with left', 'mode main']
+alt-shift-e = ['join-with down', 'mode main']
+alt-shift-u = ['join-with up', 'mode main']
+alt-shift-i = ['join-with right', 'mode main']
 
 down = 'volume down'
 up = 'volume up'
