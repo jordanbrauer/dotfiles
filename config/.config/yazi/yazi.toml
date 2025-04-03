@@ -1,6 +1,6 @@
 [manager]
 
-ratio = [0, 4, 0]
+ratio = [0, 4, 4]
 sort_dir_first = true
 linemode = "none"
 

@@ -104,7 +104,7 @@ rules = [
     { name = "*", is = "link", fg = "cyan" },
     { name = "*", is = "orphan", fg = "#dea6a0" },
     { name = "*", is = "exec", fg = "#1bfd9c" },
-    { name = "*/", fg = "#d1d1d1"},
+    { name = "*/", fg = "#b2d8d8"},
     { name = "*", fg = "#c0c0c0"}
 ]
 
