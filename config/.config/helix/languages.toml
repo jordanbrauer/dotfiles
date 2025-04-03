@@ -8,6 +8,11 @@ args = ["lsp-proxy"]
 command = "vscode-eslint-language-server"
 args = ["--stdio"]
 
+[language-server.zk]
+
+command = "zk"
+args = ["lsp"]
+
 [language-server.eslint.config]
 
 format = true
@@ -24,6 +29,15 @@ codeActionOnSave = { mode = "all" }
 experimental = { useFlatConfig = false }
 problems = { shortenToSingleLine = false }
 workingDirectory = { mode = "auto" }
+
+[[language]]
+
+name = "markdown"
+injection-regex = "md|markdown"
+language-servers = [{ name = "zk"}, { name = "marksman"}]
+roots = [".zk"]
+scope = "source.md"
+file-types = ["md"]
 
 [[language]]
 
