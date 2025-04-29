@@ -7,6 +7,7 @@ alias todo = todo.sh
 alias cat = bat
 alias vim = nvim
 alias top = btm
+alias rot13 = tr 'A-Za-z' 'N-ZA-Mn-za-m'
 
 $env.config = {
   show_banner: false
