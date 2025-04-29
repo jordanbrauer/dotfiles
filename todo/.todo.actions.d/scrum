@@ -25,7 +25,7 @@ list() {
 completed() {
     # date -u +'%Y-%m-'$(printf '%02d' $(expr $(date -u +'%d') - $1))
     # return
-    printf "\033[38;5;241m%s\033[0m\n\n" "$(grep $(date -u +'%Y-%m-'$(printf '%02d' $(expr $(date -u +'%d') - $1))) ~/Code/todo/done.txt || printf 'N/A')"
+    printf "\033[38;5;241m%s\033[0m\n\n" "$(grep $(date -u +'%Y-%m-'$(printf '%02d' $(expr $(date -u +'%d') - $1))) ~/.local/share/todo/done.txt || printf 'N/A')"
 }
 
 what=$2
