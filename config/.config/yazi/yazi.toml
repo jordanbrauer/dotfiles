@@ -1,8 +1,10 @@
 [manager]
 
-ratio = [0, 4, 4]
+ratio = [0, 4, 6]
 sort_dir_first = true
 linemode = "none"
+show_hidden = true
+show_symlink = true
 
 [preview]
 
