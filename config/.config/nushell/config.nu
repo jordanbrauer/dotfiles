@@ -541,32 +541,6 @@ export def howto [
     curl $"https://cht.sh/($selection)/($path)"
 }
 
-# list notes
-export def "nb ls" [] {
-    ^nb ls -l --no-footer --no-header --no-indicator
-}
-
-# view notes in rendered markdown
-export def "nb view" [
-    id: int # the id of the document to read
-] {
-    ^nb view $id -p --no-color | glow
-}
-
-# export def "nb q" [
-#     --tag(-t): string # a tag to query by
-# ] {
-#     mut args = [search -l]
-
-#     if ($tag | str length) > 0 {
-#        $args = ($args | append $"-t ($tag)") 
-#     }
-
-#     print $args
-
-#     ^nb ($args | str join " ")
-# }
-
 def "nu-complete code projects" [] {
     ls ~/Code/github.com/*/* | where type == dir | get name | each {|l| path split | last 2 | path join}
 }
@@ -621,25 +595,83 @@ source ~/.zoxide.nu
 alias cd = z
 alias cdi = zi
 
-def "nb add" [
-  --notebook(-b): string = "inbox" # the notebook to file the note away in
-]  {
-  let nb = ^nb notebooks | ansi strip | lines
+def "nu-complete zk note types" [] {
+  [fleet ref perm article book video interview deck meeting]
+}
 
-  if $notebook not-in $nb {
-    gum log -s -l error "not a valid notebook" notebook $"($notebook)"
+# add a new note
+export def "zk add" [
+  nb: string@"nu-complete zk note types" = "fleet"
+] {
+  SHELL=bash ^zk $nb -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+  gum log -s -l info "created new note" type $nb
+}
 
-    return 
+# interactively find a note to edit
+export def "zk edit" [] {
+  SHELL=bash ^zk edit -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i
+}
+ 
+# interactively edit one of the most recently touched notes
+export def "zk recent" [] {
+  SHELL=bash ^zk recent -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+}
+
+# edit the last touched note
+export def "zk last" [] {
+  SHELL=bash ^zk last -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+}
+
+# open the notes in a text editor
+export def "zk open" [] {
+  y ~/.local/share/zk
+}
+
+def "nu-complete zk note filters" [] {
+  [fleeting refs permd articles books videos interviews decks meetings]
+}
+
+# list all notes interactively and print a selected note
+export def "zk ls" [
+  nb?: string@"nu-complete zk note filters"
+] {
+  if true == ($nb | is-empty) {  
+    SHELL=bash ^zk list -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f full -q --sort created
+
+    return
   }
-  
-  # TODO: get template
 
-  let title = gum input --header "note title" --placeholder "something about something" | str trim
-  let body = gum write --width 120 --height 10 --header "ctrl+d to submit" --placeholder "the quick brown fox jumps over the lazy dog, or something like that..." --show-line-numbers | str trim
+  SHELL=bash ^zk list $nb -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f full -q --sort created
+}
 
-  let fp = echo $"($body)" | SHELL=bash zk new $"($env.HOME)/.nb/($notebook)/" -W $"($env.HOME)/.nb" --title $"($title)" -i -p
-  let id = $fp | path parse | get stem
-  let len = ($body | str length)
+# list all tags
+export def "zk tag ls" [] {
+  SHELL=bash ^zk tag list -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -q -f json | from json
+}
 
-  gum log -s -l info "created new note" title $"($title)" id $id chars $len path $"($fp)"
+# interactively present a slide deck note
+export def "zk present" [] {
+  let deck = SHELL=bash ^zk list decks -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f json -q -P | from json | first
+
+  kitty @ set-tab-title $"($deck.title)"
+  slides $deck.absPath
+}
+
+# output a graph of the notes and links
+export def "zk graph" [] {
+  SHELL=bash ^zk graph -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -f json -q | from json
+}
+
+# (re)index the note database
+export def "zk index" [] {
+  SHELL=bash ^zk index -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+}
+
+# index the note database, commit all changes, and attempt to push to remote
+export def "zk save" [] {
+  zk index
+  cd ~/.local/share/zk
+  git add .
+  git commit -m "saving contents"
+  git push
 }
