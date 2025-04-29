@@ -13,6 +13,6 @@ tab_size = 4
 
 [opener]
 
-edit = [
-  { run = 'nu ~/.dotfiles/config/.config/yazi/open_file.nu "$0"', desc = "Open File in a new window", block = true },
-]
+# edit = [
+#   { run = 'nu ~/.dotfiles/config/.config/yazi/open_file.nu "$0"', desc = "Open File in a new window", block = true },
+# ]
