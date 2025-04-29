@@ -589,6 +589,7 @@ source ~/.config/nushell/completions/rg.nu
 source ~/.config/nushell/completions/tar.nu
 source ~/.config/nushell/completions/curl.nu
 source ~/.config/nushell/completions/op.nu
+source ~/.config/nushell/completions/just.nu
 
 source ~/.zoxide.nu
 
