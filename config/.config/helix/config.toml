@@ -36,13 +36,22 @@ skip-levels = 1
 
 esc     = ["collapse_selection", "keep_primary_selection"]
 ret     = ["goto_word"]
-space.n = "@\"%p<space>Yd"
+space.n = "@\"%p<space>Yduu"
 
-C-g = [
-    ":write-all", 
-    ":new", 
-    ":insert-output lazygit", 
-    ":buffer-close!", 
-    ":redraw", 
-    ":reload-all"
-]
+# C-a = [":sh unibear add_file Makefile"]
+
+# NOTE: using kitty overlays from kitty.conf until :noop is released
+# C-g = [
+#     ":write-all", 
+#     ":new", 
+#     ":insert-output lazygit", 
+#     ":buffer-close!", 
+#     ":redraw", 
+#     ":reload-all"
+# ]
+# C-g = [
+#     ":write-all",
+#     ":noop %sh{kitty @ launch --type=overlay --cwd=(pwd) (which lazygit | first | get path)}",
+#     ":redraw", 
+#     ":reload-all"
+# ]
