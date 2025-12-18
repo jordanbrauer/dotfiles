@@ -102,6 +102,8 @@ run = "move-node-to-workspace T"
 if.app-id = "com.apple.Safari"
 run = "move-node-to-workspace B"
 
+# calendar
+
 [[on-window-detected]]
 
 if.app-id = "com.apple.iCal"
@@ -109,8 +111,22 @@ run = "move-node-to-workspace C"
 
 [[on-window-detected]]
 
+if.app-id = "com.cron.electron"
+run = "move-node-to-workspace C"
+
+# email
+
+[[on-window-detected]]
+
 if.app-id = "com.apple.mail"
 run = "move-node-to-workspace C"
+
+[[on-window-detected]]
+
+if.app-id = "notion.mail.id"
+run = "move-node-to-workspace C"
+
+# product stuff
 
 [[on-window-detected]]
 
@@ -127,6 +143,8 @@ run = "move-node-to-workspace P"
 if.app-id = "notion.figma.Desktop"
 run = "move-node-to-workspace P"
 
+# chats
+
 [[on-window-detected]]
 
 if.app-id = "com.gather.Gather"
@@ -141,3 +159,20 @@ run = "move-node-to-workspace Z"
 
 if.app-id = "com.tinyspeck.slackmacgap"
 run = "move-node-to-workspace S"
+
+# floaters
+
+[[on-window-detected]]
+
+if.app-id = "com.apple.MobileSMS"
+run = "layout floating"
+
+[[on-window-detected]]
+
+if.app-id = "com.apple.finder"
+run = "layout floating"
+
+[[on-window-detected]]
+
+if.app-id = "com.hnc.Discord"
+run = "layout floating"
