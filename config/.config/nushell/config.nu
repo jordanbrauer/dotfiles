@@ -553,7 +553,7 @@ def "code open" [
   if ($project | length) == 0 {
     nu-complete code projects
       | to text
-      | fzf -m --bind 'ctrl-c:clear-query' --bind 'enter:become(code op {+} --focus)' --height=25% --header-border rounded --header "select code repo(s)" --header-label="open" --header-label-pos=3 --prompt "" --padding=0
+      | fzf -m --bind 'ctrl-c:clear-query' --bind 'enter:become(code op {+} --focus)' --height=100% --header-border rounded --header "select code repo(s)" --header-label="open" --header-label-pos=3 --prompt "" --padding=0
     return    
   }
 
