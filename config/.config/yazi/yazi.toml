@@ -5,6 +5,7 @@ sort_dir_first = true
 linemode = "none"
 show_hidden = true
 show_symlink = true
+title_format = "{cwd}"
 
 [preview]
 
