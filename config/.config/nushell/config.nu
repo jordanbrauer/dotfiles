@@ -598,7 +598,7 @@ alias cd = z
 alias cdi = zi
 
 def "nu-complete zk note types" [] {
-  [fleet ref perm article book video interview deck meeting]
+  [fleet ref perm article paper book video interview deck meeting]
 }
 
 # add a new note
@@ -630,7 +630,7 @@ export def "zk open" [] {
 }
 
 def "nu-complete zk note filters" [] {
-  [fleeting refs permd articles books videos interviews decks meetings]
+  [fleeting refs permd articles papers books videos interviews decks meetings]
 }
 
 # list all notes interactively and print a selected note
