@@ -11,7 +11,7 @@ highlight: true
 indent_character: '|'
 journals:
   default:
-    journal: /Users/jorb/.local/share/jrnl/journal.txt
+    journal: '~/Library/Mobile Documents/com~apple~CloudDocs/Journal/jrnl/journal.txt'
 linewrap: 79
 tagsymbols: '#@'
 template: false
