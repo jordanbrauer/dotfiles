@@ -605,23 +605,23 @@ def "nu-complete zk note types" [] {
 export def "zk add" [
   nb: string@"nu-complete zk note types" = "fleet"
 ] {
-  SHELL=bash ^zk $nb -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+  SHELL=bash ^zk $nb
   gum log -s -l info "created new note" type $nb
 }
 
 # interactively find a note to edit
 export def "zk edit" [] {
-  SHELL=bash ^zk edit -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i
+  SHELL=bash ^zk edit -i
 }
  
 # interactively edit one of the most recently touched notes
 export def "zk recent" [] {
-  SHELL=bash ^zk recent -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+  SHELL=bash ^zk recent
 }
 
 # edit the last touched note
 export def "zk last" [] {
-  SHELL=bash ^zk last -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+  SHELL=bash ^zk last
 }
 
 # open the notes in a text editor
@@ -638,22 +638,22 @@ export def "zk ls" [
   nb?: string@"nu-complete zk note filters"
 ] {
   if true == ($nb | is-empty) {  
-    SHELL=bash ^zk list -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f full -q --sort created
+    SHELL=bash ^zk list -i -f full -q --sort created
 
     return
   }
 
-  SHELL=bash ^zk list $nb -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f full -q --sort created
+  SHELL=bash ^zk list $nb -i -f full -q --sort created
 }
 
 # list all tags
 export def "zk tag ls" [] {
-  SHELL=bash ^zk tag list -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -q -f json | from json
+  SHELL=bash ^zk tag list -q -f json | from json
 }
 
 # interactively present a slide deck note
 export def "zk present" [] {
-  let deck = SHELL=bash ^zk list decks -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -i -f json -q -P | from json | first
+  let deck = SHELL=bash ^zk list decks -i -f json -q -P | from json | first
 
   kitty @ set-tab-title $"($deck.title)"
   slides $deck.absPath
@@ -661,12 +661,12 @@ export def "zk present" [] {
 
 # output a graph of the notes and links
 export def "zk graph" [] {
-  SHELL=bash ^zk graph -W ~/.local/share/zk --notebook-dir ~/.local/share/zk -f json -q | from json
+  SHELL=bash ^zk graph -f json -q | from json
 }
 
 # (re)index the note database
 export def "zk index" [] {
-  SHELL=bash ^zk index -W ~/.local/share/zk --notebook-dir ~/.local/share/zk
+  SHELL=bash ^zk index
 }
 
 # index the note database, commit all changes, and attempt to push to remote
