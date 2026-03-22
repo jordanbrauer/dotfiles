@@ -1,0 +1,273 @@
+# https://github.com/NotASentientTomato/public-configs/blob/main/themes/monium_dark/helix/monium_dark.toml
+
+  # the background color of the text field of the general helix window
+"ui.background" =                             { bg="s5"}
+  # the line that seperate the typing field from the list items in picker panels, like the File Picker
+"ui.background.separator" =                   { fg="s3"}
+
+"ui.cursor.normal" =                          { bg="s2", fg="s9" }
+  # # when using multiple cursors, the cursor which are not the primary has the following appearence where the cursor is on the selected words
+"ui.cursor.insert" =                          { bg="cursor", fg="s9" }
+"ui.cursor.select" =                          { bg="cursor", fg="s9" }
+  # a second cursor that finds any matching symbol, such as selecting the other of these when one is selected ""
+"ui.cursor.match" =                           { bg="s4", fg="s9" }
+  # # primary: the cursor you move around with hkjl
+"ui.cursor.primary" =                         { bg="cursor", fg="s9" }
+"ui.cursor.primary.normal" =                  { bg="cursor", fg="s9" }
+"ui.cursor.primary.insert" =                  { bg="cursor", fg="s9" }
+"ui.cursor.primary.select" =                  { bg="cursor", fg="s9" }
+
+"ui.debug.breakpoint" =                       { fg="red" }
+"ui.debug.active" =                           { fg="green" }
+
+  # the column to the left that shows the line number and breakpoints
+"ui.gutter" =                                 { bg="" }
+  # if you want to hide the ui.cursorline.primary in the gutter, set bg to s5 
+"ui.gutter.selected" =                        { bg="" }
+
+  # # the line number column in the gutter typically to the left in the window
+"ui.linenr" =                                 { fg="s1" }
+"ui.linenr.selected" =                        {fg="s1", modifiers=["bold"] }
+
+  # # the line below that shows the file location of the current buffer, the mode you are in, etc
+"ui.statusline" =                             { bg="s1", fg="s5" }
+  # if you use multiple windows (space, w, v)  
+"ui.statusline.inactive" =                    { bg="s3", fg="s8" }
+
+  # the background of the buffer tabs
+"ui.bufferline" =                             { bg="s5", fg="s0" }
+  # the tab of the opened buffer
+"ui.bufferline.active" =                      { bg="s1", fg="s5", modifiers=["bold"] }
+  # highlight diff lines between the file changes and the git repository
+
+  # the documentation popup (space, k)
+"ui.popup" =                                  { bg="s5l" }
+  # the boarder of the popup when pressing space or ']' 
+"ui.popup.info" =                             { bg="s5l", fg="s1"}
+
+  # the  "    kind     name    " header bar in the Symbol picker (space, s)
+"ui.picker.header" =                          { bg="s5" }
+
+  # the border between panes in vertical split mode, etc
+"ui.window" =                                 { bg="s5", fg="s1" }
+
+  # the panel that explains the selected command in the : field
+"ui.help" =                                   { bg="s5l", fg="s1" }
+
+  # Default text style, command prompts, popup text, etc.
+"ui.text" =                                   { fg="s1" } 
+  # # the current selected line in pickers, such as the File Picker (space, f)
+"ui.text.focus" =                             { bg="s7" } 
+  # # text in the spacebar popup
+"ui.text.info" =                              { fg="s1"}
+  # Directory names in prompt completion, such as when writing file paths, like "res://"
+"ui.text.directory" =                         { fg="s1" }
+
+  # # a line that goes vertically through the window the help show character numbers. set in [editor] /n rulers = [120]
+"ui.virtual.ruler" =                          { bg="s5l" }
+  # # symbols like -> where indentation (tabs) is used
+"ui.virtual.whitespace" =                     { fg="s1" }
+  # Vertical indent width guides, no idea what it is
+"ui.virtual.indent-guide" =                   { bg="s5", fg="s3" }
+  # Default style for inlay hints of all kinds. can be separated into 'parameter', 'type'
+"ui.virtual.inlay-hint" =                     { fg = "s1" }
+  # # stuff like <   > or whichever you've configuered in helix's config.toml file under [editor.soft-wrap] for where long lines extends outside the border of the terminal
+"ui.virtual.wrap" =                           { fg="s1", modifiers=[""] }
+  # the jump labels when using the two-letter jumper tool - gw
+"ui.virtual.jump-label" =                     { bg="s5l", fg="s8", modifiers=["bold"] }
+ 
+  # Code and command completion menus
+"ui.menu" =                                   { bg="s5l", fg="s1" }
+  # the text that is selected when tabbing through the choices in the : field, or completion menus
+"ui.menu.selected" =                          { bg="s7", fg="s1"}
+  # text that is selected, for instance during search within selected text (%s), or lines that are highlighted in the reference picker
+  # fg sets thumb color, bg sets track color of scrollbar
+"ui.menu.scroll" =                            { bg="s3", fg="s0" }
+
+  # for selection in the editing area
+"ui.selection" =                              { bg="s2", fg="s9" }
+  # # the text that is selected by the primary cursor when using multible cursors, such as when searching for something within the selected text (%s)
+"ui.selection.primary" =                      { bg="s1", fg="s8" }
+
+  # Highlighted lines in the picker preview
+"ui.highlight" =                              { bg="s8", fg="s1" }
+  # Line at which debugging execution is paused at
+"ui.highlight.frameline" =                    { bg="s1", fg="s8" }
+  # the line where the primary cursor is (when using multiple cursors, such as when searching for something within the selected text (%s)
+
+"ui.cursorline" =                             { bg="s7", fg="s1" }
+"ui.cursorline.primary" =                     { bg="s7", fg="s1" }
+"ui.cursorline.secondary" =                   { bg="s6", fg="s1" }
+"ui.cursorcolumn.primary" =                   { bg="s7" }
+"ui.cursorcolumn.secondary" =                 { bg="s6" }
+
+  # things like id, type, format...
+"attribute" =                                 { modifiers=["italic"] }
+
+"type" =                                      { modifiers=[""] }
+  # "keywords like Vec, String, usize"
+"type.builtin" =                              { fg="s3",  modifiers=["italic"] }
+  # Generic type parameters (T)
+"type.parameter" =                            { modifiers=["bold"] }
+"type.enum.variant" =                         { modifiers=["italic"] }
+  # words like #303030, LEFT RIGHT enums
+
+  # such as 
+"constructor" =                               { fg="s0", modifiers=["italic"] }
+
+"constant" =                                  { fg="s0" }
+  #  Special constants provided by the language (true, false, nil etc)
+"constant.builtin" =                          { fg="s0" }
+  # escape
+"constant.character" =                        { fg="s1" }
+  # numbers
+"constant.numeric" =                          { fg="s1" }
+
+  # string literals
+"string" = "s2"
+  # Regular expressions
+"string.regexp" =                             { modifiers=["italic"] }
+  # path, url, symbol (Erlang/Elixir atoms, Ruby symbols, Clojure keywords)
+"string.special" =                            { fg="s2" }
+  # Erlang/Elixir atoms, Ruby symbols, Clojure keywords
+"string.symbol" =                             { fg="s2" }
+  # comments such as this very line itself
+"comment" =                                   { fg="s3", modifiers=["italic"] }
+  # single line comments // or #
+"comment.line" =                              { fg="s3", modifiers=[""] }
+  # Line documentation comments (e.g. /// in Rust)
+"comment.line.documentation" =                { fg="s3", modifiers=[""] }
+  # Block comments /* */
+"comment.block" =                             { fg="s3", modifiers=[""] }
+  # Block documentation comments (e.g. /** */ in Rust)
+"comment.block.documentation" =               { fg="s3", modifiers=[""] }
+
+  # variables
+"variable" = "s2"
+  # keywords like "self, this, super"
+"variable.builtin" =                          { fg="s2", modifiers=["italic"] }
+  # function parameters, the parameter symbols () and its content in function signatures
+"variable.parameter" =                        { fg="s0" }
+  # dotted members, such as in Globals.this.this.this, fields of composite data types (e.g. structs, unions)
+"variable.other.member" =                     { fg="s1" }
+
+  # things like %..., $... in gdscript, or .class and #id in CSS
+"label" = "s1"
+
+"punctuation" =                               { fg="s2" }
+  # commas, colons
+"punctuation.delimiter" =                     { fg="s2" }
+  # backets [] in [editor]
+"punctuation.bracket" =                       { fg="s2" }
+  # string interpolation brackets
+"punctuation.special" =                       { fg="s2" }
+
+  # can be broken up into control, operators, directive, function, storage
+"keyword" =                                   {fg="s0", modifiers=["bold"]}
+  # words like func, for, if, pass, continue, return, exception, use
+"keyword.control" =                           {fg="s1", modifiers=["bold"]}
+
+  # mathematical operators like += -* || >
+"operator" = "s3"
+
+  # the word that makes up the function call, like say_hello() in object.say_hello()
+"function" =                                  { modifiers=["italic"] } 
+"function.builtin" =                          { fg="s0" }
+  # macros, stuff like "#[cfg(not(target_arch = "wasm32"))]"
+"function.macro" =                            { fg="s1" }
+"function.method" =                           { modifiers=["italic"] }
+
+  # words like @onready in GDscript comments, or <body> in HTML
+"tag" =                                       { modifiers=["bold"]}
+
+  # namespace declarations, such as   use bevy::{prelude::*}
+"namespace" =                                 { modifiers=["italic"] }
+
+  # text that gets highlighted when searching in the file picker, etc. 
+  # this is helpful to show which part of the text is related to the search
+  # however...
+  # this is also the keyword that is "derive" in Rust, and leaving it on is distracting
+  # uncomment it only when not programming in Rust
+  # "special" =                                 { bg="s7", fg="s1", modifiers=["line"]}
+
+"markup" =                                    { fg="s1" }
+  # heading can separate into 'marker' and '1 2 3 4 5 6'
+"markup.heading" =                            { bg="s4", fg="s0", modifiers=["bold"] }
+  # list can separate into 'unnumbered' 'numbered' 'checked' 'unchecked'
+"markup.list" =                               { modifiers=["italic"] }
+"markup.bold" =                               { modifiers=["bold"] }
+"markup.italic" =                             { modifiers=["italic"] }
+"markup.strikethrough" =                      { modifiers=["crossed_out"] }
+"markup.link" =                               { fg="s2" }
+"markup.link.url" =                           { fg="blue", underline = { color="blue", style="curl" }}
+"markup.link.label" =                         { fg="s3" }
+"markup.link.text" =                          { fg="s2" }
+"markup.quote" =                              { bg="s1", fg="s8" }
+  # raw can separate into 'inline' and 'block'
+"markup.raw" =                                { fg="s1" }
+
+"diff.plus" =                                 { fg="green" }
+"diff.minus" =                                { fg="red" }
+  # modifications. delta can separate into 'moved' 'conflict' 'gutter'
+"diff.delta" =                                { fg="warning_second" }
+"diff.delta.conflict"  =                      { bg="error", fg="s1" } 
+
+  # the text that shows up in the corner when hovering some line with errors in it
+  # also the style of the lines with such status, both here in the main window and for instance in the diagnostic picker window (spacebar,d)
+"warning" =                                   { bg="warning_second", fg="s0" }
+"error" =                                     { bg="error_second", fg="s9", modifiers=["bold"] }
+"info" =                                      { bg="info", fg="s1" }
+"hint" =                                      { bg="hint", fg="s9" }
+
+"diagnostic" =                                { bg="red", fg="s0" }
+"diagnostic.hint" =                           { underline={ color="s0", style="line"} }
+"diagnostic.info" =                           { bg="info", fg="s0", modifiers=["bold"] }
+"diagnostic.warning" =                        { bg="warning", fg="s0", modifiers=["bold"] }
+  # lines with compile errors
+"diagnostic.error" =                          { bg="error", fg="s8", modifiers=["bold"] }
+"diagnostic.unnecessary" =                    { bg="s6" }
+"diagnostic.deprecated" =                     { modifiers=["crossed_out"] }
+  # snippet placeholder
+"tabstop" =                                   { bg="s1", fg="s8" }
+
+
+  ### interface
+  # These scopes are used for theming the editor interface. I have no idea what it is.
+
+"markup.normal" =                             { fg="s1" }
+"markup.normal.completion" =                  { fg="s1" }
+  # "markup.normal.hover" =                     { fg="s1" }
+"markup.heading.completion" =                 { fg="s1" }
+  # "markup.heading.hover" =                    { fg="s1" }
+"markup.inline.completion" =                  { fg="s1" }
+  # "markup.inline.hover" =                     { fg="s1" }
+
+  # [HINT]
+  # [INFO]
+  # [WARN]
+  # [SAFETY]
+
+[palette]
+error = "#ff0000"
+error_second = "#cc0000"
+warning = "#ffff70"
+warning_second = "#dcdc60"
+hint = "#1368ca"
+info = "#00ff00"
+red = "#a93636"
+green = "#065905"
+blue = "#6666aa"
+cursor = "#3388ea"
+
+
+s9 = "#fffffd"
+s8 = "#fafaf6"
+s7 = "#efefed"
+s6 = "#d2d2d0"
+s5 = "#bababd"
+s5l = "#afafaf"
+s4 = "#a1a1a1"
+s3 = "#787876"
+s2 = "#5f5f5d"
+s1 = "#333331"
+s0 = "#000000"

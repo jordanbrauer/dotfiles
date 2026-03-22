@@ -1,18 +1,25 @@
 # general 
-[manager]
+[mgr]
 syntect_theme = "~/.dotfiles/config/.config/yazi/darkvoid.xml"
 marker_copied   = { fg = "green",   bg = "green" }
 marker_cut      = { fg = "red",     bg = "red" }
-marker_marked   = { fg = "#bdfe58", bg = "#bdfe58" }
+marker_marked   = { fg = "#333331", bg = "#333331" }
 marker_selected = { fg = "cyan",    bg = "cyan" }
 
-cwd = { fg = "#1bfd9c", bold = true } # yellow
-hovered = { bg = "#303030", bold = true }
-preview_hovered = { reversed = false }
+cwd = { fg = "#333331", bold = true }
+hovered = { bg = "#333331", bold = true }
 
 tab_active   = { fg = "#1bfd9c", bold = true, italic = true }
 tab_inactive = { fg = "#585858" }
 tab_width    = 1
+
+[tabs]
+
+active = { fg = "#bababd", bg="#333331", bold = true }
+inactive = { fg = "#333331", bg="#bababd" }
+sep_inner = { open = "▐", close = "▌" }
+sep_outer = { open = "", close = "" }
+
 
 # default bg
 count_copied   = { fg = "green", reversed = true } # green
@@ -20,13 +27,18 @@ count_cut      = { fg = "red", reversed = true } # red
 count_selected = { fg = "cyan", reversed = true } # yellow
 
 border_symbol = "│"
-border_style = { fg = "#585858"} # white
+border_style = { fg = "#333331"} # white
 title_format = ""
+
+[indicator]
+current = { bg = "#3388ea", fg = "#fffffd" }
+padding = { open = "▐", close = "▌" }
+preview = { reversed = false }
 
 # status-line
 [status]
-separator_open = ""
-separator_close = ""
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 separator_style = { fg = "reset" } # light bg
 
 perm_type = { fg = "#1bfd9c" } # green
@@ -57,7 +69,7 @@ active   = { fg = "#938aa9", bold = true } # magenta
 inactive = {}
 
 [input]
-border   = { fg = "#c0c0c0" }
+border   = { fg = "#333331" }
 title    = {}
 value    = {}
 selected = { reversed = true }
@@ -101,15 +113,91 @@ rules = [
     { mime = "application/{,g}zip", fg = "#e1e1e1" },
     { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "#e46876" },
     { mime = "application/{pdf,doc,rtf,vnd.*}", fg = "yellow" },
-    { name = "*", is = "link", fg = "cyan" },
-    { name = "*", is = "orphan", fg = "#dea6a0" },
-    { name = "*", is = "exec", fg = "#1bfd9c" },
-    { name = "*/", fg = "#b2d8d8"},
-    { name = "*", fg = "#c0c0c0"}
+    { url = "*", is = "link", fg = "#5f5f5d" },
+    { url = "*/", is = "link", fg = "#5f5f5d" },
+    { url = "*", is = "orphan", fg = "#cc0000" },
+    # { url = "*", is = "exec", fg = "#efefed" },
+    { url = "*/", fg = "#000000"},
+    { url = "*", fg = "#000000"},
 ]
 
 [icon]
 
-globs = []
-files = []
-exts  = []
+# using nf-md-file-*
+#       nf-oct-*    (also seems to work okay)
+
+globs = [
+	# { url = "/Users/jorb/Code/github.com/**/*", text = "", fg = "#333331" }
+	# { url = ".*rc", text = "󱁼", fg = "#efefed" },
+]
+
+dirs  = [
+	# { name = ".git", text = "", fg = "#333331" }
+]
+
+files = [
+	# { name = "Makefile", text = "󰧮", fg = "#efefed" },
+	# { name = "makefile", text = "󰧮", fg = "#efefed" },
+	# { name = "Justfile", text = "󰧮", fg = "#efefed" },
+	# { name = "justfile", text = "󰧮", fg = "#efefed" },
+	# { name = "Dockerfile", text = "󰧮", fg = "#efefed" },
+	# { name = "Containerfile", text = "󰧮", fg = "#efefed" },
+	{ name = "config", text = "󱁼", fg = "#efefed" },
+	{ name = "conf", text = "󱁼", fg = "#efefed" },
+	{ name = "LICENSE", text = "󱆇", fg = "#efefed" },
+	# { name = "LICENSE", text = "󰿃", fg = "#efefed" },
+	{ name = "CODE_OF_CONDUCT.md", text = "", fg = "#efefed" },
+]
+
+exts  = [
+	{ name = "js", text = "󱀫", fg = "#efefed" },
+	{ name = "jsx", text = "󱀫", fg = "#efefed" },
+	{ name = "ts", text = "󱀫", fg = "#efefed" },
+	{ name = "tsx", text = "󱀫", fg = "#efefed" },
+	{ name = "lua", text = "󱀫", fg = "#efefed" },
+	{ name = "php", text = "󱀫", fg = "#efefed" },
+	{ name = "jl", text = "󱀫", fg = "#efefed" },
+	{ name = "go", text = "󱀫", fg = "#efefed" },
+	{ name = "nu", text = "󱀫", fg = "#efefed" },
+	{ name = "r", text = "󱀫", fg = "#efefed" },
+	{ name = "vim", text = "󱀫", fg = "#efefed" },
+	{ name = "ini", text = "󱁼", fg = "#efefed" },
+	{ name = "conf", text = "󱁼", fg = "#efefed" },
+	{ name = "config", text = "󱁼", fg = "#efefed" },
+	{ name = "json", text = "󱁼", fg = "#efefed" },
+	{ name = "yaml", text = "󱁼", fg = "#efefed" },
+	{ name = "yml", text = "󱁼", fg = "#efefed" },
+	{ name = "toml", text = "󱁼", fg = "#efefed" },
+	{ name = "xml", text = "󱁼", fg = "#efefed" },
+	{ name = "ron", text = "󱁼", fg = "#efefed" },
+	{ name = "neon", text = "󱁼", fg = "#efefed" },
+	{ name = "pkl", text = "󱁼", fg = "#efefed" },
+	{ name = "tf", text = "󱁼", fg = "#efefed" },
+	{ name = "bak", text = "󱋢", fg = "#efefed" },
+	{ name = "lock", text = "󱀰", fg = "#efefed" },
+	{ name = "md", text = "󰧮", fg = "#efefed" },
+	{ name = "csv", text = "󰺥", fg = "#efefed" },
+	{ name = "tsv", text = "󰺥", fg = "#efefed" },
+	{ name = "db", text = "󱘲", fg = "#efefed" },
+]
+
+conds = [
+	# Special files
+	# { if = "block", text = "", fg = "#ffc107" },
+	# { if = "char", text = "", fg = "#ffc107" },
+	{ if = "sticky", text = "󱝵", fg = "#ffc107" },
+	{ if = "fifo", text = "󱪔", fg = "#ffc107" },
+	{ if = "sock", text = "󱪖", fg = "#ffc107" },
+	{ if = "orphan", text = "󰩌", fg = "red" },
+	{ if = "link", text = "󱅸", fg = "blue" },
+	{ if = "dummy", text = "󰷇", fg = "red" },
+
+	# Fallback 
+	# { if = "hidden", text = "", fg = "#5f5f5d" },
+	{ if = "dir & hidden", text = "󱞞", fg = "#5f5f5d" },
+	{ if = "!dir & hidden", text = "󰘓", fg = "#5f5f5d" },
+	{ if = "dir", text = "󰉋", fg = "#333331" },
+	{ if = "exec", text = "", fg = "#efefed" },
+	# { if = "exec", text = "󰑷", fg = "#efefed" },
+	{ if = "!dir", text = "󰈤", fg = "#efefed" },
+]

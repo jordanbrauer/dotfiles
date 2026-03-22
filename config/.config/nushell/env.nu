@@ -31,9 +31,9 @@ $env.PATH = ($env.PATH | prepend [ $"($env.FNM_MULTISHELL_PATH)/bin" ])
 $env.PROMPT_INDICATOR = ""
 $env.PROMPT_COMMAND = {(starship prompt --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
 $env.PROMPT_COMMAND_RIGHT = {(starship prompt --right --cmd-duration $env.CMD_DURATION_MS $'--status=($env.LAST_EXIT_CODE)')}
-$env.PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#bdfe58' attr: b }) "λ " (ansi reset)] | str join)
-$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#c0c0c0' attr: b }) "λ " (ansi reset)] | str join)
-$env.PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#404040' }) "|> " (ansi reset)] | str join)
+$env.PROMPT_INDICATOR_VI_INSERT = ([(ansi -e { fg: '#000000' attr: b }) "λ " (ansi reset)] | str join)
+$env.PROMPT_INDICATOR_VI_NORMAL = ([(ansi -e { fg: '#787876' attr: b }) "λ " (ansi reset)] | str join)
+$env.PROMPT_MULTILINE_INDICATOR = ([(ansi -e { fg: '#333331' }) "|> " (ansi reset)] | str join)
 
 $env.NU_LIB_DIRS = [
     ($nu.config-path | path dirname | path join 'scripts')
@@ -66,14 +66,15 @@ $env.GREP_OPTIONS = '--color=auto'
 $env.FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 $env.STARSHIP_SHELL = "nu"
 $env.JQ_COLORS = "0;36:0;36:0;36:0;34:0;37:0;37:0;37:2;37"
-# https://vitormv.github.io/fzf-themes#eyJib3JkZXJTdHlsZSI6InJvdW5kZWQiLCJib3JkZXJMYWJlbCI6IiIsImJvcmRlckxhYmVsUG9zaXRpb24iOjAsInByZXZpZXdCb3JkZXJTdHlsZSI6InJvdW5kZWQiLCJwYWRkaW5nIjoiIiwibWFyZ2luIjoiMCIsInByb21wdCI6Is67ICIsIm1hcmtlciI6IisiLCJwb2ludGVyIjoiPiIsInNlcGFyYXRvciI6IuKUgCIsInNjcm9sbGJhciI6InwiLCJsYXlvdXQiOiJyZXZlcnNlIiwiaW5mbyI6InJpZ2h0IiwiY29sb3JzIjoiZmc6I2MwYzBjMCxmZys6I2YxZjFmMSxiZzojMWMxYzFjLGJnKzojMWMxYzFjLGhsOiNiZGZlNTgsaGwrOiNiZGZlNTgsaW5mbzojYzBjMGMwLG1hcmtlcjojMWJmZDljLHByb21wdDojYmRmZTU4LHNwaW5uZXI6IzFiZmQ5Yyxwb2ludGVyOiNiZGZlNTgsaGVhZGVyOiNmMWYxZjEsYm9yZGVyOiM1ODU4NTgsbGFiZWw6IzNjM2MzYyxxdWVyeTojYzBjMGMwIn0=
-$env.FZF_DEFAULT_OPTS = '--color=fg:#c0c0c0,fg+:#f1f1f1,bg:#1c1c1c,bg+:#1c1c1c
-  --color=hl:#bdfe58,hl+:#bdfe58,info:#c0c0c0,marker:#1bfd9c
-  --color=prompt:#bdfe58,spinner:#1bfd9c,pointer:#bdfe58,header:#f1f1f1
-  --color=border:#585858,label:#3c3c3c,query:#c0c0c0
-  --border="rounded" --border-label="" --preview-window="border-rounded" --padding=1
+# https://vitormv.github.io/fzf-themes#eyJib3JkZXJTdHlsZSI6InJvdW5kZWQiLCJib3JkZXJMYWJlbCI6IiIsImJvcmRlckxhYmVsUG9zaXRpb24iOjAsInByZXZpZXdCb3JkZXJTdHlsZSI6InJvdW5kZWQiLCJwYWRkaW5nIjoiMSIsIm1hcmdpbiI6IjAiLCJwcm9tcHQiOiLOuyAiLCJtYXJrZXIiOiIrIiwicG9pbnRlciI6Ij4iLCJzZXBhcmF0b3IiOiLilIAiLCJzY3JvbGxiYXIiOiJ8IiwibGF5b3V0IjoicmV2ZXJzZSIsImluZm8iOiJyaWdodCIsImNvbG9ycyI6ImZnOiMzMzMzMzEsZmcrOiNmZmZmZmQsYmc6I2JhYmFiZCxiZys6IzMzODhlYSxobDojZmZmZmZkLGhsKzojNWZkN2ZmLGluZm86IzMzMzMzMSxtYXJrZXI6Izc4Nzg3Nixwcm9tcHQ6IzAwMDAwMCxzcGlubmVyOiMwMDAwMDAscG9pbnRlcjojZmZmZmZkLGhlYWRlcjojMzMzMzMxLGd1dHRlcjojYmFiYWJkLGJvcmRlcjojMDAwMDAwLGxhYmVsOiMzYzNjM2MscXVlcnk6IzMzMzMzMSJ9
+$env.FZF_DEFAULT_OPTS = '--color=fg:#333331,fg+:#fffffd,bg:#bababd,bg+:#3388ea
+  --color=hl:#fffffd,hl+:#5fd7ff,info:#333331,marker:#787876
+  --color=prompt:#000000,spinner:#000000,pointer:#fffffd,header:#333331
+  --color=gutter:#bababd,border:#000000,label:#3c3c3c,query:#333331
+  --border="rounded" --border-label="" --preview-window="border-rounded" --padding="1"
   --prompt="λ " --marker="+" --pointer=">" --separator="─"
   --scrollbar="|" --layout="reverse" --info="right"'
+
 # $env.NAP_CONFIG = "~/.config/nap/config.yaml" # NOTE: file does not work for some reason
 $env.NAP_THEME = "bw"
 $env.NAP_PRIMARY_COLOR = "#1bfd9c"

@@ -230,6 +230,31 @@ $env.config.rm = {
   always_trash: false
 }
 
+let monium = {
+  error: "#ff0000"
+  error_second: "#cc0000"
+  warning: "#ffff70"
+  warning_second: "#dcdc60"
+  hint: "#1368ca"
+  info: "#00ff00"
+  red: "#a93636"
+  green: "#065905"
+  blue: "#6666aa"
+  cursor: "#3388ea"
+
+  s9: "#fffffd"
+  s8: "#fafaf6"
+  s7: "#efefed"
+  s6: "#d2d2d0"
+  s5: "#bababd"
+  s5l: "#afafaf"
+  s4: "#a1a1a1"
+  s3: "#787876"
+  s2: "#5f5f5d"
+  s1: "#333331"
+  s0: "#000000"
+}
+
 let palette = {
   White: white
   Black: black
@@ -240,14 +265,14 @@ let palette = {
   Magenta: magenta
   Cyan: cyan
 
-  Fg: "#c0c0c0"
-  Bg: "#1c1c1c"
-  Cursor: "#bdfe58"
+  Fg: "#333331"
+  Bg: "#bababd"
+  Cursor: "#3388ea"
   LineNr: "#404040"
   Visual: "#303030"
   Comment: "#585858"
-  String: "#d1d1d1"
-  Func: "#e1e1e1"
+  String: "#5f5f5d"
+  Func: "#333331"
   Kw: "#f1f1f1"
   Identifier: "#b1b1b1"
   Type: "#a1a1a1"
@@ -277,18 +302,18 @@ let colours = $palette
 $env.config.color_config = {
   # color for nushell primitives
   leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-  separator: $palette.Visual
-  header: $palette.Visual
-  empty: $palette.Yellow
-  bool: $palette.Bool
-  int: $palette.Constant
-  filesize: $palette.Constant
-  duration: $palette.Constant
-  date: $palette.Constant
-  range: $palette.Operator
-  float: $palette.Constant
-  string: $palette.String
-  nothing: $palette.White
+  separator: $monium.s1
+  header: $monium.s1
+  empty: $monium.warning
+  bool: $monium.s0
+  int: $monium.s1
+  float: $monium.s1
+  filesize: $monium.s1
+  duration: $monium.s1
+  date: $monium.s1
+  range: $monium.s3
+  string: $monium.s2
+  nothing: $monium.s2
   binary: $palette.White
   cellpath: $palette.White
   row_index: $palette.LineNr
@@ -298,24 +323,24 @@ $env.config.color_config = {
   hints: $palette.Comment
 
   # shapes are used to change the cli syntax highlighting
-  shape_garbage: { fg: $palette.Black bg: $palette.Error attr: b}
-  shape_binary: $palette.White
-  shape_bool: $palette.Bool
-  shape_int: $palette.Constant
-  shape_float: $palette.Constant
-  shape_range: yellow_bold
+  shape_garbage: { fg: $monium.s9 bg: $monium.error attr: b}
+  shape_binary: $monium.s0
+  shape_bool: $monium.s0
+  shape_int: $monium.s1
+  shape_float: $monium.s1
+  shape_range: $monium.s3
   shape_internalcall: $palette.Func
   shape_external: $palette.Func
-  shape_externalarg: $palette.Identifier
+  shape_externalarg: $monium.s1
   shape_literal: $palette.Blue
-  shape_operator: $palette.Operator
+  shape_operator: $monium.s3
   shape_signature: $palette.Operator
   shape_string: $palette.String
   shape_string_interpolation: $palette.Preprocessor
-  shape_datetime: $palette.Constant
-  shape_list: cyan_bold
+  shape_datetime: $monium.s1
+  shape_list: $monium.s2
   shape_table: blue_bold
-  shape_record: cyan_bold
+  shape_record: $monium.s2
   shape_block: blue_bold
   shape_filepath: $palette.Blue
   shape_globpattern: cyan_bold
@@ -326,12 +351,12 @@ $env.config.color_config = {
 }
 
 $env.config.table = {
-  mode: rounded
+  mode: compact
   index_mode: always
   trim: {
     methodology: truncating
     wrapping_try_keep_words: true
-    truncating_suffix: "..."
+    truncating_suffix: "…"
   }
 }
 
@@ -341,7 +366,7 @@ $env.config.menus = [
   {
     name: completion_menu
     only_buffer_difference: false
-    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $monium.s1 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: ide
         columns: 4
