@@ -13,6 +13,6 @@ install: ## Attempt to install dependencies. Typically only used for new compute
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # mkdir ~/.vim/{plugged,undodir}
 	@brew update
-	@brew install node php fnm jq xsv bat fzf bottom glow ripgrep fd stow code-minimap tldr nushell vivid starship neovim hurl vhs gum helix
+	@brew install node php go fnm jq xsv bat fzf bottom glow ripgrep fd stow code-minimap nushell vivid starship hurl vhs gum helix lazygit lazydocker zk jrnl todo-txt yazi gh biome lua luarocks lua-language-server zoxide tree hledger git-delta
 	@npm install -g intelephense typescript typescript-language-server ts-node
 	@bat cache --build
