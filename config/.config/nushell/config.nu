@@ -218,8 +218,8 @@ $env.config.history = {
 }
 
 $env.config.filesize = {
-  metric: true
-  format: "auto"
+  # metric: true
+  # format: "auto"
 }
 
 $env.config.ls = {
