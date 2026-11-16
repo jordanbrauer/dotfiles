@@ -3,6 +3,7 @@ title: {{ title }}
 interview: coding
 score: 0
 candidate: https://hire.lever.co/interviews
+question: ""
 date: {{ format-date now '%Y-%m-%d' }}
 tags: [interview]
 ---
@@ -16,6 +17,7 @@ bare-minimum to get more than a 2 with a working solution.
 * [ ] went through examples with me
 * [ ] discussed algorithms and datastructures for initial approach
 * [ ] stubbed out the interface with inert methods
+* [ ] talking out loud while coding and sharing their thought proccesses
 
 ## notes
 

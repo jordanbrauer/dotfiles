@@ -1,5 +1,6 @@
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.config/git/ignore
+	pager = delta
 [user]
 	name = jordanbrauer
 	email = 18744334+jordanbrauer@users.noreply.github.com
@@ -19,3 +20,38 @@
     adog = log --all --decorate --oneline --graph
 [commit]
 	gpgsign = false
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    light = true
+    syntax-theme = none
+    # file headers
+    file-style = "#333331 bold"
+    file-decoration-style = "#5f5f5d ul"
+    hunk-header-style = "#787876"
+    hunk-header-decoration-style = "#5f5f5d box"
+    # line numbers
+    line-numbers-minus-style = "#a93636"
+    line-numbers-plus-style = "#065905"
+    line-numbers-zero-style = "#787876"
+    line-numbers-left-style = "#5f5f5d"
+    line-numbers-right-style = "#5f5f5d"
+    # diff content
+    minus-style = "#333331 #e8cccc"
+    minus-emph-style = "#333331 #d4a3a3"
+    plus-style = "#333331 #cce8cc"
+    plus-emph-style = "#333331 #a3d4a3"
+    # blame
+    blame-palette = "#bababd #b0b0ae #a6a6a4"
+
+[merge]
+    conflictStyle = zdiff3
+
+[diff]
+    colorMoved = default
+[beads]
+	role = maintainer

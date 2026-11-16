@@ -1,0 +1,29 @@
+[metadata]
+name = "zk-notes"
+description = "Browse recent zettelkasten notes"
+requirements = ["zk", "awk"]
+
+[source]
+command = '''
+zk list --format '{{created}}	{{title}}	{{path}}	{{join tags ","}}' --sort created- --limit 200 --quiet | awk -F'\t' '{split($1,d," "); $1=d[1]; print}' OFS='\t'
+'''
+display = "{split:\\t:0}  {split:\\t:1}  {split:\\t:3}"
+output = "{split:\\t:2}"
+no_sort = true
+
+[preview]
+command = "zk list --format '{{raw-content}}' --match '{split:\\t:2}' --exact-match --limit 1 --quiet | head -80"
+
+[keybindings]
+enter = "actions:edit"
+ctrl-n = "actions:new"
+
+[actions.edit]
+description = "Open the note in your editor"
+command = '''zk edit --match '{split:\t:2}' --exact-match --limit 1'''
+mode = "execute"
+
+[actions.new]
+description = "Create a new inbox note"
+command = '''zk new --no-input "$ZK_NOTEBOOK_DIR/inbox"'''
+mode = "execute"

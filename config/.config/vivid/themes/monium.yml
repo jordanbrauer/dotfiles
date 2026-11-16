@@ -1,0 +1,122 @@
+colors:
+  # Monium palette — light grayscale theme
+  # Source of truth: helix themes/monium.toml + kitty themes/monium.conf
+  s0: "000000"
+  s1: "333331"
+  s2: "5f5f5d"
+  s3: "787876"
+  s4: "a1a1a1"
+  s5: "bababd"
+  s6: "d2d2d0"
+  s7: "efefed"
+  s8: "fafaf6"
+  s9: "fffffd"
+
+  cursor: "3388ea"
+  red: "a93636"
+  green: "065905"
+  blue: "6666aa"
+  cyan: "66b2b2"
+  magenta: "dea6a0"
+  yellow: "dcdc60"
+  warning: "ffff70"
+  error: "cc0000"
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+
+  directory:
+    foreground: s0
+    font-style: bold
+
+  symlink:
+    foreground: blue
+
+  multi_hard_link: {}
+
+  fifo:
+    foreground: s0
+    background: green
+
+  socket:
+    foreground: s0
+    background: green
+
+  door:
+    foreground: s0
+    background: cyan
+
+  block_device:
+    foreground: s9
+    background: s3
+
+  character_device:
+    foreground: s9
+    background: s3
+
+  broken_symlink:
+    foreground: s9
+    background: red
+
+  missing_symlink_target:
+    foreground: s9
+    background: red
+
+  setuid: {}
+  setgid: {}
+  file_with_capability: {}
+  sticky_other_writable: {}
+  other_writable: {}
+  sticky: {}
+
+  executable_file:
+    foreground: cursor
+    font-style: bold
+
+text:
+  special:
+    foreground: s1
+
+  todo:
+    font-style: bold
+
+  licenses:
+    foreground: s3
+
+  configuration:
+    foreground: s2
+
+  other:
+    foreground: s1
+
+markup:
+  foreground: s1
+
+programming:
+  source:
+    foreground: s1
+
+  tooling:
+    foreground: s2
+
+    continuous-integration:
+      foreground: s2
+
+media:
+  foreground: cyan
+
+office:
+  foreground: yellow
+
+archives:
+  foreground: s3
+  font-style: underline
+
+executable:
+  foreground: cursor
+  font-style: bold
+
+unimportant:
+  foreground: s3

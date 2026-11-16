@@ -1,0 +1,63 @@
+[metadata]
+name = "kitty-tabs"
+description = "Browse and switch between open kitty terminal tabs"
+requirements = ["kitty", "python3"]
+
+[source]
+command = '''
+kitty @ ls 2>/dev/null | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for os_win in data:
+    for tab in os_win.get('tabs', []):
+        tid = tab['id']
+        title = tab.get('title', 'untitled')
+        active = ' *' if tab.get('is_focused') else ''
+        wins = tab.get('windows', [])
+        cwd = wins[0].get('cwd', '') if wins else ''
+        fg = wins[0].get('foreground_processes', [{}]) if wins else [{}]
+        cmd = ' '.join(fg[0].get('cmdline', [])) if fg else ''
+        print(f'{tid}|{title}{active}|{cwd}|{cmd}')
+"
+'''
+display = "{split:|:1}  {split:|:3}"
+output = "{split:|:0}"
+
+[preview]
+command = '''
+kitty @ ls 2>/dev/null | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for os_win in data:
+    for tab in os_win.get('tabs', []):
+        if str(tab['id']) == sys.argv[1]:
+            print(f'  Tab:     {tab[\"title\"]}')
+            print(f'  ID:      {tab[\"id\"]}')
+            print(f'  Active:  {tab.get(\"is_focused\", False)}')
+            print(f'  Layout:  {tab.get(\"layout\", \"\")}')
+            print()
+            for i, win in enumerate(tab.get('windows', [])):
+                print(f'  Window {i+1}:')
+                print(f'    Title:   {win.get(\"title\",\"\")}')
+                print(f'    CWD:     {win.get(\"cwd\",\"\")}')
+                print(f'    PID:     {win.get(\"pid\",\"\")}')
+                fg = win.get('foreground_processes', [])
+                for p in fg:
+                    print(f'    Process: {\" \".join(p.get(\"cmdline\",[]))}')
+                print()
+" '{split:|:0}'
+'''
+
+[keybindings]
+enter = "actions:focus"
+ctrl-d = "actions:close"
+
+[actions.focus]
+description = "Switch to the selected tab"
+command = "kitty @ focus-tab --match id:{split:|:0}"
+mode = "execute"
+
+[actions.close]
+description = "Close the selected tab"
+command = "kitty @ close-tab --match id:{split:|:0}"
+mode = "execute"

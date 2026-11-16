@@ -1,67 +1,72 @@
-# Get editor completions based on the config schema
+# Monium — minimal monochrome prompt
+# Two-line: info on top, cursor on bottom. Left only.
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "" # prompt and vim mode handled by nushell
-right_format = "$directory$git_branch$golang$php$lua$nodejs$time"
-add_newline = false # Warp & left+right prompts do not support newlines well
+format = """
+$directory\
+$git_branch\
+$git_status\
+\
+$cmd_duration\
+$status\
+$line_break\
+$character"""
 
-# Note: Every module must end with an empty space to provide consistent padding
+right_format = ""
+add_newline = true
 
-[time]
-format = "[at $time]($style)"
-style = "fg:#585858"
-disabled = false
-
-[cmd_duration]
-format = " [took $duration]($style)"
-style="fg:#585858"
-
+# ── Cursor ──────────────────────────────────────────────────
+# Insert = bold dark, Normal = bold gray, Error = bold red
 [character]
-success_symbol = "[➜](bold fg:#1bfd9c)"
-error_symbol = '[ⅹ](bold fg:#dea6a0)'
+success_symbol = "[λ](bold #333331)"
+error_symbol = "[λ](bold #a93636)"
+vimcmd_symbol = "[λ](bold #787876)"
 
+# ── Directory ───────────────────────────────────────────────
+# Just the current directory name (basename)
 [directory]
-format = "[$path]($style) "
-style = "fg:240"
+format = "[$path]($style)"
+style = "bold #333331"
 truncate_to_repo = false
 truncation_length = 1
 
-[username]
-format = "[$user](bold white) "
-show_always = true
-
+# ── Git ─────────────────────────────────────────────────────
 [git_branch]
-format = "[$symbol $branch]($style) "
-symbol = ""
-style = "bold green"
+format = " [on](fg:#787876) [$branch $symbol]($style)"
+symbol = ""
+style = "#5f5f5d"
 
-[golang]
-format = "[via](fg:#585858) [$version]($style) "
-version_format = "go $major.$minor"
+[git_status]
+format = " [$all_status$ahead_behind]($style)"
+style = "#787876"
+staged = " "
+untracked = " "
+modified = " "
+deleted = " "
+renamed = " "
+conflicted = "! "
+typechanged = " "
+stashed = ""
+ahead = "↑${count}"
+behind = "↓${count}"
+diverged = "↑${ahead_count}↓${behind_count}"
+
+# [custom.git_dirty]
+# command = "printf '\\uf4d2'"
+# when = "test -n \"$(git status --porcelain 2>/dev/null)\""
+# format = " [$output]($style) "
+# style = "#787876"
+# detect_folders = [".git"]
+
+[cmd_duration]
+format = " [·](fg:#787876) [$duration]($style)"
+style = "#787876"
+min_time = 2000
+
+# ── Exit Code ───────────────────────────────────────────────
+# Shows numeric exit code on failure (λ also turns red)
+[status]
+format = " [·](fg:#787876) [$status]($style)"
+style = "bold #a93636"
 symbol = ""
-
-[php]
-format = "[via](fg:#585858) [$version]($style) "
-version_format = "php $major.$minor"
-symbol = ""
-
-[lua]
-format = "[via](fg:#585858) [$version]($style) "
-version_format = "lua $major.$minor"
-symbol = ""
-
-[nodejs]
-format = "[via](fg:#585858) [$version]($style) "
-version_format = "node $major"
-symbol = ""
-
-[aws]
-force_display = false
-symbol = ""
-
-[kubernetes]
 disabled = false
-# format = "$context"
-symbol = ""
-style = "bold blue"
-detect_env_vars = ["AWS_SSO_PROFILE"]

@@ -1,0 +1,28 @@
+[metadata]
+name = "databases"
+description = "Connect to PostgreSQL databases from ~/.pg_service.conf"
+requirements = ["yq", "pgcli"]
+shell = "bash"
+
+[source]
+command = "yq -p ini -oy 'keys | .[]' ~/.pg_service.conf"
+
+[preview]
+command = "yq -p ini -oy '.[\"{}\"]' ~/.pg_service.conf"
+
+[ui]
+layout = "portrait"
+
+[keybindings]
+enter = "actions:connect"
+ctrl-y = "actions:copy-dsn"
+
+[actions.connect]
+description = "Open pgcli in a new kitty tab"
+command = "~/.config/television/scripts/pg-connect.sh '{}'"
+mode = "execute"
+
+[actions.copy-dsn]
+description = "Copy full DSN to clipboard"
+command = "~/.config/television/scripts/pg-dsn.sh '{}'"
+mode = "execute"

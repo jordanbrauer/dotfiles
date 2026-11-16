@@ -6,7 +6,7 @@ $env.PATH = (
     | prepend '/opt/homebrew/opt/libpq/bin'
     | prepend '/opt/homebrew/sbin'
     | prepend '/opt/homebrew/bin'
-    | append '/usr/local/bin'
+    | prepend '/usr/local/bin'
     | append '/usr/local/bin/php'
     | append '/usr/local/go/bin'
     | append '/usr/local/go/bin'
@@ -14,7 +14,10 @@ $env.PATH = (
     | append (echo [$env.GOPATH 'bin'] | path join)
     | append (echo [$env.HOME '.bun/bin'] | path join)
     | append (echo [$env.HOME '.cargo/bin'] | path join)
+    | append (echo [$env.HOME '.local/bin'] | path join)
+    | append (echo [$env.HOME '.juliaup/bin'] | path join)
 )
+$env.MANPATH = ($env.MANPATH? | default "" | split row ":" | prepend "/opt/homebrew/share/man" | str join ":")
 
 load-env (
     fnm env --shell bash
@@ -59,7 +62,7 @@ $env.EDITOR = 'hx'
 $env.VISUAL = 'hx'
 $env.MANPAGER = "less -R --use-color -Dd+231 -Du+253 -DS+49.240"
 $env.CLICOLOR = 1
-$env.LS_COLORS = (^vivid generate darkvoid | str trim)
+$env.LS_COLORS = (^vivid generate monium | str trim)
 $env.VIMRC = '~/.vimrc'
 $env.GPG_TTY = (tty | str trim)
 $env.GREP_OPTIONS = '--color=auto'
@@ -77,16 +80,18 @@ $env.FZF_DEFAULT_OPTS = '--color=fg:#333331,fg+:#fffffd,bg:#bababd,bg+:#3388ea
 
 # $env.NAP_CONFIG = "~/.config/nap/config.yaml" # NOTE: file does not work for some reason
 $env.NAP_THEME = "bw"
-$env.NAP_PRIMARY_COLOR = "#1bfd9c"
-$env.NAP_PRIMARY_COLOR_SUBDUED = "#303030"
-$env.NAP_RED = "#dea6a0"
-$env.NAP_BRIGHT_RED = "#dea6a0"
-$env.NAP_GREEN = "#baffc9"
-$env.NAP_BRIGHT_GREEN = "#baffc9"
-$env.NAP_FOREGROUND = "#c0c0c0"
-$env.NAP_BACKGROUND = "#1c1c1c"
-$env.NAP_BLACK = "#1c1c1c"
-$env.NAP_GRAY = "#404040"
-$env.NAP_WHITE = "#d1d1d1"
+$env.NAP_PRIMARY_COLOR = "#3388ea"
+$env.NAP_PRIMARY_COLOR_SUBDUED = "#333331"
+$env.NAP_RED = "#a93636"
+$env.NAP_BRIGHT_RED = "#cc0000"
+$env.NAP_GREEN = "#065905"
+$env.NAP_BRIGHT_GREEN = "#065905"
+$env.NAP_FOREGROUND = "#333331"
+$env.NAP_BACKGROUND = "#bababd"
+$env.NAP_BLACK = "#000000"
+$env.NAP_GRAY = "#787876"
+$env.NAP_WHITE = "#fffffd"
+
+$env.BEADS_DIR = ([$env.HOME .beads] | path join)
 
 zoxide init nushell | save -f ~/.zoxide.nu

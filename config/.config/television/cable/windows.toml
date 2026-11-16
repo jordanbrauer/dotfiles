@@ -1,0 +1,23 @@
+[metadata]
+name = "windows"
+description = "Browse and focus open macOS windows via AeroSpace"
+requirements = ["aerospace"]
+
+[source]
+command = "aerospace list-windows --all --format '%{window-id}|%{app-name}|%{window-title}'"
+display = "{split:|:1}  {split:|:2}"
+output = "{split:|:0}"
+
+[keybindings]
+enter = "actions:focus"
+ctrl-d = "actions:close"
+
+[actions.focus]
+description = "Focus the selected window"
+command = "aerospace focus --window-id {split:|:0}"
+mode = "execute"
+
+[actions.close]
+description = "Close the selected window"
+command = "aerospace close --window-id {split:|:0}"
+mode = "execute"

@@ -194,7 +194,14 @@ $env.config.hooks = {
   # ]
   env_change: {
     PWD: [
-      {|before, after| null}
+      {|before, after| null},
+      { ||
+          if (which direnv | is-empty) {
+              return
+          }
+
+          direnv export json | from json | default {} | load-env
+      }
     ]
   }
 }
@@ -255,49 +262,48 @@ let monium = {
   s0: "#000000"
 }
 
-let palette = {
-  White: white
-  Black: black
-  Red: red
-  Green: green
-  Yellow: yellow
-  Blue: blue
-  Magenta: magenta
-  Cyan: cyan
-
-  Fg: "#333331"
-  Bg: "#bababd"
-  Cursor: "#3388ea"
-  LineNr: "#404040"
-  Visual: "#303030"
-  Comment: "#585858"
-  String: "#5f5f5d"
-  Func: "#333331"
-  Kw: "#f1f1f1"
-  Identifier: "#b1b1b1"
-  Type: "#a1a1a1"
-  SearchHighlight: "#1bfd9c"
-  Operator: "#1bfd9c"
-  Bracket: "#e6e6e6"
-  Preprocessor: "#4b8902"
-  Bool: "#66b2b2"
-  Constant: "#b2d8d8"
-  Added: "#baffc9"
-  Changed: "#ffffba"
-  Removed: "#ffb3ba"
-  Error: "#dea6a0"
-  Warning: "#d6efd8"
-  Hint: "#bedc74"
-  Info: "#7fa1c3"
-  PmenuBg: "#1c1c1c"
-  PmenuSelBg: "#1bfd9c"
-  PmenuFg: "#c0c0c0"
-  Eob: "#3c3c3c"
-  Border: "#585858"
-  Title: "#bdfe58"
-  BufferlineSelection: "#1bfd9c"
-}
-let colours = $palette
+# Legacy palette — kept for reference, all config now uses $monium
+# let palette = {
+#   White: white
+#   Black: black
+#   Red: red
+#   Green: green
+#   Yellow: yellow
+#   Blue: blue
+#   Magenta: magenta
+#   Cyan: cyan
+#   Fg: "#333331"
+#   Bg: "#bababd"
+#   Cursor: "#3388ea"
+#   LineNr: "#404040"
+#   Visual: "#303030"
+#   Comment: "#585858"
+#   String: "#5f5f5d"
+#   Func: "#333331"
+#   Kw: "#f1f1f1"
+#   Identifier: "#b1b1b1"
+#   Type: "#a1a1a1"
+#   SearchHighlight: "#1bfd9c"
+#   Operator: "#1bfd9c"
+#   Bracket: "#e6e6e6"
+#   Preprocessor: "#4b8902"
+#   Bool: "#66b2b2"
+#   Constant: "#b2d8d8"
+#   Added: "#baffc9"
+#   Changed: "#ffffba"
+#   Removed: "#ffb3ba"
+#   Error: "#dea6a0"
+#   Warning: "#d6efd8"
+#   Hint: "#bedc74"
+#   Info: "#7fa1c3"
+#   PmenuBg: "#1c1c1c"
+#   PmenuSelBg: "#1bfd9c"
+#   PmenuFg: "#c0c0c0"
+#   Eob: "#3c3c3c"
+#   Border: "#585858"
+#   Title: "#bdfe58"
+#   BufferlineSelection: "#1bfd9c"
+# }
 
 $env.config.color_config = {
   # color for nushell primitives
@@ -310,17 +316,19 @@ $env.config.color_config = {
   float: $monium.s1
   filesize: $monium.s1
   duration: $monium.s1
-  date: $monium.s1
+  date: { fg: $monium.s1 }
   range: $monium.s3
   string: $monium.s2
   nothing: $monium.s2
-  binary: $palette.White
-  cellpath: $palette.White
-  row_index: $palette.LineNr
-  record: $palette.Bracket
-  list: $palette.Bracket
-  block: $palette.Bracket
-  hints: $palette.Comment
+  binary: $monium.s9
+  cellpath: $monium.s9
+  row_index: $monium.s3
+  record: $monium.s2
+  list: $monium.s2
+  block: $monium.s2
+  hints: $monium.s3
+  closure: $monium.s2
+  glob: $monium.s3
 
   # shapes are used to change the cli syntax highlighting
   shape_garbage: { fg: $monium.s9 bg: $monium.error attr: b}
@@ -329,25 +337,33 @@ $env.config.color_config = {
   shape_int: $monium.s1
   shape_float: $monium.s1
   shape_range: $monium.s3
-  shape_internalcall: $palette.Func
-  shape_external: $palette.Func
+  shape_internalcall: $monium.s1
+  shape_external: $monium.s1
   shape_externalarg: $monium.s1
-  shape_literal: $palette.Blue
+  shape_literal: $monium.blue
+  shape_pipe: $monium.s3
   shape_operator: $monium.s3
-  shape_signature: $palette.Operator
-  shape_string: $palette.String
-  shape_string_interpolation: $palette.Preprocessor
+  shape_signature: $monium.s3
+  shape_string: $monium.s2
+  shape_string_interpolation: { fg: $monium.s0 attr: i }
   shape_datetime: $monium.s1
   shape_list: $monium.s2
-  shape_table: blue_bold
+  shape_table: $monium.s2
   shape_record: $monium.s2
-  shape_block: blue_bold
-  shape_filepath: $palette.Blue
-  shape_globpattern: cyan_bold
-  shape_variable: $palette.Identifier
-  shape_flag: blue_bold
-  shape_custom: green
-  shape_nothing: light_cyan
+  shape_block: $monium.s2
+  shape_filepath: $monium.blue
+  shape_globpattern: { fg: $monium.s3 attr: b }
+  shape_variable: $monium.s4
+  shape_flag: { fg: $monium.blue attr: b }
+  shape_custom: $monium.s0
+  shape_nothing: $monium.s3
+  shape_closure: $monium.s2
+  shape_glob_interpolation: { fg: $monium.s3 attr: b }
+  shape_keyword: { fg: $monium.s0 attr: b }
+  shape_match_pattern: $monium.s1
+  shape_external_resolved: { fg: $monium.s1 attr: i }
+  shape_directory: $monium.blue
+  shape_raw_string: $monium.s2
 }
 
 $env.config.table = {
@@ -370,54 +386,53 @@ $env.config.menus = [
     type: {
         layout: ide
         columns: 4
-        col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
+        col_width: 20
         col_padding: 2
     }
     style: {
-        text: white
-        selected_text: $colours.Green
-        description_text: $colours.Comment
+        text: $monium.s1
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        match_text: { fg: $monium.s0 attr: b }
+        selected_match_text: { fg: $monium.s9 bg: $monium.cursor attr: b }
+        description_text: $monium.s3
     }
   }
   {
     name: history_menu
     only_buffer_difference: true
-    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $monium.s0 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: list
         page_size: 10
     }
     style: {
-        text: white
-        selected_text: white_reverse
-        description_text: $colours.Comment
+        text: $monium.s1
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        description_text: $monium.s3
     }
   }
   {
     name: help_menu
     only_buffer_difference: true
-    marker: ([(ansi -e { fg: $colours.Operator attr: b }) "λ " (ansi reset)] | str join)
+    marker: ([(ansi -e { fg: $monium.s0 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: description
         columns: 4
-        col_width: 20   # Optional value. If missing all the screen width is used to calculate column width
+        col_width: 20
         col_padding: 2
         selection_rows: 4
         description_rows: 10
     }
     style: {
-        text: white
-        selected_text: white_reverse
-        description_text: $colours.Comment
+        text: $monium.s1
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        description_text: $monium.s3
     }
   }
-  # Example of extra menus created using a nushell source
-  # Use the source field to create a list of records that populates
-  # the menu
   {
     name: commands_menu
     only_buffer_difference: false
-    marker: "λ "
+    marker: ([(ansi -e { fg: $monium.s0 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: columnar
         columns: 4
@@ -425,9 +440,9 @@ $env.config.menus = [
         col_padding: 2
     }
     style: {
-        text: white_bold
-        selected_text: white_reverse
-        description_text: $colours.Comment
+        text: { fg: $monium.s1 attr: b }
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        description_text: $monium.s3
     }
     source: { |buffer, position|
         $nu.scope.commands
@@ -438,15 +453,15 @@ $env.config.menus = [
   {
     name: vars_menu
     only_buffer_difference: true
-    marker: "λ "
+    marker: ([(ansi -e { fg: $monium.s0 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: list
         page_size: 10
     }
     style: {
-        text: white_bold
-        selected_text: white_reverse
-        description_text: $colours.Comment
+        text: { fg: $monium.s1 attr: b }
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        description_text: $monium.s3
     }
     source: { |buffer, position|
         $nu.scope.vars
@@ -458,7 +473,7 @@ $env.config.menus = [
   {
     name: commands_with_description
     only_buffer_difference: true
-    marker: "λ "
+    marker: ([(ansi -e { fg: $monium.s0 attr: b }) "λ " (ansi reset)] | str join)
     type: {
         layout: description
         columns: 4
@@ -468,9 +483,9 @@ $env.config.menus = [
         description_rows: 10
     }
     style: {
-        text: white_bold
-        selected_text: white_reverse
-        description_text: $colours.Comment
+        text: { fg: $monium.s1 attr: b }
+        selected_text: { fg: $monium.s9 bg: $monium.cursor }
+        description_text: $monium.s3
     }
     source: { |buffer, position|
         $nu.scope.commands
@@ -616,6 +631,7 @@ source ~/.config/nushell/completions/tar.nu
 source ~/.config/nushell/completions/curl.nu
 source ~/.config/nushell/completions/op.nu
 source ~/.config/nushell/completions/just.nu
+source ~/.config/nushell/completions/television.nu
 
 source ~/.zoxide.nu
 

@@ -1,0 +1,26 @@
+[metadata]
+name = "beads"
+description = "Browse and manage beads issues (tasks, bugs, features)"
+requirements = ["beads", "jq"]
+
+[source]
+command = "bash ~/.config/television/scripts/beads-list.sh"
+display = "P{split:|:1} {split:|:2}  {split:|:3}"
+output = "{split:|:0}"
+
+[preview]
+command = "beads show {split:|:0}"
+
+[keybindings]
+enter = "actions:show"
+ctrl-d = "actions:close"
+
+[actions.show]
+description = "Print issue details"
+command = "beads show {split:|:0}"
+mode = "execute"
+
+[actions.close]
+description = "Close the issue"
+command = "beads close {split:|:0}"
+mode = "fork"

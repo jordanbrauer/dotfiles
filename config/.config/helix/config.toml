@@ -39,13 +39,14 @@ ret     = ["goto_word"]
 space.n = [":sh echo %{buffer_name} | pbcopy"]
 space.N = [":sh [(pwd) %{buffer_name}] | path join | pbcopy"]
 space.W = [":sh [(pwd) (echo %{buffer_name} | path parse | get parent)] | path join | pbcopy"]
-space.O = [":sh gh browse %{buffer_name}"]
+space.o = [":sh gh browse %{buffer_name}"]
+space.O = [":sh gh browse %{buffer_name}:%{selection_line_start}-%{selection_line_end}"]
 space.B = [":sh git blame -L %{selection_line_start},%{selection_line_end} %{buffer_name}"]
 
 space.e = ["file_explorer_in_current_buffer_directory"]
 space.E = [
     ":write-all",
-    ":noop %sh{kitty @ launch --type=overlay --cwd=(echo [(pwd) (echo %{buffer_name} | path parse | get parent)] | path join) /opt/homebrew/bin/nu -c yazi .}",
+    ":noop %sh{kitty @ launch --type=overlay --cwd=$(dirname $(pwd)/%{buffer_name}) /opt/homebrew/bin/fish -c 'yazi .'}",
     ":redraw", 
     ":reload-all"
 ]

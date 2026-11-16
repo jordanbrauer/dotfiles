@@ -1,0 +1,27 @@
+[metadata]
+name = "pi-sessions"
+description = "Browse and resume Pi agent chat sessions"
+requirements = ["python3"]
+
+[source]
+command = "python3 ~/.config/television/scripts/pi-sessions-list.py"
+display = "{split:|:0}  {split:|:1}  {split:|:2}"
+output = "{split:|:3}"
+no_sort = true
+
+[preview]
+command = "python3 ~/.config/television/scripts/pi-sessions-preview.py '{split:|:3}'"
+
+[keybindings]
+enter = "actions:open"
+ctrl-d = "actions:delete"
+
+[actions.open]
+description = "Resume session in a new kitty tab"
+command = "bash ~/.config/television/scripts/pi-sessions-open.sh '{split:|:3}'"
+mode = "execute"
+
+[actions.delete]
+description = "Delete the selected session"
+command = "rm -i ~/.pi/agent/sessions/'{split:|:3}'"
+mode = "execute"

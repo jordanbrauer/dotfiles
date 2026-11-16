@@ -1,4 +1,14 @@
+# Keep GitHub CLI account/authentication state local.
+config/.config/gh/hosts.yml
+
 packer_compiled.lua
+
+# Private files and mutable state: never import these during consolidation.
+# These rules do not protect already tracked files or control Stow.
+config/.config/fish/secrets.fish
+config/.config/fish/fish_variables
+config/.config/fish/completions/finch.fish
+config/.config/television/cable/finch-*.toml
 
 config/.config/nushell/history.txt
 config/.config/configstore/

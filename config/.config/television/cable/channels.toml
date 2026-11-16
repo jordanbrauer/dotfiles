@@ -1,0 +1,17 @@
+[metadata]
+name = "channels"
+description = "Browse channel listing"
+
+[source]
+command = "tv list-channels"
+
+# [preview]
+# command = "tldr '{}'"
+
+[keybindings]
+enter = "actions:open"
+
+[actions.open]
+description = "Switch to the selected channel"
+command = "tv '{}'"
+mode = "execute"

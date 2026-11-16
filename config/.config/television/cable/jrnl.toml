@@ -1,0 +1,28 @@
+[metadata]
+name = "jrnl"
+description = "Browse journal entries"
+requirements = ["jrnl"]
+
+[source]
+command = "jrnl --short -n 100 --config-override colors.date none --config-override colors.title none --config-override colors.body none --config-override colors.tags none"
+no_sort = true
+
+[preview]
+command = '''jrnl -on '{split: :0}' --format md 2>/dev/null | tail -n +5'''
+
+[ui]
+layout = "portrait"
+
+[keybindings]
+enter = "actions:read"
+ctrl-n = "actions:new"
+
+[actions.read]
+description = "Read the full entry"
+command = "jrnl -on '{split: :0}' --format md | ${PAGER:-less}"
+mode = "execute"
+
+[actions.new]
+description = "Write a new journal entry"
+command = "jrnl"
+mode = "execute"

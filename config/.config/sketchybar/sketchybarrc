@@ -27,10 +27,10 @@ default=(
   background.corner_radius=10
   label.padding_left=4
   label.padding_right=10
-  label.color=$WHITE
-  label.font="SF Pro:Semibold:14.0"
+  label.color=0xff000000
+  label.font="Berkeley Mono:Bold:14.0"
   icon.font="SF Pro:Semibold:14.0"
-  icon.color=$WHITE
+  icon.color=0xff000000
   icon.padding_right=4
 )
 
@@ -47,6 +47,7 @@ source $ITEM_DIR/volume.sh
 source $ITEM_DIR/battery.sh
 source $ITEM_DIR/memory.sh
 source $ITEM_DIR/cpu.sh
+source $ITEM_DIR/k8s.sh
 
 # Force all scripts to run the first time (never do this in a script)
 sketchybar --update

@@ -1,0 +1,22 @@
+[metadata]
+name = "todosh"
+description = "Browse and manage todo.sh tasks"
+requirements = ["todo.sh"]
+
+[source]
+command = "todo.sh -p list | grep -v '^--$' | grep -v '^TODO:'"
+no_sort = true
+
+[keybindings]
+enter = "actions:done"
+ctrl-n = "actions:add"
+
+[actions.done]
+description = "Mark the selected task as done"
+command = "todo.sh done {split: :0}"
+mode = "fork"
+
+[actions.add]
+description = "Add a new todo"
+command = '''echo "Enter todo:" && read -r item && todo.sh add "$item"'''
+mode = "execute"

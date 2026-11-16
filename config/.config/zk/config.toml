@@ -128,6 +128,21 @@ note.template = "slides.md"
 paths = ["meetings"]
 note.template = "meeting.md"
 
+[group.contacts]
+
+paths = ["contacts"]
+note.template = "contact.md"
+
+[group.tickets]
+
+paths = ["tickets"]
+note.template = "ticket.md"
+
+[group.projects]
+
+paths = ["projects"]
+note.template = "project.md"
+
 # MARKDOWN SETTINGS
 [format.markdown]
 

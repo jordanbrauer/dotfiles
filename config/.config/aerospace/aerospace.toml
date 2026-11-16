@@ -2,7 +2,7 @@ start-at-login = true
 
 after-startup-command = [
     'exec-and-forget sketchybar',
-    'exec-and-forget borders active_color=0xff1bfd9c inactive_color=0xff494d64 width=5.0 blacklist=Loom'
+    'exec-and-forget borders active_color=0xff3388ea inactive_color=0xff787876 width=5.0 blacklist=Loom'
 ]
 
 exec-on-workspace-change = [

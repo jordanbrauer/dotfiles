@@ -6,28 +6,28 @@ tree = true
 [styles]
 
 [styles.tables]
-headers = {color = "#e1e1e1", bold = true}
+headers = {color = "#333331", bold = true}
 
 [styles.graphs]
-graph_color = "gray"
-legend_text = {color = "gray"}
+graph_color = "#787876"
+legend_text = {color = "#787876"}
 
 [styles.widgets]
-border_color = "dark gray"
-selected_border_color = "gray"
-widget_title = {color = "#1bfd9c"}
-text = {color = "gray"}
-selected_text = {color = "#c0c0c0", bg_color = "#303030"}
-disabled_text = {color = "dark gray"}
+border_color = "#5f5f5d"
+selected_border_color = "#3388ea"
+widget_title = {color = "#000000"}
+text = {color = "#333331"}
+selected_text = {color = "#fffffd", bg_color = "#3388ea"}
+disabled_text = {color = "#a1a1a1"}
 
 [styles.memory]
-ram_color = "#66b2b2"
-swap_color = "#b2d8d8"
-cache_color = "light red"
+ram_color = "#3388ea"
+swap_color = "#6666aa"
+cache_color = "#a93636"
 
 [styles.network]
-rx_color = "#66b2b2"
-tx_color = "#b2d8d8"
+rx_color = "#3388ea"
+tx_color = "#6666aa"
 
 [[row]]
   ratio=2
